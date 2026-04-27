@@ -2187,8 +2187,18 @@ function parseVoiceText(text){
 
 function parseAndShowItems(text){
   const cmd=parseVoiceCommand(text);
-  voiceItems=cmd.items;
-  voiceNewListName=cmd.type==='create'?cmd.listName:null;
+
+  if(cmd.type==='create'){
+    // "Neue Liste X mit ..." → Liste neu anlegen, alles zurücksetzen
+    voiceItems=cmd.items;
+    voiceNewListName=cmd.listName;
+  } else {
+    // Normale Artikel → AKKUMULIEREN, nicht überschreiben!
+    const existingLower=new Set(voiceItems.map(i=>i.toLowerCase()));
+    const newItems=cmd.items.filter(i=>!existingLower.has(i.toLowerCase()));
+    voiceItems=[...voiceItems, ...newItems];
+    if(cmd.type==='addto' && cmd.listName) voiceNewListName=null;
+  }
 
   const preview=document.getElementById('voice-cmd-preview');
   const hints=document.getElementById('voice-hint-examples');
@@ -2249,7 +2259,9 @@ function parseAndShowItems(text){
   if(addBtn) addBtn.disabled=false;
   if(status){
     const n=voiceItems.length;
-    status.textContent=n===0?'Liste wird erstellt …':n===1?'1 Artikel erkannt':n+' Artikel erkannt';
+    const base=n===0?'Liste wird erstellt …':n===1?'1 Artikel erkannt':n+' Artikel erkannt';
+    // Zeige an, dass das Mikrofon weiter zuhört
+    status.textContent=isListening ? base+' · Weiter sprechen …' : base;
   }
   // Zähler im Titel aktualisieren
   const counter=document.getElementById('voice-items-count');
