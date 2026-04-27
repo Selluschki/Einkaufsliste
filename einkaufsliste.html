@@ -2034,14 +2034,121 @@ function stopListening(){
 }
 
 function parseVoiceText(text){
-  return text
-    .replace(/\b(und|and|ve|ile|dann|auch|noch|sowie|plus|dazu|außerdem)\b/gi,',')
-    .split(/[,;]+/)
-    .map(s=>s.trim()
-      .replace(/^(bitte\s*|ich\s+brauche\s+|ich\s+möchte\s+|ich\s+nehme\s+|kauf\w*\s+|hol\w*\s+|add\s+|get\s+)/i,'')
-      .replace(/\s+/g,' ').trim())
-    .filter(s=>s.length>1)
-    .map(s=>s.charAt(0).toUpperCase()+s.slice(1));
+  /* ── Comprehensive stopword list ── */
+  const STOPWORDS = new Set([
+    // Deutsche Artikel
+    'der','die','das','den','dem','des','ein','eine','einen','einem','einer','eines',
+    // Deutsche Pronomen
+    'ich','du','er','sie','es','wir','ihr','man','mich','mir','dich','dir','ihn','ihm',
+    'uns','euch','sich','mein','meine','meinen','meinem','meiner','dein','deine','sein',
+    'seine','unser','unsere','ihr','ihre','deren','denen','wer','was','welche','welcher',
+    // Deutsche Präpositionen & Konjunktionen
+    'in','an','auf','bei','mit','von','zu','aus','nach','seit','vor','über','unter',
+    'neben','zwischen','gegen','durch','für','ohne','um','bis','ab','und','oder','aber',
+    'doch','sondern','weil','dass','damit','wenn','ob','als','wie','so','auch','noch',
+    'schon','nur','mal','denn','dann','danach','daher','darum','deshalb','deswegen',
+    'jedoch','allerdings','trotzdem','zwar','sowohl','entweder','weder','nicht','kein',
+    'keine','keinen','keinem','keiner','ja','nein','doch','bitte','bitte',
+    // Füllwörter & Floskeln
+    'also','genau','quasi','halt','eben','eigentlich','irgendwie','sozusagen','nämlich',
+    'übrigens','ohnehin','sowieso','tatsächlich','wirklich','einfach','vielleicht',
+    'ungefähr','etwa','circa','ca','usw','etc','etcetera','usf','und so weiter',
+    'und so fort','zum beispiel','zum','zum','beispiel','beziehungsweise','bzw',
+    'sprich','respektive','nochmal','nochmals','mal','eben','halt','jedenfalls',
+    'auf jeden fall','auf','jeden','fall','jedenfalls','immer','manchmal','oft',
+    'meistens','normalerweise','natürlich','sicher','bestimmt','wahrscheinlich',
+    'vielleicht','hoffentlich','leider','leider','gerne','gern','lieber','am liebsten',
+    'und zwar','zwar','nämlich','quasi','so','na','nun','ok','okay','alright','right',
+    // Verben die keine Produkte sind
+    'brauche','brauchen','möchte','möchten','will','wollen','nehme','nehmen','kaufe',
+    'kaufen','hole','holen','besorge','besorgen','bring','bringen','pack','packen',
+    'add','added','get','got','need','needs','want','wanted','buy','bought',
+    'sage','sagen','mache','machen','tue','tun','gehe','gehen','komme','kommen',
+    'habe','haben','bin','ist','sind','war','waren','werde','werden',
+    // Mengenangaben & Adjektive (die allein kein Produkt sind)
+    'viel','viele','wenig','wenige','mehr','weniger','etwas','etwas','bisschen',
+    'paar','einige','mehrere','alle','alles','jede','jeden','jeder','jedes',
+    'große','großen','kleinen','kleine','frische','frischen','frisch',
+    // Englische Stopwörter
+    'the','a','an','is','are','was','were','be','been','being','have','has','had',
+    'do','does','did','will','would','could','should','may','might','must','shall',
+    'of','in','to','for','on','at','by','from','with','about','into','through',
+    'i','me','my','we','our','you','your','he','his','she','her','it','its','they',
+    'them','their','this','that','these','those','and','or','but','so','yet','both',
+    'either','neither','not','no','nor','just','very','also','too','then','now',
+    // Türkische Stopwörter
+    've','ile','da','de','mi','mu','mü','mı','bir','bu','şu','o','ben','sen','biz',
+    'siz','onlar','benim','senin','bizim','sizin','için','ile','den','dan','ten','tan',
+    'ya','ya da','veya','ama','fakat','lakin','ancak','sadece','yalnız','hem','ne',
+  ]);
+
+  /* ── Filler phrases to strip out entirely (multi-word) ── */
+  const FILLER_PHRASES = [
+    /\bund zwar\b/gi, /\bund so\b/gi, /\bund auch\b/gi,
+    /\bund dann\b/gi, /\bund noch\b/gi, /\bund außerdem\b/gi,
+    /\bet cetera\b/gi, /\betcetera\b/gi, /\busw\b\.?/gi, /\betc\b\.?/gi,
+    /\bund so weiter\b/gi, /\bund so fort\b/gi,
+    /\bzum beispiel\b/gi, /\bz\.b\b\.?/gi,
+    /\bauf jeden fall\b/gi,
+    /\bich brauche\b/gi, /\bich möchte\b/gi, /\bich will\b/gi,
+    /\bich nehme\b/gi, /\bich sage\b/gi, /\bich kaufe\b/gi,
+    /\bich hole\b/gi, /\bwir brauchen\b/gi, /\bwir möchten\b/gi,
+    /\bkauf(?:e|en|st)?\b/gi, /\bhol(?:e|en|st)?\b/gi,
+    /\bbesorge?\b/gi, /\bbring(?:e|en|st)?\b/gi,
+    /\bpack(?:e|en|st)?\b/gi,
+    /\bsodass\b/gi, /\bdass\b/gi, /\bdamit\b/gi,
+    /\bbitte\b/gi,
+  ];
+
+  let t = text;
+
+  // 1) Strip filler phrases
+  FILLER_PHRASES.forEach(rx => { t = t.replace(rx, ' '); });
+
+  // 2) Treat conjunctions & "plus"/"sowie" as item separators → comma
+  t = t.replace(/\b(und|and|oder|plus|sowie|dazu|außerdem|ve|ile|dann|danach)\b/gi, ',');
+
+  // 3) Split on commas, semicolons, colons, numbers at start (e.g. "1. Milch 2. Brot")
+  const segments = t.split(/[,;:]+|\b\d+\.\s*/);
+
+  const results = [];
+  for(let seg of segments){
+    seg = seg.trim().replace(/\s+/g,' ');
+    if(!seg) continue;
+
+    // 4) Remove leading/trailing stopwords word by word
+    const words = seg.split(/\s+/);
+
+    // Filter: keep words that are NOT stopwords and are at least 2 chars
+    const kept = words.filter(w => {
+      const clean = w.toLowerCase().replace(/[.,!?;:'"()]/g,'');
+      if(clean.length < 2) return false;
+      if(STOPWORDS.has(clean)) return false;
+      // Skip pure numbers
+      if(/^\d+$/.test(clean)) return false;
+      // Skip single letters
+      if(clean.length === 1) return false;
+      return true;
+    });
+
+    if(kept.length === 0) continue;
+
+    // 5) If the remaining phrase is 1-3 words, treat it as a product
+    //    If it's longer, it might still have hidden stopwords – try trimming lead/trail again
+    const phrase = kept.join(' ').trim();
+    if(phrase.length >= 2){
+      results.push(phrase.charAt(0).toUpperCase() + phrase.slice(1));
+    }
+  }
+
+  // 6) Deduplicate (case-insensitive)
+  const seen = new Set();
+  return results.filter(r => {
+    const k = r.toLowerCase();
+    if(seen.has(k)) return false;
+    seen.add(k);
+    return true;
+  });
 }
 
 function parseAndShowItems(text){
