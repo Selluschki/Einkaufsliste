@@ -158,7 +158,7 @@ html[data-layout="compact"] .list-cards{gap:5px}
 }
 html[data-theme="dark"] .list-card{background:rgba(30,40,60,.88);border-color:rgba(255,255,255,.07)}
 html[data-layout="compact"] .list-card{padding:11px 14px;border-radius:var(--r2)}
-html[data-layout="grid"] .list-card{flex-direction:column;align-items:flex-start;gap:10px;padding:18px}
+html[data-layout="grid"] .list-card{flex-direction:column;align-items:flex-start;gap:10px;padding:18px;position:relative}
 .list-card:hover{transform:translateY(-3px);box-shadow:var(--shadow2)}
 .list-card:active{transform:scale(.97)}
 .list-card-color{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
@@ -172,6 +172,18 @@ html[data-layout="compact"] .list-card-name{font-size:.88rem}
 .list-card-badge{background:var(--greenlt);color:var(--green);font-size:.68rem;font-weight:700;padding:3px 10px;border-radius:50px;flex-shrink:0;letter-spacing:.01em}
 .list-card-arrow{color:var(--text3);font-size:.85rem;flex-shrink:0;opacity:.5}
 html[data-layout="grid"] .list-card-arrow{display:none}
+/* ── Card Delete Button ── */
+.list-card-del{
+  flex-shrink:0;width:32px;height:32px;border-radius:10px;border:none;
+  background:transparent;color:var(--text3);font-size:1rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;opacity:.45;
+  transition:background .15s,opacity .15s,color .15s;
+}
+.list-card-del:hover{background:#fee2e2;color:#dc2626;opacity:1}
+.list-card-del:active{transform:scale(.88)}
+html[data-layout="grid"] .list-card-del{position:absolute;top:10px;right:10px}
+html[data-layout="tiles-lg"] .list-card-del{position:absolute;top:10px;right:10px}
+html[data-layout="tiles-sm"] .list-card-del{display:none} /* zu klein */
 .list-card-prog{display:none;height:3px;background:var(--border);border-radius:2px;margin-top:10px;width:100%;overflow:hidden}
 .list-card-prog-fill{height:100%;background:linear-gradient(90deg,var(--green2),var(--green));border-radius:2px;transition:width .4s ease}
 html[data-layout="grid"] .list-card-prog{display:block}
@@ -569,7 +581,7 @@ html[data-theme="dark"] .logo-action-sheet{background:#1a2332}
   background:linear-gradient(135deg,var(--green2),var(--green));
   color:#fff;border:none;border-radius:16px;width:calc(100% - 32px);
   cursor:pointer;font-family:'Inter',inherit;font-size:.95rem;font-weight:700;
-  transition:opacity .2s;
+  transition:opacity .2s;text-decoration:none;box-sizing:border-box;
 }
 .logo-action-prospekt-btn:hover{opacity:.9}
 .logo-action-prospekt-btn .btn-icon{font-size:1.3rem;background:rgba(255,255,255,.2);width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -1715,6 +1727,7 @@ function renderHome(){
       </div>
       ${l.items.length>0?`<div class="list-card-badge">${checked(l)}/${l.items.length}</div>`:''}
       <div class="list-card-arrow">›</div>
+      <button class="list-card-del" title="Liste löschen" onclick="event.stopPropagation();deleteListById('${l.id}')">🗑</button>
     </div>`;
   }).join('')+`</div>`;
 }
@@ -1723,6 +1736,16 @@ function openList(id){
   currentListId=id;
   renderListView();
   showView('list');
+}
+
+function deleteListById(id){
+  const list=lists.find(l=>l.id===id);
+  if(!list) return;
+  if(!confirm(`🗑 "${list.name}" wirklich löschen?`)) return;
+  lists=lists.filter(l=>l.id!==id);
+  save();
+  renderHome();
+  toast(`🗑 "${list.name}" gelöscht`);
 }
 
 // ── List View ─────────────────────────────────────
@@ -2802,14 +2825,14 @@ function showLogoAction(key, domain, bg, fg){
   const pWrap = document.getElementById('la-prospekt-wrap');
   if(prospektUrl){
     pWrap.innerHTML = `
-      <button class="logo-action-prospekt-btn" onclick="openProspekt('${prospektUrl.replace(/'/g,"\\'")}')">
+      <a class="logo-action-prospekt-btn" href="${prospektUrl}" target="_blank" rel="noopener noreferrer" onclick="closeLogoAction();toast('📰 Prospekt wird geöffnet …')">
         <span class="btn-icon">📰</span>
         <span class="btn-text">
           Aktueller Prospekt & Angebote
           <small>Öffnet die offizielle Angebotsseite</small>
         </span>
         <span style="margin-left:auto;opacity:.7">›</span>
-      </button>`;
+      </a>`;
   } else {
     pWrap.innerHTML = `<div class="logo-action-no-prospekt">📰 Kein direkter Prospekt-Link verfügbar</div>`;
   }
@@ -2831,9 +2854,21 @@ function closeLogoAction(){
 }
 
 function openProspekt(url){
-  window.open(url, '_blank', 'noopener');
   closeLogoAction();
   toast('📰 Prospekt wird geöffnet …');
+  // PWA-sicheres Öffnen: <a>-Element ist zuverlässiger als window.open()
+  try {
+    const a = document.createElement('a');
+    a.href = url;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => document.body.removeChild(a), 300);
+  } catch(e) {
+    // Fallback
+    location.href = url;
+  }
 }
 
 function setLogoActiveStore(){
