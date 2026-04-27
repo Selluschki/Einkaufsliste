@@ -421,6 +421,16 @@ html[data-theme="dark"] .voice-item-row{background:rgba(30,40,60,.6)}
 .voice-add-btn:not(:disabled):hover{opacity:.9}
 .voice-retry-btn{background:var(--surface);border:1.5px solid var(--border);color:var(--text2);border-radius:12px;padding:14px 16px;font-size:.88rem;font-weight:600;cursor:pointer}
 .voice-retry-btn:hover{border-color:var(--green);color:var(--green)}
+.voice-stop-btn{
+  display:flex;align-items:center;justify-content:center;gap:7px;
+  background:linear-gradient(135deg,#ef4444,#dc2626);
+  color:#fff;border:none;border-radius:12px;
+  padding:11px 22px;font-size:.9rem;font-weight:700;
+  cursor:pointer;animation:fadeIn .3s ease;
+  box-shadow:0 3px 14px rgba(220,38,38,.35);
+  transition:opacity .2s,transform .15s;
+}
+.voice-stop-btn:hover{opacity:.9;transform:scale(1.02)}
 .voice-no-support{text-align:center;padding:36px 20px}
 .voice-list-picker{padding:4px 20px 16px;display:flex;flex-direction:column;gap:8px}
 .voice-list-btn{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:12px 14px;text-align:left;cursor:pointer;display:flex;align-items:center;gap:10px;font-family:inherit;transition:all .2s}
@@ -1952,6 +1962,9 @@ function renderVoiceContent(){
     <div class="voice-mic-area" style="padding-top:24px">
       <button class="voice-mic-btn" id="voice-mic-btn" onclick="toggleListening()">🎤</button>
       <div class="voice-status" id="voice-status">Tippe auf das Mikrofon und sprich</div>
+      <button class="voice-stop-btn" id="voice-stop-btn" onclick="stopListening()" style="display:none">
+        🛑 Fertig – Aufnahme beenden
+      </button>
     </div>
     <div class="voice-hint-examples" id="voice-hint-examples">
       <div class="voice-example">💡 <strong>Neue Liste erstellen:</strong> „Neue Liste Wocheneinkauf mit Milch, Eier und Brot"</div>
@@ -1999,31 +2012,50 @@ function startListening(){
   recognition.lang=lang==='tr'?'tr-TR':lang==='en'?'en-US':'de-DE';
   recognition.interimResults=true;
   recognition.maxAlternatives=1;
+  recognition.continuous=true;   // ← Hört NICHT automatisch bei Pausen auf
 
   const micBtn=document.getElementById('voice-mic-btn');
+  const stopBtn=document.getElementById('voice-stop-btn');
   const status=document.getElementById('voice-status');
   const transcript=document.getElementById('voice-transcript');
 
   recognition.onstart=()=>{
     isListening=true;
     micBtn?.classList.add('listening');
+    if(stopBtn) stopBtn.style.display='flex';
     if(status) status.textContent=t.voiceListening;
     if(transcript){transcript.style.display='block';transcript.textContent='…';transcript.classList.add('interim');}
   };
   recognition.onresult=e=>{
-    const last=e.results[e.results.length-1];
-    const text=last[0].transcript;
-    if(transcript) transcript.textContent=text;
-    if(last.isFinal){
-      transcript.classList.remove('interim');
-      parseAndShowItems(text);
+    // Mit continuous=true: alle Resultate durchgehen
+    let finalText='';
+    for(let i=e.resultIndex;i<e.results.length;i++){
+      if(e.results[i].isFinal){
+        finalText += e.results[i][0].transcript + ' ';
+      } else {
+        if(transcript) transcript.textContent=e.results[i][0].transcript;
+      }
+    }
+    if(finalText.trim()){
+      if(transcript){ transcript.textContent=finalText.trim(); transcript.classList.remove('interim'); }
+      parseAndShowItems(finalText.trim());
     }
   };
   recognition.onerror=e=>{
+    if(e.error==='no-speech') return; // Bei Stille einfach weitermachen
     stopListening();
-    if(status) status.textContent='Fehler: '+e.error+(e.error==='no-speech'?' (Kein Ton erkannt)':e.error==='not-allowed'?' (Mikrofon verweigert)':'');
+    if(status) status.textContent='Fehler: '+e.error+(e.error==='not-allowed'?' (Mikrofon verweigert)':'');
   };
-  recognition.onend=()=>{ isListening=false; micBtn?.classList.remove('listening'); };
+  recognition.onend=()=>{
+    // Nur wirklich stoppen wenn der Nutzer es explizit beendet hat
+    if(isListening){
+      // Browser hat ungewollt gestoppt → sofort neu starten
+      try{ recognition.start(); } catch(e){ /* ignore */ }
+    } else {
+      micBtn?.classList.remove('listening');
+      if(stopBtn) stopBtn.style.display='none';
+    }
+  };
   recognition.start();
 }
 
@@ -2031,6 +2063,8 @@ function stopListening(){
   isListening=false;
   recognition?.stop();
   document.getElementById('voice-mic-btn')?.classList.remove('listening');
+  const sb=document.getElementById('voice-stop-btn');
+  if(sb) sb.style.display='none';
 }
 
 function parseVoiceText(text){
