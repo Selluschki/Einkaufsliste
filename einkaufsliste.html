@@ -389,16 +389,32 @@ html[data-theme="dark"] .voice-sheet{background:#1a2332}
 }
 .voice-transcript.interim{color:var(--text3);font-style:italic}
 .voice-items-preview{padding:0 20px 4px}
-.voice-items-title{font-size:.73rem;font-weight:700;color:var(--text3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
-.voice-chips{display:flex;flex-wrap:wrap;gap:6px}
-.voice-chip{
-  display:flex;align-items:center;gap:5px;
-  background:var(--greenlt);color:var(--green);
-  border:1.5px solid var(--green3);border-radius:50px;
-  padding:5px 11px;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s;
+.voice-items-title{font-size:.7rem;font-weight:700;color:var(--text3);letter-spacing:.07em;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between}
+.voice-items-title span{font-weight:400;font-size:.68rem;color:var(--text3)}
+/* Vertikale Artikelliste */
+.voice-item-list{display:flex;flex-direction:column;gap:6px;max-height:220px;overflow-y:auto;padding-right:2px}
+.voice-item-list::-webkit-scrollbar{width:3px}
+.voice-item-list::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.voice-item-row{
+  display:flex;align-items:center;gap:10px;
+  background:var(--surface);border:1px solid var(--border);border-radius:12px;
+  padding:9px 12px;transition:all .18s;
+  animation:slideUp .2s ease both;
 }
-.voice-chip:hover{background:var(--green);color:#fff;border-color:var(--green)}
-.voice-chip .x{font-size:.7rem;opacity:.65}
+html[data-theme="dark"] .voice-item-row{background:rgba(30,40,60,.6)}
+.voice-item-row:hover{border-color:var(--green3);background:var(--greenlt)}
+.voice-item-num{width:20px;height:20px;border-radius:50%;background:var(--green);color:#fff;font-size:.62rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.voice-item-icon{font-size:1.1rem;flex-shrink:0;width:24px;text-align:center}
+.voice-item-info{flex:1;min-width:0}
+.voice-item-name{font-size:.88rem;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.voice-item-cat{font-size:.68rem;color:var(--text3);margin-top:1px;font-weight:500}
+.voice-item-del{background:none;border:none;color:var(--text3);font-size:.9rem;cursor:pointer;padding:4px 6px;border-radius:8px;flex-shrink:0;transition:all .15s;line-height:1}
+.voice-item-del:hover{color:var(--red);background:#fef2f2}
+/* Sortier-Hinweis */
+.voice-sort-hint{font-size:.72rem;color:var(--text3);background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:6px 10px;margin-top:6px;display:flex;align-items:center;gap:5px}
+/* alte Chips – nicht mehr genutzt, Kompatibilität */
+.voice-chips{display:flex;flex-wrap:wrap;gap:6px}
+.voice-chip{display:none}
 .voice-footer{padding:14px 20px 20px;display:flex;gap:8px}
 .voice-add-btn{flex:1;background:linear-gradient(135deg,var(--green2),var(--green));color:#fff;border:none;border-radius:12px;padding:14px;font-size:.95rem;font-weight:700;cursor:pointer;transition:opacity .2s}
 .voice-add-btn:disabled{opacity:.38;cursor:default}
@@ -1946,8 +1962,10 @@ function renderVoiceContent(){
     </div>
     <div class="voice-cmd-preview" id="voice-cmd-preview" style="display:none">
       <div id="voice-cmd-banner" class="voice-cmd-banner"></div>
-      <div class="voice-items-title" id="voice-items-label">${t.voiceDetected}</div>
-      <div class="voice-chips" id="voice-chips"></div>
+      <div class="voice-items-title" id="voice-items-label">
+        Erkannte Artikel <span id="voice-items-count"></span>
+      </div>
+      <div class="voice-item-list" id="voice-chips"></div>
       <div id="voice-target-wrap"></div>
     </div>
     <div class="voice-footer">
@@ -2090,8 +2108,11 @@ function parseAndShowItems(text){
   if(addBtn) addBtn.disabled=false;
   if(status){
     const n=voiceItems.length;
-    status.textContent=n===0?'Liste wird erstellt':n===1?'1 Artikel erkannt':n+' Artikel erkannt';
+    status.textContent=n===0?'Liste wird erstellt …':n===1?'1 Artikel erkannt':n+' Artikel erkannt';
   }
+  // Zähler im Titel aktualisieren
+  const counter=document.getElementById('voice-items-count');
+  if(counter&&voiceItems.length>0) counter.textContent='· '+voiceItems.length+' Stk';
 }
 
 function selectVoiceTarget(id, btn){
@@ -2105,12 +2126,52 @@ function selectVoiceTarget(id, btn){
 }
 
 function renderVoiceChips(){
-  const chips=document.getElementById('voice-chips');
+  // Container wird jetzt als voice-item-list gerendert (vertikal)
+  const chips = document.getElementById('voice-chips');
   if(!chips) return;
-  chips.innerHTML=voiceItems.map((item,i)=>`
-    <div class="voice-chip" onclick="removeVoiceItem(${i})">
-      ${CATS[autoCategory(item)]?.icon||'📦'} ${item} <span class="x">✕</span>
+
+  // Items nach Kategorie sortieren (Markt-Reihenfolge)
+  const store = voiceTargetListId
+    ? lists.find(l=>l.id===voiceTargetListId)?.store
+    : (currentListId ? getList()?.store : null);
+  const order = store ? getStoreOrder(store) : DEFAULT_ORDER;
+
+  // Jedes Item bekommt seine Kategorie + Position in der Markt-Reihenfolge
+  const withCat = voiceItems.map((name,i)=>{
+    const cat = autoCategory(name);
+    const sortPos = order.indexOf(cat) >= 0 ? order.indexOf(cat) : 999;
+    return {name, cat, icon: CATS[cat]?.icon||'📦', label: catName(cat), sortPos, origIdx: i};
+  });
+
+  // Sortiert nach Markt-Reihenfolge
+  const sorted = [...withCat].sort((a,b)=>a.sortPos - b.sortPos);
+
+  chips.className = 'voice-item-list';
+  chips.innerHTML = sorted.map((item, displayIdx) => `
+    <div class="voice-item-row" style="animation-delay:${displayIdx*0.04}s">
+      <div class="voice-item-num">${displayIdx+1}</div>
+      <div class="voice-item-icon">${item.icon}</div>
+      <div class="voice-item-info">
+        <div class="voice-item-name">${item.name}</div>
+        <div class="voice-item-cat">${item.label}</div>
+      </div>
+      <button class="voice-item-del" onclick="removeVoiceItem(${item.origIdx})" title="Entfernen">✕</button>
     </div>`).join('');
+
+  // Sortier-Hinweis anzeigen wenn Markt bekannt
+  const existing = chips.parentElement?.querySelector('.voice-sort-hint');
+  if(existing) existing.remove();
+  if(store && voiceItems.length > 1){
+    const hint = document.createElement('div');
+    hint.className = 'voice-sort-hint';
+    hint.innerHTML = `🗺 Sortiert nach <strong style="color:var(--green);margin:0 3px">${store}</strong>-Reihenfolge`;
+    chips.after(hint);
+  } else if(voiceItems.length > 1){
+    const hint = document.createElement('div');
+    hint.className = 'voice-sort-hint';
+    hint.innerHTML = `💡 Tipp: Markt wählen für automatische Sortierung nach Supermarkt-Gang`;
+    chips.after(hint);
+  }
 }
 
 function removeVoiceItem(i){
