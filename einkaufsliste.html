@@ -142,6 +142,19 @@ html[data-theme="orange"] body{background:linear-gradient(rgba(255,247,237,.92),
 .home-search::placeholder{color:rgba(255,255,255,.5)}
 .home-search:focus{background:rgba(255,255,255,.22);border-color:rgba(255,255,255,.5);box-shadow:0 0 0 3px rgba(255,255,255,.1)}
 .home-search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:1rem;pointer-events:none}
+.home-app-share-btn{margin-top:12px;background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.3);color:#fff;border-radius:50px;padding:8px 22px;font-size:.82rem;font-weight:700;cursor:pointer;font-family:inherit;backdrop-filter:blur(8px);transition:background .15s,transform .12s;letter-spacing:.01em}
+.home-app-share-btn:hover{background:rgba(255,255,255,.25);transform:scale(1.03)}
+.home-app-share-btn:active{transform:scale(.97)}
+/* App Share Sheet (Modal) */
+.app-share-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);z-index:250;display:none;align-items:flex-end;justify-content:center}
+.app-share-overlay.open{display:flex;animation:fadeIn .2s ease}
+.app-share-sheet{background:var(--white);border-radius:28px 28px 0 0;width:100%;max-width:520px;padding-bottom:env(safe-area-inset-bottom)}
+html[data-theme="dark"] .app-share-sheet{background:#1a2332}
+.app-share-sheet-handle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:14px auto 0}
+.app-share-sheet-head{padding:16px 20px 6px;text-align:center}
+.app-share-sheet-title{font-weight:800;font-size:1rem;color:var(--text)}
+.app-share-sheet-sub{font-size:.8rem;color:var(--text2);margin-top:3px}
+.app-share-sheet-btns{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:14px 18px}
 .home-body{flex:1;padding:20px 16px;margin-top:-22px}
 .section-title{font-size:.7rem;font-weight:700;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px;padding:0 2px;display:flex;align-items:center;justify-content:space-between}
 
@@ -805,6 +818,23 @@ html[data-theme="dark"] .recipe-detail-sheet{background:#131c30}
 .install-banner-sub{font-size:.75rem;opacity:.8}
 .install-banner-btn{background:#fff;color:#1d4ed8;border:none;border-radius:10px;padding:9px 16px;font-weight:800;font-size:.82rem;cursor:pointer;white-space:nowrap;font-family:inherit}
 .install-banner-close{background:none;border:none;color:rgba(255,255,255,.7);font-size:1.1rem;cursor:pointer;padding:4px;margin-left:4px}
+/* App Share Card */
+.app-share-card{background:var(--white);border-radius:var(--r);margin-bottom:18px;padding:18px;box-shadow:var(--shadow);border:1.5px solid rgba(255,255,255,.6)}
+html[data-theme="dark"] .app-share-card{background:rgba(31,41,55,.88);border-color:rgba(255,255,255,.08)}
+.app-share-title{font-weight:800;font-size:.95rem;color:var(--text);margin-bottom:3px}
+.app-share-sub{font-size:.78rem;color:var(--text2);margin-bottom:14px}
+.app-share-btns{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.app-share-btn{display:flex;flex-direction:column;align-items:center;gap:5px;border:none;border-radius:14px;padding:12px 6px 10px;font-size:.72rem;font-weight:700;cursor:pointer;font-family:inherit;transition:opacity .15s,transform .12s;color:#fff}
+.app-share-btn:hover{opacity:.88;transform:scale(1.04)}
+.app-share-btn:active{transform:scale(.96)}
+.app-share-btn-icon{font-size:1.5rem;line-height:1}
+.app-share-btn.whatsapp{background:linear-gradient(135deg,#25d366,#128c7e)}
+.app-share-btn.telegram{background:linear-gradient(135deg,#2aabee,#1a7abf)}
+.app-share-btn.facebook{background:linear-gradient(135deg,#1877f2,#0a5dc2)}
+.app-share-btn.instagram{background:linear-gradient(135deg,#f77737,#c13584,#833ab4)}
+.app-share-btn.copy{background:linear-gradient(135deg,#64748b,#475569)}
+.app-share-btn.native{background:linear-gradient(135deg,var(--green2),var(--green))}
+
 /* Install Card in Settings */
 .install-card{background:linear-gradient(135deg,#1e3a8a,#1d4ed8);border-radius:var(--r);padding:16px;margin-bottom:18px;display:flex;align-items:center;gap:14px;box-shadow:0 4px 20px rgba(29,78,216,.35)}
 .install-card-left{display:flex;align-items:center;gap:12px;flex:1;min-width:0}
@@ -875,6 +905,7 @@ html[data-theme="dark"] .ios-install-sheet{background:#1a2332}
       <span class="home-search-icon">🔍</span>
       <input class="home-search" id="home-search" placeholder="Liste suchen …" autocomplete="off" oninput="filterLists(this.value)"/>
     </div>
+    <button class="home-app-share-btn" onclick="openAppShareSheet()">📤 App teilen</button>
     <!-- Store Logo Strip -->
     <div class="store-logo-strip" id="store-logo-strip"></div>
   </div>
@@ -975,6 +1006,38 @@ html[data-theme="dark"] .ios-install-sheet{background:#1a2332}
     </div>
   </div>
   <div class="settings-body">
+
+    <!-- App teilen -->
+    <div class="app-share-card">
+      <div class="app-share-title">📤 App weiterempfehlen</div>
+      <div class="app-share-sub">Teile Einkaufsliste III mit Freunden & Familie</div>
+      <div class="app-share-btns">
+        <button class="app-share-btn whatsapp" onclick="shareAppVia('whatsapp')">
+          <span class="app-share-btn-icon">💬</span>
+          <span>WhatsApp</span>
+        </button>
+        <button class="app-share-btn telegram" onclick="shareAppVia('telegram')">
+          <span class="app-share-btn-icon">✈️</span>
+          <span>Telegram</span>
+        </button>
+        <button class="app-share-btn facebook" onclick="shareAppVia('facebook')">
+          <span class="app-share-btn-icon">👍</span>
+          <span>Facebook</span>
+        </button>
+        <button class="app-share-btn instagram" onclick="shareAppVia('instagram')">
+          <span class="app-share-btn-icon">📸</span>
+          <span>Instagram</span>
+        </button>
+        <button class="app-share-btn copy" onclick="shareAppVia('copy')">
+          <span class="app-share-btn-icon">📋</span>
+          <span>Link kopieren</span>
+        </button>
+        <button class="app-share-btn native" onclick="shareAppVia('native')">
+          <span class="app-share-btn-icon">↗️</span>
+          <span>Mehr …</span>
+        </button>
+      </div>
+    </div>
 
     <!-- App installieren -->
     <div class="install-card" id="install-card">
@@ -1316,6 +1379,41 @@ html[data-theme="dark"] .ios-install-sheet{background:#1a2332}
   </div>
   <button class="install-banner-btn" id="install-banner-btn">Installieren</button>
   <button class="install-banner-close" onclick="dismissInstall()">✕</button>
+</div>
+
+<!-- App Share Sheet -->
+<div class="app-share-overlay" id="app-share-overlay" onclick="if(event.target===this)closeAppShareSheet()">
+  <div class="app-share-sheet">
+    <div class="app-share-sheet-handle"></div>
+    <div class="app-share-sheet-head">
+      <div style="font-size:2rem;margin-bottom:6px">📤</div>
+      <div class="app-share-sheet-title">App teilen</div>
+      <div class="app-share-sheet-sub">Empfehle Einkaufsliste III weiter</div>
+    </div>
+    <div class="app-share-sheet-btns">
+      <button class="app-share-btn whatsapp" onclick="shareAppVia('whatsapp')">
+        <span class="app-share-btn-icon">💬</span><span>WhatsApp</span>
+      </button>
+      <button class="app-share-btn telegram" onclick="shareAppVia('telegram')">
+        <span class="app-share-btn-icon">✈️</span><span>Telegram</span>
+      </button>
+      <button class="app-share-btn facebook" onclick="shareAppVia('facebook')">
+        <span class="app-share-btn-icon">👍</span><span>Facebook</span>
+      </button>
+      <button class="app-share-btn instagram" onclick="shareAppVia('instagram')">
+        <span class="app-share-btn-icon">📸</span><span>Instagram</span>
+      </button>
+      <button class="app-share-btn copy" onclick="shareAppVia('copy')">
+        <span class="app-share-btn-icon">📋</span><span>Link kopieren</span>
+      </button>
+      <button class="app-share-btn native" onclick="shareAppVia('native')">
+        <span class="app-share-btn-icon">↗️</span><span>Mehr …</span>
+      </button>
+    </div>
+    <div style="padding:0 18px 22px">
+      <button class="share-cancel" onclick="closeAppShareSheet()">Abbrechen</button>
+    </div>
+  </div>
 </div>
 
 <!-- iOS Install Anleitung -->
@@ -4323,6 +4421,57 @@ function dismissInstall(){
     if(el){ el.style.display='flex'; el.style.animation='fadeIn .25s ease'; }
   }, 3000);
 })();
+
+// ── App teilen ─────────────────────────────────────
+const APP_URL = 'https://selluschki.github.io/Einkaufsliste/einkaufsliste.html';
+const APP_TEXT = '🛒 Schau mal – diese Einkaufsliste App ist richtig praktisch! Kostenlos, direkt im Browser, keine Installation nötig:';
+
+function openAppShareSheet(){
+  document.getElementById('app-share-overlay').classList.add('open');
+}
+function closeAppShareSheet(){
+  document.getElementById('app-share-overlay').classList.remove('open');
+}
+
+function shareAppVia(platform){
+  const url = encodeURIComponent(APP_URL);
+  const text = encodeURIComponent(APP_TEXT + '\n' + APP_URL);
+  closeAppShareSheet();
+  switch(platform){
+    case 'whatsapp':
+      openProspekt('https://wa.me/?text=' + text);
+      break;
+    case 'telegram':
+      openProspekt('https://t.me/share/url?url=' + url + '&text=' + encodeURIComponent(APP_TEXT));
+      break;
+    case 'facebook':
+      openProspekt('https://www.facebook.com/sharer/sharer.php?u=' + url);
+      break;
+    case 'instagram':
+      // Instagram hat kein URL-Share-Schema → Link kopieren + Hinweis
+      navigator.clipboard.writeText(APP_URL).then(()=>{
+        toast('📋 Link kopiert! Füge ihn in Instagram ein.');
+      }).catch(()=>{
+        toast('📋 Kopiere diesen Link: ' + APP_URL);
+      });
+      break;
+    case 'copy':
+      navigator.clipboard.writeText(APP_URL).then(()=>{
+        toast('✓ Link kopiert!');
+      }).catch(()=>{
+        toast('Link: ' + APP_URL);
+      });
+      break;
+    case 'native':
+      if(navigator.share){
+        navigator.share({title:'🛒 Einkaufsliste III', text: APP_TEXT, url: APP_URL})
+          .catch(()=>{});
+      } else {
+        navigator.clipboard.writeText(APP_URL).then(()=>toast('✓ Link kopiert!'));
+      }
+      break;
+  }
+}
 
 function dismissIosInstall(){
   const el = document.getElementById('ios-install-overlay');
