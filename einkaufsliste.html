@@ -805,6 +805,15 @@ html[data-theme="dark"] .recipe-detail-sheet{background:#131c30}
 .install-banner-sub{font-size:.75rem;opacity:.8}
 .install-banner-btn{background:#fff;color:#1d4ed8;border:none;border-radius:10px;padding:9px 16px;font-weight:800;font-size:.82rem;cursor:pointer;white-space:nowrap;font-family:inherit}
 .install-banner-close{background:none;border:none;color:rgba(255,255,255,.7);font-size:1.1rem;cursor:pointer;padding:4px;margin-left:4px}
+/* iOS Install Sheet */
+.ios-install-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);z-index:300;align-items:flex-end;justify-content:center}
+.ios-install-sheet{background:var(--white);border-radius:28px 28px 0 0;width:100%;max-width:520px;padding-bottom:env(safe-area-inset-bottom)}
+html[data-theme="dark"] .ios-install-sheet{background:#1a2332}
+.ios-install-handle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:14px auto 0}
+.ios-install-steps{display:flex;flex-direction:column;gap:12px;padding:0 24px 8px}
+.ios-step{display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:13px 15px}
+.ios-step-num{width:28px;height:28px;border-radius:50%;background:var(--green);color:#fff;font-weight:800;font-size:.82rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ios-step-text{font-size:.88rem;color:var(--text);line-height:1.4}
 
 /* ════ EXPORT / PRINT ════ */
 @media print {
@@ -1280,11 +1289,32 @@ html[data-theme="dark"] .recipe-detail-sheet{background:#131c30}
 <div class="install-banner" id="install-banner">
   <div class="install-banner-icon">📲</div>
   <div class="install-banner-text">
-    <div class="install-banner-title">App installieren</div>
-    <div class="install-banner-sub">Für schnelleren Zugriff auf dem Homescreen</div>
+    <div class="install-banner-title" id="install-banner-title">App installieren</div>
+    <div class="install-banner-sub" id="install-banner-sub">Für schnelleren Zugriff auf dem Homescreen</div>
   </div>
   <button class="install-banner-btn" id="install-banner-btn">Installieren</button>
   <button class="install-banner-close" onclick="dismissInstall()">✕</button>
+</div>
+
+<!-- iOS Install Anleitung -->
+<div class="ios-install-overlay" id="ios-install-overlay" style="display:none">
+  <div class="ios-install-sheet">
+    <div class="ios-install-handle"></div>
+    <div style="text-align:center;padding:10px 24px 4px">
+      <div style="font-size:2.8rem;margin-bottom:10px">📲</div>
+      <div style="font-weight:800;font-size:1.1rem;color:var(--text);margin-bottom:6px">App auf dem Homescreen speichern</div>
+      <div style="font-size:.85rem;color:var(--text2);margin-bottom:22px">So kannst du Einkaufsliste III wie eine echte App nutzen – ganz ohne App Store</div>
+    </div>
+    <div class="ios-install-steps">
+      <div class="ios-step"><div class="ios-step-num">1</div><div class="ios-step-text">Tippe unten in Safari auf das <strong>Teilen-Symbol</strong> <span style="font-size:1.1rem">⬆️</span></div></div>
+      <div class="ios-step"><div class="ios-step-num">2</div><div class="ios-step-text">Scrolle und tippe auf <strong>„Zum Home-Bildschirm"</strong> <span style="font-size:1rem">＋</span></div></div>
+      <div class="ios-step"><div class="ios-step-num">3</div><div class="ios-step-text">Tippe oben rechts auf <strong>„Hinzufügen"</strong> – fertig! 🎉</div></div>
+    </div>
+    <div style="padding:16px 24px 28px;display:flex;gap:10px">
+      <button class="voice-retry-btn" style="flex:1" onclick="dismissIosInstall()">Vielleicht später</button>
+      <button class="voice-add-btn" style="flex:1.5" onclick="dismissIosInstall()">Verstanden ✓</button>
+    </div>
+  </div>
 </div>
 
 <!-- ══════════════════════════════════════
@@ -4223,15 +4253,25 @@ function addRecipeToNewList(recipeId){
 // ════════════════════════════════════════════════
 //  INSTALL-BANNER (PWA Prompt)
 // ════════════════════════════════════════════════
+//  PWA INSTALL PROMPT
+// ════════════════════════════════════════════════
 let _deferredInstall = null;
 
+function _installDismissedRecently(){
+  const ts = localStorage.getItem('install_dismissed_ts');
+  if(!ts) return false;
+  // Wieder zeigen nach 7 Tagen
+  return (Date.now() - parseInt(ts)) < 7 * 24 * 60 * 60 * 1000;
+}
+
+// ── Android / Desktop Chrome/Edge ──
 window.addEventListener('beforeinstallprompt', e => {
   e.preventDefault();
   _deferredInstall = e;
-  if(!localStorage.getItem('install_dismissed')){
+  if(!_installDismissedRecently()){
     setTimeout(()=>{
       document.getElementById('install-banner').classList.add('open');
-    }, 3000);
+    }, 2500);
   }
 });
 
@@ -4239,19 +4279,39 @@ document.getElementById('install-banner-btn').addEventListener('click', async ()
   if(!_deferredInstall) return;
   _deferredInstall.prompt();
   const result = await _deferredInstall.userChoice;
-  if(result.outcome === 'accepted') toast('✓ App installiert!');
+  if(result.outcome === 'accepted') toast('🎉 App erfolgreich installiert!');
   dismissInstall();
 });
 
 function dismissInstall(){
   document.getElementById('install-banner').classList.remove('open');
-  localStorage.setItem('install_dismissed','1');
+  localStorage.setItem('install_dismissed_ts', Date.now());
 }
 
 window.addEventListener('appinstalled', () => {
   document.getElementById('install-banner').classList.remove('open');
-  toast('🎉 App erfolgreich installiert!');
+  toast('🎉 App installiert – viel Spaß!');
 });
+
+// ── iOS Safari ──
+(function checkIOSInstall(){
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+  if(!isIOS || isStandalone || _installDismissedRecently()) return;
+  const isSafari = /safari/i.test(navigator.userAgent) && !/chrome|crios|fxios/i.test(navigator.userAgent);
+  if(!isSafari) return;
+  setTimeout(()=>{
+    const el = document.getElementById('ios-install-overlay');
+    if(el){ el.style.display='flex'; el.style.animation='fadeIn .25s ease'; }
+  }, 3000);
+})();
+
+function dismissIosInstall(){
+  const el = document.getElementById('ios-install-overlay');
+  if(el) el.style.display='none';
+  localStorage.setItem('install_dismissed_ts', Date.now());
+}
 
 // ── Boot ──────────────────────────────────────────
 applyTheme(CFG.theme);
