@@ -404,7 +404,7 @@ html[data-theme="dark"] .voice-sheet{background:#1a2332}
 .voice-items-title{font-size:.7rem;font-weight:700;color:var(--text3);letter-spacing:.07em;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between}
 .voice-items-title span{font-weight:400;font-size:.68rem;color:var(--text3)}
 /* Vertikale Artikelliste */
-.voice-item-list{display:flex;flex-direction:column;gap:6px;max-height:220px;overflow-y:auto;padding-right:2px}
+.voice-item-list{display:flex;flex-direction:column;gap:6px;max-height:340px;overflow-y:auto;padding-right:2px}
 .voice-item-list::-webkit-scrollbar{width:3px}
 .voice-item-list::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
 .voice-item-row{
@@ -1475,30 +1475,167 @@ function catName(k){const c=CATS[k];if(!c)return k;return c[lang]||c.de;}
 
 // ── Keywords ─────────────────────────────────────
 const KEYWORDS = {
-  produce:['apfel','äpfel','birne','birnen','banane','orange','zitrone','erdbeere','himbeere','traube','mango','ananas','kiwi','avocado','tomate','karotte','möhre','zwiebel','knoblauch','salat','gurke','paprika','brokkoli','blumenkohl','spinat','zucchini','kartoffel','süßkartoffel','lauch','sellerie','fenchel','melone','pfirsich','pflaume','kirsche','nektarine','grapefruit','kohlrabi','rosenkohl','kohl','rucola','radieschen','spargel','champignon','pilz','ingwer','petersilie','koriander','basilikum','apple','banana','tomato','carrot','onion','garlic','lettuce','cucumber','pepper','broccoli','spinach','potato','strawberry','grape','lemon','lime','melon','peach','cherry','pear','mushroom','zucchini','kale','asparagus'],
-  bakery:['brot','brötchen','baguette','croissant','toast','brezel','muffin','donut','kuchen','torte','waffel','pfannkuchen','ciabatta','hefezopf','lebkuchen','kekse','cookie','cracker','knäckebrot','bread','roll','bun','cake','waffle','pretzel'],
-  deli:['käse','gouda','edamer','brie','camembert','mozzarella','parmesan','feta','quark','frischkäse','schinken','salami','wurst','aufschnitt','prosciutto','chorizo','leberwurst','cheese','ham','cold cuts'],
-  meat:['hackfleisch','hähnchen','hühnchen','huhn','hühnerbrust','putenbrust','schweinefleisch','rindfleisch','lammfleisch','schnitzel','steak','bratwurst','speck','bacon','chicken','beef','pork','lamb','mince','ground beef'],
-  seafood:['lachs','thunfisch','kabeljau','shrimps','garnelen','hummer','krabben','muscheln','tintenfisch','sardinen','makrele','forelle','salmon','tuna','shrimp','prawns','lobster','crab','squid','sardines','trout'],
-  dairy:['milch','vollmilch','hafermilch','mandelmilch','sojamilch','sahne','joghurt','buttermilch','kefir','butter','margarine','schmand','sauerrahm','mascarpone','milk','cream','yogurt','butter','sour cream','oat milk'],
-  eggs:['eier','ei','eggs','egg'],
-  frozen:['tiefkühl','gefroren','eiscreme','sorbet','tiefkühlpizza','tiefkühlgemüse','fischstäbchen','pommes','frozen','ice cream','french fries'],
-  canned:['konserve','dose','dosentomaten','kichererbsen','linsen','kidneybohnen','maiskörner','canned','tinned','kidney beans','chickpeas','lentils','passata'],
-  dry:['nudeln','pasta','spaghetti','penne','fusilli','reis','basmatireis','mehl','backpulver','haferflocken','müsli','cornflakes','quinoa','couscous','bulgur','noodles','rice','flour','oats','cereal','granola'],
-  condiments:['ketchup','senf','mayonnaise','sojasoße','pesto','tomatensauce','honig','marmelade','nutella','erdnussbutter','olivenöl','essig','salz','pfeffer','paprikapulver','zimt','curry','gewürze','mustard','honey','jam','peanut butter','olive oil','vinegar','salt','pepper','spices'],
-  snacks:['chips','popcorn','nüsse','mandeln','walnüsse','cashews','erdnüsse','schokolade','gummibärchen','bonbons','süßigkeiten','riegel','crisps','nuts','almonds','chocolate','candy','gummy bears'],
-  beverages:['wasser','mineralwasser','saft','orangensaft','apfelsaft','cola','pepsi','fanta','limonade','kaffee','tee','espresso','kakao','smoothie','water','juice','coffee','tea','beer','wine','soda','lemonade'],
-  baby:['windeln','pampers','babynahrung','babymilch','babylotion','diapers','baby food','baby formula','baby wipes'],
-  pet:['hundefutter','katzenfutter','tiernahrung','streu','katzenstreu','dog food','cat food','pet food','cat litter'],
-  household:['spülmittel','waschmittel','weichspüler','allzweckreiniger','müllbeutel','frischhaltefolie','alufolie','backpapier','küchenrolle','toilettenpapier','klopapier','taschentücher','schwamm','dish soap','detergent','bin bags','kitchen roll','toilet paper','tissues','sponge'],
-  personal:['shampoo','duschgel','seife','deodorant','rasierschaum','zahnpasta','zahnbürste','mundwasser','körperlotion','sonnencreme','parfüm','conditioner','shower gel','soap','toothpaste','toothbrush','lotion','sunscreen'],
-  pharmacy:['aspirin','ibuprofen','paracetamol','vitamin','pflaster','verband','hustensaft','vitamins','supplements','plasters','cough syrup'],
-  alcohol:['bier','weißbier','wein','rotwein','weißwein','sekt','prosecco','gin','vodka','rum','whisky','beer','wine','spirits','tequila'],
+  // 🥦 Obst & Gemüse – NUR echte Obst/Gemüse-Begriffe
+  produce:[
+    'apfel','äpfel','birne','birnen','banane','bananen','orange','orangen','zitrone','zitronen',
+    'erdbeere','erdbeeren','himbeere','himbeeren','heidelbeere','heidelbeeren','brombeere','brombeeren',
+    'traube','trauben','mango','mangos','ananas','kiwi','avocado','avocados',
+    'tomate','tomaten','kirschtomate','kirschtomaten','karotte','karotten','möhre','möhren',
+    'zwiebel','zwiebeln','rote zwiebel','knoblauch','knoblauchzehen','salat','kopfsalat','feldsalat',
+    'gurke','gurken','paprika','brokkoli','blumenkohl','spinat','zucchini','rosenkohl',
+    'kartoffel','kartoffeln','süßkartoffel','süßkartoffeln','lauch','sellerie','fenchel',
+    'melone','wassermelone','honigmelone','pfirsich','pflaume','pflaumen','kirsche','kirschen',
+    'nektarine','grapefruit','kohlrabi','kohl','rucola','radieschen','spargel',
+    'champignon','champignons','pilz','pilze','steinpilz','pfifferling',
+    'ingwer','petersilie','koriander','basilikum','dill','schnittlauch','rosmarin','thymian','minze',
+    'aprikose','aprikosen','feige','feigen','granatapfel','physalis','litchi','maracuja',
+    'rote beete','pak choi','chinakohl','wirsing','grünkohl','mangold','artischocke',
+    'apple','banana','tomato','tomatoes','carrot','carrots','onion','garlic','lettuce',
+    'cucumber','broccoli','spinach','potato','potatoes','strawberry','strawberries',
+    'grape','grapes','lemon','lime','melon','peach','cherry','cherries','pear','pears',
+    'mushroom','mushrooms','asparagus','kale','blueberry','blueberries','raspberry',
+  ],
+  // 🥖 Brot & Backwaren
+  bakery:[
+    'brot','brötchen','baguette','croissant','toast','toastbrot','brezel','muffin','donut',
+    'hefezopf','lebkuchen','kekse','cookie','cookies','cracker','knäckebrot','ciabatta',
+    'laugenstange','laugenbrezel','vollkornbrot','körnerbrötchen','roggenbrötchen',
+    'bread','roll','rolls','bun','buns','waffle','pretzel','breadcrumbs','semmelbrösel',
+  ],
+  // 🧀 Käse & Aufschnitt
+  deli:[
+    'käse','gouda','edamer','brie','camembert','mozzarella','parmesan','feta','emmentaler',
+    'gorgonzola','pecorino','ricotta','quark','frischkäse','hüttenkäse','schmelzkäse',
+    'schinken','kochschinken','rohschinken','salami','wurst','aufschnitt','fleischwurst',
+    'prosciutto','chorizo','leberwurst','mettwurst','bierschinken','geflügelwurst',
+    'cheese','ham','cold cuts','turkey breast','cheddar',
+  ],
+  // 🥩 Fleisch
+  meat:[
+    'hackfleisch','hähnchen','hühnchen','huhn','hühnerbrust','hähnchenbrust','putenbrustfilet',
+    'putenbrust','pute','schweinefleisch','schweinekotelett','rindfleisch','lammfleisch',
+    'schnitzel','steak','rindersteak','bratwurst','speck','cevapcici','gyros','döner',
+    'bacon','chicken','beef','pork','lamb','mince','sausage','turkey',
+  ],
+  // 🐟 Fisch & Meer
+  seafood:[
+    'lachs','lachsfilet','thunfisch','kabeljau','dorsch','shrimps','garnelen','hummer',
+    'krabben','muscheln','tintenfisch','sardinen','makrele','forelle','pangasius','zander',
+    'fischfilet','fischstäbchen','matjes','heilbutt','seelachs',
+    'salmon','tuna','shrimp','prawns','lobster','crab','squid','sardines','trout','cod',
+  ],
+  // 🥛 Milchprodukte
+  dairy:[
+    'milch','vollmilch','fettarme milch','hafermilch','mandelmilch','sojamilch','kokosmilch',
+    'laktosefreie milch','sahne','schlagsahne','kochsahne','saure sahne','crème fraîche',
+    'joghurt','naturjoghurt','griechischer joghurt','skyr','buttermilch','kefir',
+    'butter','margarine','schmand','sauerrahm','mascarpone','pudding','quark',
+    'milk','cream','yogurt','yoghurt','sour cream','oat milk','almond milk',
+  ],
+  // 🥚 Eier
+  eggs:['eier','ei','freilandeier','bioeier','eggs','egg'],
+  // 🧊 Tiefkühlkost
+  frozen:[
+    'tiefkühlpizza','tiefkühlgemüse','tiefkühlerbsen','tiefkühlspinat','tiefkühlerbsen',
+    'tiefkühlbeeren','tiefkühlkost','gefroren','eiscreme','speiseeis','sorbet','pommes',
+    'frozen','ice cream','french fries','frozen peas','frozen vegetables',
+  ],
+  // 🥫 Konserven
+  canned:[
+    'dosentomaten','tomaten dose','kichererbsen','linsen','kidneybohnen','maiskörner',
+    'mais','bohnen','weißbohnen','erbsen dose','konserven','eingemacht','passata',
+    'coconut milk','canned','tinned','kidney beans','chickpeas','lentils',
+  ],
+  // 🌾 Nudeln, Reis & Trockenwaren
+  dry:[
+    'nudeln','pasta','spaghetti','penne','fusilli','rigatoni','farfalle','tagliatelle',
+    'lasagneplatten','reis','basmatireis','jasminreis','vollkornreis','risottoreis','wildreis',
+    'mehl','weizenmehl','vollkornmehl','dinkelmehl','backpulver','natron','hefe','trockenhefe',
+    'haferflocken','müsli','cornflakes','granola','quinoa','couscous','bulgur','polenta',
+    'paniermehl','semmelbrösel','stärke','speisestärke',
+    'noodles','rice','flour','oats','cereal','baking powder','yeast','semolina',
+  ],
+  // 🍶 Gewürze, Öle & Saucen
+  condiments:[
+    'zucker','rohrzucker','puderzucker','vanillezucker','brauner zucker','staubzucker',
+    'salz','meersalz','himalayasalz','pfeffer','schwarzer pfeffer','weißer pfeffer',
+    'paprikapulver','currypulver','curry','kurkuma','kreuzkümmel','zimt','muskatnuss',
+    'oregano','basilikum getrocknet','thymian getrocknet','lorbeer','gewürze','gewürzmischung',
+    'ketchup','senf','dijon','mayonnaise','mayo','sojasoße','sojasauce','fischsauce',
+    'pesto','tomatensauce','tomatenmark','tomatenpassata','worcestersauce','tabasco',
+    'honig','ahornsirup','agavendicksaft','reissirup','zuckerrübensirup',
+    'marmelade','konfitüre','nutella','erdnussbutter','mandelmus','sesammus',
+    'olivenöl','rapsöl','sonnenblumenöl','kokosöl','sesamöl','essig','balsamico',
+    'brühe','gemüsebrühe','hühnerbrühe','rinderbrühe','bouillon','suppenwürze',
+    'vanilleextrakt','vanilleschote','lebensmittelfarbe',
+    'mustard','honey','jam','peanut butter','olive oil','vinegar','salt','pepper','spices','sugar','soy sauce',
+  ],
+  // 🍫 Süßes & Snacks
+  snacks:[
+    'chips','popcorn','erdnüsse','mandeln','walnüsse','cashews','haselnüsse','pistazien',
+    'nüsse','studentenfutter','mix nüsse','schokolade','vollmilchschokolade','zartbitterschokolade',
+    'gummibärchen','haribo','bonbons','süßigkeiten','riegel','schokoriegel','müsliriegel',
+    'salzstangen','cracker snack','pretzels','weingummi','lakritz','kaugummi',
+    'crisps','nuts','almonds','chocolate','candy','gummy','snack','popcorn',
+  ],
+  // 🧃 Getränke
+  beverages:[
+    'wasser','mineralwasser','leitungswasser','sprudel','stilles wasser',
+    'orangensaft','apfelsaft','multivitaminsaft','saft','smoothie',
+    'cola','pepsi','fanta','sprite','limonade','eistee','eistee',
+    'kaffee','kaffeebohnen','kaffeepulver','espresso','cappuccino','instantkaffee',
+    'tee','grüntee','schwarztee','kamillentee','früchtetee','pfefferminztee',
+    'kakao','trinkschokolade','heißgetränk',
+    'water','juice','coffee','soda','lemonade','tea','iced tea',
+  ],
+  // 🍷 Alkohol
+  alcohol:[
+    'bier','weißbier','pils','lager','radler','craft beer','weizen',
+    'wein','rotwein','weißwein','rosé','sekt','prosecco','champagner','cava',
+    'gin','vodka','rum','whisky','whiskey','cognac','schnaps','likör','tequila',
+    'beer','wine','spirits','rosé','sparkling wine',
+  ],
+  // 👶 Baby & Kind
+  baby:['windeln','pampers','babynahrung','babymilch','babylotion','feuchttücher baby','schnuller','diapers','baby food'],
+  // 🐾 Tiernahrung
+  pet:['hundefutter','katzenfutter','tiernahrung','katzenstreu','hundeleckerli','katzensnack','dog food','cat food','cat litter'],
+  // 🧹 Haushalt
+  household:[
+    'spülmittel','waschmittel','weichspüler','allzweckreiniger','badreiniger','wc reiniger',
+    'müllbeutel','müllsäcke','frischhaltefolie','alufolie','backpapier','gefrierbeutel',
+    'küchenrolle','toilettenpapier','klopapier','taschentücher','servietten',
+    'schwamm','schwämme','spülbürste','haushaltsgummi','putztücher',
+    'dish soap','detergent','bin bags','kitchen roll','toilet paper','tissues','sponge','cleaning',
+  ],
+  // 🧴 Körperpflege
+  personal:[
+    'shampoo','haarspülung','conditioner','haarkur','duschgel','badeschaum','seife','handseife',
+    'deodorant','deo','antitranspirant','rasierschaum','rasiergel','rasierer','rasierklingen',
+    'zahnpasta','zahnbürste','mundwasser','zahnseide','wattestäbchen','wattepads',
+    'körperlotion','bodylotion','handcreme','gesichtscreme','sonnencreme','parfüm','eau de toilette',
+    'makeup','lippenstift','mascara','concealer','foundation',
+    'shower gel','soap','toothpaste','toothbrush','lotion','sunscreen','deodorant','shaving',
+  ],
+  // 💊 Drogerie & Gesundheit
+  pharmacy:[
+    'aspirin','ibuprofen','paracetamol','vitamin','vitamine','vitamin c','vitamin d',
+    'pflaster','verband','verbandsmaterial','hustensaft','erkältungsmittel','nasenspray',
+    'magnesium','zink','omega 3','supplements','probiotika',
+    'vitamins','plasters','cough syrup','pain relief',
+  ],
 };
+
 function autoCategory(name){
-  const n=name.toLowerCase();
-  for(const [cat,words] of Object.entries(KEYWORDS)){
-    if(words.some(w=>n.includes(w))) return cat;
+  const n = name.toLowerCase().trim();
+  const words = n.split(/\s+/);
+
+  // Pass 1: Exaktes Wort-Match (verhindert Fehlzuordnungen durch Teilwörter)
+  for(const [cat, kwds] of Object.entries(KEYWORDS)){
+    if(words.some(word => kwds.includes(word))) return cat;
+  }
+  // Pass 2: Substring-Match für Komposita (z.B. "Hühnerbrust" → enthält "hühnchen"? nein, aber "hähnchenbrust" ja)
+  for(const [cat, kwds] of Object.entries(KEYWORDS)){
+    if(kwds.some(kw => n.includes(kw) || kw.includes(n))) return cat;
   }
   return 'other';
 }
@@ -2421,23 +2558,56 @@ function parseVoiceText(text){
       const clean = w.toLowerCase().replace(/[.,!?;:'"()]/g,'');
       if(clean.length < 2) return false;
       if(STOPWORDS.has(clean)) return false;
-      if(/^\d+$/.test(clean)) return false; // restliche Ziffern überspringen
+      if(/^\d+$/.test(clean)) return false;
       if(clean.length === 1) return false;
       return true;
     });
 
     if(kept.length === 0) continue;
 
+    // 6) Intelligentes Aufteilen: Wenn mehrere Wörter übrig bleiben,
+    //    prüfen ob jedes einzelne Wort ein bekanntes Produkt ist.
+    //    Wenn ja → jedes Wort als eigenes Produkt eintragen (kein Zusammenfassen!).
+    //    So wird "Milch Brot Zucker" → 3 separate Artikel statt 1 langer Name.
+    if(kept.length >= 2){
+      const wordCategories = kept.map(w => {
+        const wClean = w.toLowerCase().replace(/[.,!?;:'"()]/g,'');
+        return autoCategory(wClean);
+      });
+      const allKnown = wordCategories.every(c => c !== 'other');
+      const allDistinct = new Set(wordCategories).size >= Math.max(1, Math.floor(kept.length * 0.6));
+
+      if(allKnown && allDistinct){
+        // Jedes Wort ist ein eigenständiges erkanntes Produkt → einzeln speichern
+        kept.forEach(w => {
+          const p = w.replace(/[.,!?;:'"()]/g,'').trim();
+          if(p.length >= 2){
+            results.push({ name: p.charAt(0).toUpperCase() + p.slice(1), qty });
+          }
+        });
+        continue; // nicht als zusammengesetzten Ausdruck hinzufügen
+      }
+
+      // Zweiwortige Produkte (z.B. "Kirschtomaten", "Rote Zwiebeln") bleiben zusammen
+      // wenn nur 2 Wörter und dasselbe nicht-other Ergebnis
+      if(kept.length === 2 && wordCategories[0] === wordCategories[1] && wordCategories[0] !== 'other'){
+        // z.B. "Rote Paprika" → bleibt als ein Produkt
+        const phrase = kept.join(' ').trim();
+        results.push({ name: phrase.charAt(0).toUpperCase() + phrase.slice(1), qty });
+        continue;
+      }
+    }
+
     const phrase = kept.join(' ').trim();
     if(phrase.length >= 2){
       results.push({
         name: phrase.charAt(0).toUpperCase() + phrase.slice(1),
-        qty:  qty
+        qty
       });
     }
   }
 
-  // 6) Deduplizieren (case-insensitive, nach Name)
+  // 7) Deduplizieren (case-insensitive, nach Name)
   const seen = new Set();
   return results.filter(r => {
     const k = r.name.toLowerCase();
