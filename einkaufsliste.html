@@ -433,6 +433,17 @@ html[data-theme="dark"] .voice-item-row{background:rgba(30,40,60,.6)}
 .voice-add-btn:not(:disabled):hover{opacity:.9}
 .voice-retry-btn{background:var(--surface);border:1.5px solid var(--border);color:var(--text2);border-radius:12px;padding:14px 16px;font-size:.88rem;font-weight:600;cursor:pointer}
 .voice-retry-btn:hover{border-color:var(--green);color:var(--green)}
+/* Mengen-Badge (rot) in der Spracherkennungs-Liste */
+.voice-item-qty{
+  display:inline-block;
+  background:#fee2e2;color:#dc2626;
+  font-weight:800;font-size:.78rem;
+  padding:2px 7px;border-radius:7px;
+  margin-right:5px;letter-spacing:.02em;
+  vertical-align:middle;
+  border:1.5px solid #fca5a5;
+}
+html[data-theme="dark"] .voice-item-qty{background:#450a0a;color:#f87171;border-color:#7f1d1d}
 .voice-stop-btn{
   display:flex;align-items:center;justify-content:center;gap:7px;
   background:linear-gradient(135deg,#ef4444,#dc2626);
@@ -2165,43 +2176,80 @@ function parseVoiceText(text){
   // 2) Treat conjunctions & "plus"/"sowie" as item separators → comma
   t = t.replace(/\b(und|and|oder|plus|sowie|dazu|außerdem|ve|ile|dann|danach)\b/gi, ',');
 
-  // 3) Split on commas, semicolons, colons, numbers at start (e.g. "1. Milch 2. Brot")
-  const segments = t.split(/[,;:]+|\b\d+\.\s*/);
+  // 3) Split on commas, semicolons, colons, numbered lists (e.g. "1. Milch 2. Brot")
+  const segments = t.split(/[,;:]+|\b\d+\.\s+/);
+
+  /* ── Zahlwörter → Ziffern (DE + EN + TR) ── */
+  const NUM_WORDS = {
+    'null':0,'zero':0,
+    'ein':1,'eine':1,'einen':1,'einem':1,'einer':1,'eines':1,'eins':1,'one':1,'bir':1,
+    'zwei':2,'two':2,'iki':2,
+    'drei':3,'three':3,'üç':3,
+    'vier':4,'four':4,'dört':4,
+    'fünf':5,'five':5,'beş':5,
+    'sechs':6,'six':6,'altı':6,
+    'sieben':7,'seven':7,'yedi':7,
+    'acht':8,'eight':8,'sekiz':8,
+    'neun':9,'nine':9,'dokuz':9,
+    'zehn':10,'ten':10,
+    'elf':11,'eleven':11,
+    'zwölf':12,'twelve':12,
+    'dreizehn':13,'thirteen':13,
+    'vierzehn':14,'fourteen':14,
+    'fünfzehn':15,'fifteen':15,
+    'zwanzig':20,'twenty':20,
+  };
+  const NUM_WORD_RX = new RegExp(
+    '^('+Object.keys(NUM_WORDS).join('|')+')\\s+(.+)$','i'
+  );
 
   const results = [];
   for(let seg of segments){
     seg = seg.trim().replace(/\s+/g,' ');
     if(!seg) continue;
 
-    // 4) Remove leading/trailing stopwords word by word
-    const words = seg.split(/\s+/);
+    // 4) Mengenangabe am Anfang erkennen (Ziffer ODER Zahlwort)
+    let qty = 1;
+    let nameSegment = seg;
 
-    // Filter: keep words that are NOT stopwords and are at least 2 chars
+    const digitMatch = seg.match(/^(\d+)\s+(.+)$/);
+    if(digitMatch){
+      qty = parseInt(digitMatch[1]);
+      nameSegment = digitMatch[2];
+    } else {
+      const wordMatch = seg.match(NUM_WORD_RX);
+      if(wordMatch){
+        qty = NUM_WORDS[wordMatch[1].toLowerCase()] ?? 1;
+        nameSegment = wordMatch[2];
+      }
+    }
+
+    // 5) Stopwörter aus dem Produktnamen entfernen
+    const words = nameSegment.split(/\s+/);
     const kept = words.filter(w => {
       const clean = w.toLowerCase().replace(/[.,!?;:'"()]/g,'');
       if(clean.length < 2) return false;
       if(STOPWORDS.has(clean)) return false;
-      // Skip pure numbers
-      if(/^\d+$/.test(clean)) return false;
-      // Skip single letters
+      if(/^\d+$/.test(clean)) return false; // restliche Ziffern überspringen
       if(clean.length === 1) return false;
       return true;
     });
 
     if(kept.length === 0) continue;
 
-    // 5) If the remaining phrase is 1-3 words, treat it as a product
-    //    If it's longer, it might still have hidden stopwords – try trimming lead/trail again
     const phrase = kept.join(' ').trim();
     if(phrase.length >= 2){
-      results.push(phrase.charAt(0).toUpperCase() + phrase.slice(1));
+      results.push({
+        name: phrase.charAt(0).toUpperCase() + phrase.slice(1),
+        qty:  qty
+      });
     }
   }
 
-  // 6) Deduplicate (case-insensitive)
+  // 6) Deduplizieren (case-insensitive, nach Name)
   const seen = new Set();
   return results.filter(r => {
-    const k = r.toLowerCase();
+    const k = r.name.toLowerCase();
     if(seen.has(k)) return false;
     seen.add(k);
     return true;
@@ -2217,8 +2265,8 @@ function parseAndShowItems(text){
     voiceNewListName=cmd.listName;
   } else {
     // Normale Artikel → AKKUMULIEREN, nicht überschreiben!
-    const existingLower=new Set(voiceItems.map(i=>i.toLowerCase()));
-    const newItems=cmd.items.filter(i=>!existingLower.has(i.toLowerCase()));
+    const existingLower=new Set(voiceItems.map(i=>i.name.toLowerCase()));
+    const newItems=cmd.items.filter(i=>!existingLower.has(i.name.toLowerCase()));
     voiceItems=[...voiceItems, ...newItems];
     if(cmd.type==='addto' && cmd.listName) voiceNewListName=null;
   }
@@ -2313,10 +2361,10 @@ function renderVoiceChips(){
   const order = store ? getStoreOrder(store) : DEFAULT_ORDER;
 
   // Jedes Item bekommt seine Kategorie + Position in der Markt-Reihenfolge
-  const withCat = voiceItems.map((name,i)=>{
+  const withCat = voiceItems.map(({name, qty}, i)=>{
     const cat = autoCategory(name);
     const sortPos = order.indexOf(cat) >= 0 ? order.indexOf(cat) : 999;
-    return {name, cat, icon: CATS[cat]?.icon||'📦', label: catName(cat), sortPos, origIdx: i};
+    return {name, qty, cat, icon: CATS[cat]?.icon||'📦', label: catName(cat), sortPos, origIdx: i};
   });
 
   // Sortiert nach Markt-Reihenfolge
@@ -2328,7 +2376,9 @@ function renderVoiceChips(){
       <div class="voice-item-num">${displayIdx+1}</div>
       <div class="voice-item-icon">${item.icon}</div>
       <div class="voice-item-info">
-        <div class="voice-item-name">${item.name}</div>
+        <div class="voice-item-name">
+          ${item.qty > 1 ? `<span class="voice-item-qty">${item.qty}×</span>` : ''}${item.name}
+        </div>
         <div class="voice-item-cat">${item.label}</div>
       </div>
       <button class="voice-item-del" onclick="removeVoiceItem(${item.origIdx})" title="Entfernen">✕</button>
@@ -2374,9 +2424,9 @@ function addVoiceItems(){
       color:COLORS[Math.floor(Math.random()*COLORS.length)],
       items:[], store:null, created:Date.now()
     };
-    voiceItems.forEach(name=>{
+    voiceItems.forEach(({name,qty})=>{
       if(!name) return;
-      newList.items.push({id:uid(),name,qty:'1',unit:'Stk',cat:autoCategory(name),checked:false});
+      newList.items.push({id:uid(),name,qty:String(qty||1),unit:'Stk',cat:autoCategory(name),checked:false});
     });
     lists.push(newList);
     currentListId=newId;
@@ -2396,9 +2446,9 @@ function addVoiceItems(){
     return;
   }
   if(!voiceItems.length){ closeVoice(); return; }
-  voiceItems.forEach(name=>{
+  voiceItems.forEach(({name,qty})=>{
     if(!name) return;
-    list.items.push({id:uid(),name,qty:'1',unit:'Stk',cat:autoCategory(name),checked:false});
+    list.items.push({id:uid(),name,qty:String(qty||1),unit:'Stk',cat:autoCategory(name),checked:false});
   });
   const count=voiceItems.length;
   currentListId=list.id;
