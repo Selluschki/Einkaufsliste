@@ -367,7 +367,7 @@ html[data-theme="dark"] .settings-section{background:rgba(31,41,55,.88);border-c
 /* ════ VOICE MODAL ════ */
 .voice-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.58);backdrop-filter:blur(6px);z-index:200;align-items:flex-end;justify-content:center}
 .voice-overlay.open{display:flex;animation:fadeIn .2s ease}
-.voice-sheet{background:var(--white);border-radius:28px 28px 0 0;width:100%;max-width:520px;padding-bottom:env(safe-area-inset-bottom);min-height:360px}
+.voice-sheet{background:var(--white);border-radius:28px 28px 0 0;width:100%;max-width:520px;padding-bottom:env(safe-area-inset-bottom);min-height:360px;max-height:88vh;display:flex;flex-direction:column;overflow:hidden}
 html[data-theme="dark"] .voice-sheet{background:#1a2332}
 .voice-handle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:14px auto 0}
 .voice-head{padding:16px 20px 8px;display:flex;align-items:center;justify-content:space-between}
@@ -1143,7 +1143,11 @@ html[data-theme="dark"] .recipe-detail-sheet{background:#131c30}
       <h2>🎤 Spracheingabe</h2>
       <button class="voice-close" onclick="closeVoice()">✕</button>
     </div>
-    <div id="voice-content"></div>
+    <div id="voice-content" style="flex:1;overflow-y:auto;overflow-x:hidden"></div>
+    <div class="voice-footer" id="voice-footer-static">
+      <button class="voice-retry-btn" id="voice-retry-btn" onclick="resetVoice()">↺ Neu</button>
+      <button class="voice-add-btn" id="voice-add-btn" onclick="addVoiceItems()" disabled>Zur Liste hinzufügen</button>
+    </div>
   </div>
 </div>
 
@@ -2365,15 +2369,25 @@ function capitalize(s){return s?s.charAt(0).toUpperCase()+s.slice(1):s;}
 
 function renderVoiceContent(){
   const content=document.getElementById('voice-content');
+  // Update static footer button text for current language
+  const staticAddBtn=document.getElementById('voice-add-btn');
+  const staticFooter=document.getElementById('voice-footer-static');
+  if(staticAddBtn) staticAddBtn.textContent=t.voiceAdd||'Zur Liste hinzufügen';
   if(!SR){
     content.innerHTML=`<div class="voice-no-support">
       <div style="font-size:2.8rem;margin-bottom:14px">🎤</div>
       <div style="font-weight:700;font-size:1rem;margin-bottom:8px;color:var(--text)">${t.voiceNoSupport}</div>
       <div style="font-size:.85rem;color:var(--text2)">Bitte Chrome oder Edge verwenden</div>
-    </div>
-    <div class="voice-footer"><button class="voice-retry-btn" style="width:100%" onclick="closeVoice()">Schließen</button></div>`;
+    </div>`;
+    // Show only close button in footer for no-support case
+    if(staticFooter) staticFooter.innerHTML=`<button class="voice-retry-btn" style="width:100%" onclick="closeVoice()">Schließen</button>`;
     return;
   }
+  // Restore normal footer buttons
+  if(staticFooter) staticFooter.innerHTML=`
+    <button class="voice-retry-btn" id="voice-retry-btn" onclick="resetVoice()">↺ Neu</button>
+    <button class="voice-add-btn" id="voice-add-btn" onclick="addVoiceItems()" disabled>${t.voiceAdd||'Zur Liste hinzufügen'}</button>`;
+
   voiceItems=[]; voiceNewListName=null;
   const activeList=voiceTargetListId?lists.find(l=>l.id===voiceTargetListId):null;
   content.innerHTML=`
@@ -2398,10 +2412,6 @@ function renderVoiceContent(){
       </div>
       <div class="voice-item-list" id="voice-chips"></div>
       <div id="voice-target-wrap"></div>
-    </div>
-    <div class="voice-footer">
-      <button class="voice-retry-btn" onclick="resetVoice()">↺ Neu</button>
-      <button class="voice-add-btn" id="voice-add-btn" onclick="addVoiceItems()" disabled>${t.voiceAdd}</button>
     </div>`;
 }
 
