@@ -710,6 +710,100 @@ html[data-theme="dark"] .photo-sheet{background:#1a2332}
 .photo-add-btn:not(:disabled):hover{opacity:.88}
 .photo-scan-info{font-size:.78rem;font-weight:600;color:var(--green);display:flex;align-items:center;gap:5px}
 .photo-scan-info.warn{color:var(--orange)}
+
+/* ════ SHARE MODAL ════ */
+.share-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);z-index:200;display:none;align-items:flex-end;justify-content:center}
+.share-overlay.open{display:flex;animation:fadeIn .2s ease}
+.share-sheet{background:var(--white);border-radius:28px 28px 0 0;width:100%;max-width:480px;padding:0 0 env(safe-area-inset-bottom);animation:slideUp .3s cubic-bezier(.32,1.2,.64,1)}
+html[data-theme="dark"] .share-sheet{background:#131c30}
+.share-handle{width:40px;height:4px;border-radius:2px;background:var(--border);margin:14px auto 0}
+.share-header{padding:18px 22px 10px;display:flex;align-items:center;gap:12px}
+.share-emoji{font-size:2rem;line-height:1}
+.share-title{font-weight:800;font-size:1.1rem;color:var(--text)}
+.share-subtitle{font-size:.8rem;color:var(--text3);margin-top:2px;font-weight:500}
+.share-qr{display:flex;justify-content:center;padding:12px 0 4px}
+.share-qr img{border-radius:16px;border:4px solid var(--greenlt)}
+.share-qr-offline{text-align:center;padding:12px;font-size:.8rem;color:var(--text3)}
+.share-link-box{margin:10px 20px;background:var(--surface);border:1.5px solid var(--border);border-radius:14px;display:flex;align-items:center;overflow:hidden}
+.share-link-text{flex:1;padding:11px 14px;font-size:.78rem;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:monospace}
+.share-copy-btn{padding:11px 16px;background:var(--greenlt);color:var(--green);border:none;font-weight:700;font-size:.82rem;cursor:pointer;white-space:nowrap;font-family:inherit;transition:background .15s}
+.share-copy-btn:hover{background:var(--green);color:#fff}
+.share-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px 20px 16px}
+.share-btn{display:flex;flex-direction:column;align-items:center;gap:5px;padding:14px 8px;border-radius:16px;border:1.5px solid var(--border);background:var(--surface);cursor:pointer;font-family:inherit;transition:border-color .15s,background .15s}
+.share-btn:hover{border-color:var(--green);background:var(--greenlt)}
+.share-btn-icon{font-size:1.5rem}
+.share-btn-label{font-size:.75rem;font-weight:700;color:var(--text2)}
+.share-cancel{display:block;width:calc(100% - 40px);margin:0 20px 16px;padding:13px;background:var(--surface);border:1.5px solid var(--border);border-radius:14px;font-size:.9rem;font-weight:600;color:var(--text2);cursor:pointer;font-family:inherit;transition:border-color .15s}
+.share-cancel:hover{border-color:var(--red);color:var(--red)}
+
+/* ── Import Banner ── */
+.import-banner{position:fixed;top:12px;left:16px;right:16px;z-index:300;background:linear-gradient(135deg,var(--green2),var(--green));color:#fff;border-radius:18px;padding:16px 18px;box-shadow:0 8px 32px rgba(37,99,235,.4);display:none;animation:slideDown .4s cubic-bezier(.32,1.2,.64,1)}
+.import-banner.open{display:block}
+@keyframes slideDown{from{transform:translateY(-120%);opacity:0}to{transform:translateY(0);opacity:1}}
+.import-banner-title{font-weight:800;font-size:1rem;margin-bottom:4px}
+.import-banner-sub{font-size:.82rem;opacity:.85;margin-bottom:12px}
+.import-banner-btns{display:flex;gap:8px}
+.import-banner-yes{flex:1;background:#fff;color:var(--green);border:none;border-radius:10px;padding:10px;font-weight:800;font-size:.88rem;cursor:pointer;font-family:inherit}
+.import-banner-no{padding:10px 14px;background:rgba(255,255,255,.2);color:#fff;border:none;border-radius:10px;font-weight:600;font-size:.88rem;cursor:pointer;font-family:inherit}
+
+/* ════ REZEPTE VIEW ════ */
+.recipe-hero{background:linear-gradient(135deg,var(--hdr1),var(--hdr2));padding:22px 20px 18px;color:#fff}
+.recipe-hero-title{font-size:1.3rem;font-weight:900;letter-spacing:-.02em}
+.recipe-hero-sub{font-size:.82rem;opacity:.75;margin-top:3px}
+.recipe-search{margin-top:14px;background:rgba(255,255,255,.15);border:none;border-radius:12px;padding:10px 16px;color:#fff;width:100%;font-size:.88rem;font-family:inherit;outline:none}
+.recipe-search::placeholder{color:rgba(255,255,255,.55)}
+.recipe-filters{display:flex;gap:8px;overflow-x:auto;padding:14px 16px 4px;scrollbar-width:none}
+.recipe-filters::-webkit-scrollbar{display:none}
+.recipe-filter-btn{flex-shrink:0;padding:7px 16px;border-radius:50px;border:1.5px solid var(--border);background:var(--surface);font-size:.8rem;font-weight:700;color:var(--text2);cursor:pointer;font-family:inherit;transition:all .15s}
+.recipe-filter-btn.active{background:var(--green);border-color:var(--green);color:#fff}
+.recipe-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px 16px 80px}
+.recipe-card{background:var(--white);border:1px solid var(--border);border-radius:18px;padding:16px;cursor:pointer;transition:transform .18s,box-shadow .18s;box-shadow:var(--shadow)}
+html[data-theme="dark"] .recipe-card{background:rgba(30,40,60,.9);border-color:rgba(255,255,255,.07)}
+.recipe-card:hover{transform:translateY(-3px);box-shadow:var(--shadow2)}
+.recipe-card-emoji{font-size:2.2rem;margin-bottom:8px}
+.recipe-card-name{font-weight:800;font-size:.9rem;color:var(--text);line-height:1.25;margin-bottom:4px}
+.recipe-card-meta{font-size:.72rem;color:var(--text3);font-weight:500}
+.recipe-card-tag{display:inline-block;background:var(--greenlt);color:var(--green);font-size:.65rem;font-weight:700;padding:2px 8px;border-radius:50px;margin-top:6px}
+
+/* ── Recipe Detail Sheet ── */
+.recipe-detail-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);z-index:200;display:none;align-items:flex-end;justify-content:center}
+.recipe-detail-overlay.open{display:flex;animation:fadeIn .2s ease}
+.recipe-detail-sheet{background:var(--white);border-radius:28px 28px 0 0;width:100%;max-width:480px;max-height:88vh;overflow-y:auto;padding-bottom:env(safe-area-inset-bottom);animation:slideUp .3s cubic-bezier(.32,1.2,.64,1)}
+html[data-theme="dark"] .recipe-detail-sheet{background:#131c30}
+.recipe-detail-hero{background:linear-gradient(135deg,var(--hdr1),var(--hdr2));padding:28px 22px 22px;color:#fff;position:relative}
+.recipe-detail-close{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.2);border:none;color:#fff;width:32px;height:32px;border-radius:50%;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.recipe-detail-emoji{font-size:3rem;margin-bottom:8px}
+.recipe-detail-name{font-size:1.3rem;font-weight:900;letter-spacing:-.02em;margin-bottom:4px}
+.recipe-detail-meta{font-size:.8rem;opacity:.75;display:flex;gap:12px}
+.recipe-ingredients{padding:18px 22px}
+.recipe-ing-title{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);margin-bottom:12px}
+.recipe-ing-item{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border)}
+.recipe-ing-item:last-child{border-bottom:none}
+.recipe-ing-qty{min-width:54px;font-weight:700;font-size:.85rem;color:var(--green)}
+.recipe-ing-name{flex:1;font-size:.88rem;color:var(--text);font-weight:500}
+.recipe-add-all-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:calc(100% - 44px);margin:4px 22px 18px;padding:15px;background:linear-gradient(135deg,var(--green2),var(--green));color:#fff;border:none;border-radius:16px;font-size:.95rem;font-weight:800;cursor:pointer;font-family:inherit;box-shadow:0 4px 16px rgba(37,99,235,.35);transition:opacity .2s}
+.recipe-add-all-btn:hover{opacity:.9}
+
+/* ════ INSTALL BANNER ════ */
+.install-banner{position:fixed;bottom:calc(var(--nav-h) + 12px);left:16px;right:16px;z-index:90;background:linear-gradient(135deg,#1e3a8a,#1d4ed8);color:#fff;border-radius:18px;padding:14px 16px;box-shadow:0 8px 32px rgba(29,78,216,.5);display:none;animation:slideUp .4s cubic-bezier(.32,1.2,.64,1)}
+.install-banner.open{display:flex;align-items:center;gap:12px}
+.install-banner-icon{font-size:2rem;flex-shrink:0}
+.install-banner-text{flex:1}
+.install-banner-title{font-weight:800;font-size:.9rem;margin-bottom:2px}
+.install-banner-sub{font-size:.75rem;opacity:.8}
+.install-banner-btn{background:#fff;color:#1d4ed8;border:none;border-radius:10px;padding:9px 16px;font-weight:800;font-size:.82rem;cursor:pointer;white-space:nowrap;font-family:inherit}
+.install-banner-close{background:none;border:none;color:rgba(255,255,255,.7);font-size:1.1rem;cursor:pointer;padding:4px;margin-left:4px}
+
+/* ════ EXPORT / PRINT ════ */
+@media print {
+  .bottom-nav,.fab,.header,.add-bar,.header-btn,.photo-overlay,
+  .share-overlay,.recipe-detail-overlay,.voice-overlay,.modal-overlay,
+  .install-banner,.import-banner,.toast{display:none!important}
+  .view:not(.active){display:none!important}
+  .view.active{display:block!important;padding:0!important}
+  .item-row{break-inside:avoid;border-bottom:1px solid #eee;padding:8px 0}
+  body{font-family:Arial,sans-serif;font-size:12pt}
+}
 </style>
 </head>
 <body>
@@ -755,6 +849,7 @@ html[data-theme="dark"] .photo-sheet{background:#1a2332}
         <div class="header-title" id="list-header-title">Liste</div>
       </div>
       <div class="header-actions">
+        <button class="header-btn" id="btn-share-list" title="Liste teilen">📤</button>
         <button class="header-btn" id="btn-delete-list" title="Liste löschen">🗑</button>
         <button class="header-btn" id="btn-sort-route" title="Route starten">🗺</button>
       </div>
@@ -1091,12 +1186,106 @@ html[data-theme="dark"] .photo-sheet{background:#1a2332}
 </div>
 
 <!-- ══════════════════════════════════════
+     SHARE MODAL
+══════════════════════════════════════ -->
+<div class="share-overlay" id="share-overlay" onclick="if(event.target===this)closeShare()">
+  <div class="share-sheet">
+    <div class="share-handle"></div>
+    <div class="share-header">
+      <div class="share-emoji" id="share-emoji">🛒</div>
+      <div>
+        <div class="share-title" id="share-list-title">Liste teilen</div>
+        <div class="share-subtitle" id="share-item-count">0 Artikel</div>
+      </div>
+    </div>
+    <div class="share-qr" id="share-qr-wrap">
+      <img id="share-qr-img" src="" alt="QR Code" width="180" height="180" style="display:none"/>
+      <div class="share-qr-offline" id="share-qr-offline" style="display:none">📵 QR Code nur online verfügbar</div>
+    </div>
+    <div class="share-link-box">
+      <div class="share-link-text" id="share-link-text"></div>
+      <button class="share-copy-btn" onclick="copyShareLink()">📋 Kopieren</button>
+    </div>
+    <div class="share-btns">
+      <button class="share-btn" onclick="shareViaWhatsApp()">
+        <span class="share-btn-icon">💬</span>
+        <span class="share-btn-label">WhatsApp</span>
+      </button>
+      <button class="share-btn" onclick="shareViaTelegram()">
+        <span class="share-btn-icon">✈️</span>
+        <span class="share-btn-label">Telegram</span>
+      </button>
+      <button class="share-btn" onclick="shareViaEmail()">
+        <span class="share-btn-icon">📧</span>
+        <span class="share-btn-label">E-Mail</span>
+      </button>
+      <button class="share-btn" onclick="shareNative()">
+        <span class="share-btn-icon">↗️</span>
+        <span class="share-btn-label">Mehr …</span>
+      </button>
+    </div>
+    <button class="share-cancel" onclick="closeShare()">Abbrechen</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     IMPORT BANNER
+══════════════════════════════════════ -->
+<div class="import-banner" id="import-banner">
+  <div class="import-banner-title">📥 Liste empfangen!</div>
+  <div class="import-banner-sub" id="import-banner-sub">Jemand hat eine Einkaufsliste mit dir geteilt</div>
+  <div class="import-banner-btns">
+    <button class="import-banner-yes" onclick="confirmImport()">✓ Importieren</button>
+    <button class="import-banner-no" onclick="dismissImport()">Ablehnen</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     INSTALL BANNER
+══════════════════════════════════════ -->
+<div class="install-banner" id="install-banner">
+  <div class="install-banner-icon">📲</div>
+  <div class="install-banner-text">
+    <div class="install-banner-title">App installieren</div>
+    <div class="install-banner-sub">Für schnelleren Zugriff auf dem Homescreen</div>
+  </div>
+  <button class="install-banner-btn" id="install-banner-btn">Installieren</button>
+  <button class="install-banner-close" onclick="dismissInstall()">✕</button>
+</div>
+
+<!-- ══════════════════════════════════════
+     RECIPE DETAIL SHEET
+══════════════════════════════════════ -->
+<div class="recipe-detail-overlay" id="recipe-detail-overlay" onclick="if(event.target===this)closeRecipeDetail()">
+  <div class="recipe-detail-sheet" id="recipe-detail-sheet">
+    <!-- filled by JS -->
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     VIEW 5: REZEPTE
+══════════════════════════════════════ -->
+<div class="view" id="view-recipes">
+  <div class="recipe-hero">
+    <div class="recipe-hero-title">🍽 Rezepte</div>
+    <div class="recipe-hero-sub">Zutaten direkt zur Einkaufsliste hinzufügen</div>
+    <input class="recipe-search" id="recipe-search" placeholder="🔍 Rezept suchen …" oninput="filterRecipes(this.value)" autocomplete="off"/>
+  </div>
+  <div class="recipe-filters" id="recipe-filters"></div>
+  <div class="recipe-grid" id="recipe-grid"></div>
+</div>
+
+<!-- ══════════════════════════════════════
      BOTTOM NAV
 ══════════════════════════════════════ -->
 <nav class="bottom-nav">
   <button class="nav-item active" data-tab="home" onclick="navTo('home')">
     <span class="nav-icon">🏠</span>
     <span class="nav-label">Listen</span>
+  </button>
+  <button class="nav-item" data-tab="recipes" onclick="navTo('recipes')">
+    <span class="nav-icon">🍽</span>
+    <span class="nav-label">Rezepte</span>
   </button>
   <button class="nav-item nav-voice" data-tab="voice" onclick="openVoice()">
     <span class="nav-icon">🎤</span>
@@ -1683,6 +1872,7 @@ function showView(id){
 function navTo(tab){
   if(tab==='home'){ showView('home'); renderHome(); }
   else if(tab==='settings'){ showView('settings'); initSettings(); }
+  else if(tab==='recipes'){ navToRecipes(); }
 }
 
 // ── Settings Init ─────────────────────────────────
@@ -3163,11 +3353,470 @@ document.addEventListener('click', e=>{
   if(!e.target.closest('#suggestions-box') && !e.target.closest('#add-input')) hideSuggestions();
 });
 
+// ════════════════════════════════════════════════
+//  SHARE-FUNKTION
+// ════════════════════════════════════════════════
+let _shareUrl = '';
+let _pendingImport = null;
+
+function openShare(){
+  const list = getList();
+  if(!list) return;
+  const data = {
+    v:1, name:list.name, emoji:list.emoji, color:list.color,
+    items: list.items.map(i=>({name:i.name, qty:i.qty||'1', unit:i.unit||'Stk', cat:i.cat||'sonstiges'}))
+  };
+  const base64 = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+  const base = location.href.split('?')[0].split('#')[0];
+  _shareUrl = base + '?share=' + base64;
+
+  document.getElementById('share-emoji').textContent = list.emoji;
+  document.getElementById('share-list-title').textContent = list.name;
+  document.getElementById('share-item-count').textContent = list.items.length + ' Artikel';
+  document.getElementById('share-link-text').textContent = _shareUrl;
+
+  // QR Code (online only)
+  const qrImg = document.getElementById('share-qr-img');
+  const qrOffline = document.getElementById('share-qr-offline');
+  if(navigator.onLine){
+    const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=180x180&margin=8&color=1d4ed8&data=' + encodeURIComponent(_shareUrl);
+    qrImg.src = qrUrl;
+    qrImg.style.display = 'block';
+    qrOffline.style.display = 'none';
+  } else {
+    qrImg.style.display = 'none';
+    qrOffline.style.display = 'block';
+  }
+
+  document.getElementById('share-overlay').classList.add('open');
+}
+
+function closeShare(){
+  document.getElementById('share-overlay').classList.remove('open');
+}
+
+function copyShareLink(){
+  navigator.clipboard?.writeText(_shareUrl).then(()=>{
+    toast('✓ Link kopiert!');
+    closeShare();
+  }).catch(()=>{
+    // Fallback
+    const el = document.createElement('textarea');
+    el.value = _shareUrl;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    toast('✓ Link kopiert!');
+    closeShare();
+  });
+}
+
+function shareViaWhatsApp(){
+  const list = getList();
+  const text = `🛒 *${list?.name||'Einkaufsliste'}*\n\n` +
+    (list?.items.map(i=>`• ${i.qty && i.qty!='1' ? i.qty+'× ' : ''}${i.name}`).join('\n') || '') +
+    `\n\n📱 App öffnen: ${_shareUrl}`;
+  openProspekt('https://wa.me/?text=' + encodeURIComponent(text));
+  closeShare();
+}
+
+function shareViaTelegram(){
+  const list = getList();
+  const text = `🛒 ${list?.name||'Einkaufsliste'}: ${_shareUrl}`;
+  openProspekt('https://t.me/share/url?url=' + encodeURIComponent(_shareUrl) + '&text=' + encodeURIComponent('Einkaufsliste teilen'));
+  closeShare();
+}
+
+function shareViaEmail(){
+  const list = getList();
+  const subject = encodeURIComponent(`🛒 Einkaufsliste: ${list?.name||'Meine Liste'}`);
+  const body = encodeURIComponent(
+    `Hallo!\n\nIch teile meine Einkaufsliste "${list?.name}" mit dir:\n\n` +
+    (list?.items.map(i=>`• ${i.qty && i.qty!='1' ? i.qty+'× ' : ''}${i.name}`).join('\n') || '') +
+    `\n\n📱 Liste in der App öffnen:\n${_shareUrl}\n\nViele Grüße`
+  );
+  openProspekt(`mailto:?subject=${subject}&body=${body}`);
+  closeShare();
+}
+
+function shareNative(){
+  if(navigator.share){
+    const list = getList();
+    navigator.share({
+      title: `🛒 ${list?.name||'Einkaufsliste'}`,
+      text: 'Einkaufsliste teilen',
+      url: _shareUrl
+    }).then(()=>closeShare()).catch(()=>{});
+  } else {
+    copyShareLink();
+  }
+}
+
+// ── Import beim Öffnen mit ?share= ────────────────
+function checkShareParam(){
+  const params = new URLSearchParams(location.search);
+  const shareData = params.get('share');
+  if(!shareData) return;
+  try {
+    const decoded = JSON.parse(decodeURIComponent(escape(atob(shareData))));
+    if(!decoded.name || !decoded.items) return;
+    _pendingImport = decoded;
+    const banner = document.getElementById('import-banner');
+    document.getElementById('import-banner-sub').textContent =
+      `"${decoded.name}" – ${decoded.items.length} Artikel`;
+    banner.classList.add('open');
+    // URL bereinigen
+    history.replaceState({},'',location.pathname);
+  } catch(e){ /* ignore invalid share data */ }
+}
+
+function confirmImport(){
+  if(!_pendingImport) return;
+  const d = _pendingImport;
+  const newList = {
+    id: uid(), name: d.name, emoji: d.emoji||'🛒', color: d.color||'#2563eb',
+    items: d.items.map(i=>({
+      id:uid(), name:i.name, qty:i.qty||'1', unit:i.unit||'Stk',
+      cat:i.cat||autoCategory(i.name), checked:false
+    })),
+    store:null, created:Date.now()
+  };
+  lists.push(newList);
+  save(); renderHome();
+  dismissImport();
+  toast(`✓ "${d.name}" importiert – ${d.items.length} Artikel`);
+  openList(newList.id);
+}
+
+function dismissImport(){
+  document.getElementById('import-banner').classList.remove('open');
+  _pendingImport = null;
+}
+
+// Wire up share button
+document.getElementById('btn-share-list').addEventListener('click', openShare);
+
+// ════════════════════════════════════════════════
+//  REZEPTE-MODUL
+// ════════════════════════════════════════════════
+const RECIPES = [
+  // 🍝 Pasta
+  {id:'r1',name:'Spaghetti Bolognese',emoji:'🍝',cat:'Pasta',time:'45 Min',portions:4,
+   ing:[{qty:'500g',name:'Hackfleisch'},{qty:'400g',name:'Tomaten (Dose)'},{qty:'500g',name:'Spaghetti'},
+        {qty:'2',name:'Zwiebeln'},{qty:'3',name:'Knoblauchzehen'},{qty:'2 EL',name:'Tomatenmark'},
+        {qty:'1',name:'Karotte'},{qty:'1 Stk',name:'Sellerie'},{qty:'200ml',name:'Rotwein'},
+        {qty:'1 Bund',name:'Basilikum'},{qty:'50g',name:'Parmesan'}]},
+  {id:'r2',name:'Carbonara',emoji:'🍜',cat:'Pasta',time:'25 Min',portions:4,
+   ing:[{qty:'500g',name:'Spaghetti'},{qty:'200g',name:'Speck (Pancetta)'},{qty:'4',name:'Eier'},
+        {qty:'100g',name:'Parmesan'},{qty:'2',name:'Knoblauchzehen'},{qty:'1 Bund',name:'Petersilie'}]},
+  {id:'r3',name:'Pasta Pesto',emoji:'🌿',cat:'Pasta',time:'20 Min',portions:2,
+   ing:[{qty:'300g',name:'Penne'},{qty:'1 Glas',name:'Pesto (grün)'},{qty:'50g',name:'Parmesan'},
+        {qty:'100g',name:'Kirschtomaten'},{qty:'30g',name:'Pinienkerne'}]},
+  {id:'r4',name:'Lasagne',emoji:'🫕',cat:'Pasta',time:'75 Min',portions:6,
+   ing:[{qty:'500g',name:'Hackfleisch'},{qty:'12 Stk',name:'Lasagneplatten'},{qty:'700g',name:'Tomaten (Dose)'},
+        {qty:'500ml',name:'Béchamelsauce'},{qty:'200g',name:'Mozzarella'},{qty:'100g',name:'Parmesan'},
+        {qty:'2',name:'Zwiebeln'},{qty:'2 EL',name:'Tomatenmark'}]},
+
+  // 🥩 Fleisch
+  {id:'r5',name:'Schnitzel Wiener Art',emoji:'🥩',cat:'Fleisch',time:'30 Min',portions:4,
+   ing:[{qty:'4 Stk',name:'Schweineschnitzel'},{qty:'2',name:'Eier'},{qty:'150g',name:'Semmelbrösel'},
+        {qty:'100g',name:'Mehl'},{qty:'200ml',name:'Pflanzenöl'},{qty:'2',name:'Zitronen'}]},
+  {id:'r6',name:'Gulasch',emoji:'🫕',cat:'Fleisch',time:'90 Min',portions:4,
+   ing:[{qty:'800g',name:'Rindfleisch'},{qty:'4',name:'Zwiebeln'},{qty:'2 EL',name:'Paprikapulver'},
+        {qty:'400g',name:'Tomaten (Dose)'},{qty:'200ml',name:'Rinderbrühe'},{qty:'2 EL',name:'Tomatenmark'},
+        {qty:'1 TL',name:'Kümmel'},{qty:'3',name:'Knoblauchzehen'}]},
+  {id:'r7',name:'Hähnchen Curry',emoji:'🍛',cat:'Fleisch',time:'40 Min',portions:4,
+   ing:[{qty:'600g',name:'Hähnchenbrust'},{qty:'400ml',name:'Kokosmilch'},{qty:'2 EL',name:'Currypaste'},
+        {qty:'1',name:'Zwiebel'},{qty:'2',name:'Knoblauchzehen'},{qty:'300g',name:'Basmatireis'},
+        {qty:'200g',name:'Tiefkühlerbsen'},{qty:'1',name:'Limette'}]},
+  {id:'r8',name:'Hähnchen vom Grill',emoji:'🍗',cat:'Fleisch',time:'50 Min',portions:4,
+   ing:[{qty:'1 Stk',name:'Hähnchen (1,5kg)'},{qty:'3 EL',name:'Olivenöl'},{qty:'2 TL',name:'Paprikapulver'},
+        {qty:'1 TL',name:'Knoblauchpulver'},{qty:'1 TL',name:'Oregano'},{qty:'2',name:'Zitronen'}]},
+  {id:'r9',name:'Burger',emoji:'🍔',cat:'Fleisch',time:'30 Min',portions:4,
+   ing:[{qty:'600g',name:'Hackfleisch (Rind)'},{qty:'4 Stk',name:'Burgerbrötchen'},{qty:'4 Stk',name:'Cheddar'},
+        {qty:'1',name:'Eisbergsalat'},{qty:'2',name:'Tomaten'},{qty:'1',name:'Rote Zwiebel'},
+        {qty:'4 EL',name:'BBQ-Sauce'},{qty:'4 EL',name:'Mayonnaise'}]},
+
+  // 🥗 Vegetarisch
+  {id:'r10',name:'Gemüse-Stir-Fry',emoji:'🥦',cat:'Vegetarisch',time:'25 Min',portions:2,
+   ing:[{qty:'200g',name:'Brokkoli'},{qty:'2',name:'Karotten'},{qty:'1',name:'Paprika'},
+        {qty:'100g',name:'Champignons'},{qty:'3 EL',name:'Sojasoße'},{qty:'2',name:'Knoblauchzehen'},
+        {qty:'1 Stk',name:'Ingwer'},{qty:'200g',name:'Basmatireis'}]},
+  {id:'r11',name:'Gemüsesuppe',emoji:'🍵',cat:'Vegetarisch',time:'45 Min',portions:4,
+   ing:[{qty:'3',name:'Karotten'},{qty:'2',name:'Kartoffeln'},{qty:'1',name:'Sellerie'},
+        {qty:'2',name:'Zwiebeln'},{qty:'1 Liter',name:'Gemüsebrühe'},{qty:'1 Bund',name:'Petersilie'},
+        {qty:'200g',name:'Tiefkühlerbsen'},{qty:'1',name:'Zucchini'}]},
+  {id:'r12',name:'Tomatensuppe',emoji:'🍅',cat:'Vegetarisch',time:'35 Min',portions:4,
+   ing:[{qty:'800g',name:'Tomaten (Dose)'},{qty:'2',name:'Zwiebeln'},{qty:'3',name:'Knoblauchzehen'},
+        {qty:'200ml',name:'Sahne'},{qty:'500ml',name:'Gemüsebrühe'},{qty:'1 Bund',name:'Basilikum'},
+        {qty:'2 EL',name:'Olivenöl'}]},
+  {id:'r13',name:'Shakshuka',emoji:'🍳',cat:'Vegetarisch',time:'30 Min',portions:2,
+   ing:[{qty:'400g',name:'Tomaten (Dose)'},{qty:'4',name:'Eier'},{qty:'1',name:'Zwiebel'},
+        {qty:'2',name:'Paprika'},{qty:'2',name:'Knoblauchzehen'},{qty:'1 TL',name:'Paprikapulver'},
+        {qty:'1 TL',name:'Kreuzkümmel'},{qty:'1 Bund',name:'Petersilie'}]},
+  {id:'r14',name:'Linsensuppe',emoji:'🫘',cat:'Vegetarisch',time:'50 Min',portions:4,
+   ing:[{qty:'300g',name:'Rote Linsen'},{qty:'2',name:'Karotten'},{qty:'2',name:'Zwiebeln'},
+        {qty:'3',name:'Knoblauchzehen'},{qty:'1 Liter',name:'Gemüsebrühe'},{qty:'1 TL',name:'Kreuzkümmel'},
+        {qty:'1 TL',name:'Kurkuma'},{qty:'1',name:'Zitrone'}]},
+  {id:'r15',name:'Omelett',emoji:'🍳',cat:'Vegetarisch',time:'15 Min',portions:1,
+   ing:[{qty:'3',name:'Eier'},{qty:'50ml',name:'Milch'},{qty:'50g',name:'Käse'},{qty:'1',name:'Paprika'},
+        {qty:'2 EL',name:'Butter'}]},
+
+  // 🍕 Pizza & Brot
+  {id:'r16',name:'Pizza Margherita',emoji:'🍕',cat:'Pizza',time:'60 Min',portions:4,
+   ing:[{qty:'500g',name:'Pizzamehl'},{qty:'7g',name:'Trockenhefe'},{qty:'400g',name:'Tomaten (Dose)'},
+        {qty:'200g',name:'Mozzarella'},{qty:'1 Bund',name:'Basilikum'},{qty:'3 EL',name:'Olivenöl'},
+        {qty:'1 TL',name:'Oregano'}]},
+  {id:'r17',name:'Flammkuchen',emoji:'🥧',cat:'Pizza',time:'40 Min',portions:4,
+   ing:[{qty:'300g',name:'Pizzateig'},{qty:'200g',name:'Crème fraîche'},{qty:'150g',name:'Speck (gewürfelt)'},
+        {qty:'2',name:'Zwiebeln'},{qty:'1 Bund',name:'Schnittlauch'}]},
+
+  // 🐟 Fisch
+  {id:'r18',name:'Lachs mit Gemüse',emoji:'🐟',cat:'Fisch',time:'35 Min',portions:2,
+   ing:[{qty:'2 Stk',name:'Lachsfilet'},{qty:'200g',name:'Brokkoli'},{qty:'2',name:'Karotten'},
+        {qty:'1',name:'Zitrone'},{qty:'3 EL',name:'Olivenöl'},{qty:'2',name:'Knoblauchzehen'},
+        {qty:'1 TL',name:'Dill'}]},
+  {id:'r19',name:'Fischstäbchen',emoji:'🍟',cat:'Fisch',time:'20 Min',portions:4,
+   ing:[{qty:'500g',name:'Fischstäbchen'},{qty:'500g',name:'Kartoffeln'},{qty:'1 Dose',name:'Erbsen'},
+        {qty:'200ml',name:'Remoulade'},{qty:'2 EL',name:'Butter'}]},
+
+  // 🥘 Suppe & Eintopf
+  {id:'r20',name:'Hühnersuppe',emoji:'🍲',cat:'Suppe',time:'90 Min',portions:6,
+   ing:[{qty:'1 Stk',name:'Suppenhuhn'},{qty:'3',name:'Karotten'},{qty:'2',name:'Selleriestangen'},
+        {qty:'2',name:'Zwiebeln'},{qty:'200g',name:'Suppennudeln'},{qty:'1 Bund',name:'Petersilie'},
+        {qty:'2',name:'Lorbeerblätter'}]},
+  {id:'r21',name:'Kartoffelsuppe',emoji:'🥔',cat:'Suppe',time:'50 Min',portions:4,
+   ing:[{qty:'800g',name:'Kartoffeln'},{qty:'2',name:'Zwiebeln'},{qty:'1',name:'Sellerie'},
+        {qty:'200g',name:'Speck'},{qty:'1 Liter',name:'Gemüsebrühe'},{qty:'200ml',name:'Sahne'},
+        {qty:'1 Bund',name:'Schnittlauch'}]},
+
+  // 🌮 International
+  {id:'r22',name:'Tacos',emoji:'🌮',cat:'International',time:'30 Min',portions:4,
+   ing:[{qty:'500g',name:'Hackfleisch (Rind)'},{qty:'8 Stk',name:'Taco-Schalen'},{qty:'1 Pck',name:'Taco-Gewürz'},
+        {qty:'1',name:'Eisbergsalat'},{qty:'2',name:'Tomaten'},{qty:'100g',name:'Cheddar'},
+        {qty:'1 Becher',name:'Sauerrahm'},{qty:'1',name:'Avocado'}]},
+  {id:'r23',name:'Gyros mit Tzatziki',emoji:'🥙',cat:'International',time:'40 Min',portions:4,
+   ing:[{qty:'600g',name:'Schweinefleisch'},{qty:'2 TL',name:'Gyros-Gewürz'},{qty:'4 Stk',name:'Pitabrot'},
+        {qty:'500g',name:'Joghurt'},{qty:'1',name:'Salatgurke'},{qty:'3',name:'Knoblauchzehen'},
+        {qty:'1',name:'Zitrone'},{qty:'1 Bund',name:'Dill'}]},
+  {id:'r24',name:'Sushi Bowls',emoji:'🍱',cat:'International',time:'40 Min',portions:2,
+   ing:[{qty:'200g',name:'Sushi-Reis'},{qty:'200g',name:'Lachs (roh, Sushi-Qual.)'},{qty:'1',name:'Avocado'},
+        {qty:'1',name:'Salatgurke'},{qty:'4 EL',name:'Sojasoße'},{qty:'2 EL',name:'Reisessig'},
+        {qty:'1 TL',name:'Sesamöl'},{qty:'2 EL',name:'Sesam'},{qty:'2 Blatt',name:'Nori'}]},
+  {id:'r25',name:'Pad Thai',emoji:'🍜',cat:'International',time:'30 Min',portions:2,
+   ing:[{qty:'200g',name:'Reisnudeln'},{qty:'200g',name:'Garnelen'},{qty:'3',name:'Eier'},
+        {qty:'100g',name:'Sojasprossen'},{qty:'3 EL',name:'Fischsauce'},{qty:'2 EL',name:'Tamarindenpaste'},
+        {qty:'1 EL',name:'Zucker'},{qty:'3',name:'Frühlingszwiebeln'},{qty:'50g',name:'Erdnüsse'}]},
+
+  // 🥞 Frühstück
+  {id:'r26',name:'Pancakes',emoji:'🥞',cat:'Frühstück',time:'20 Min',portions:4,
+   ing:[{qty:'250g',name:'Mehl'},{qty:'2 TL',name:'Backpulver'},{qty:'2',name:'Eier'},
+        {qty:'300ml',name:'Milch'},{qty:'2 EL',name:'Zucker'},{qty:'1 Prise',name:'Salz'},
+        {qty:'2 EL',name:'Butter'},{qty:'250g',name:'Ahornsirup'}]},
+  {id:'r27',name:'Rührei',emoji:'🍳',cat:'Frühstück',time:'10 Min',portions:2,
+   ing:[{qty:'4',name:'Eier'},{qty:'50ml',name:'Milch'},{qty:'2 EL',name:'Butter'},
+        {qty:'1 Prise',name:'Salz'},{qty:'1 Bund',name:'Schnittlauch'}]},
+  {id:'r28',name:'Avocado Toast',emoji:'🥑',cat:'Frühstück',time:'10 Min',portions:2,
+   ing:[{qty:'2',name:'Avocados'},{qty:'4 Scheiben',name:'Vollkornbrot'},{qty:'2',name:'Eier'},
+        {qty:'1',name:'Zitrone'},{qty:'1 Prise',name:'Chiliflocken'},{qty:'1',name:'Tomate'}]},
+
+  // 🎂 Backen
+  {id:'r29',name:'Schokoladenkuchen',emoji:'🎂',cat:'Backen',time:'60 Min',portions:12,
+   ing:[{qty:'200g',name:'Zartbitterschokolade'},{qty:'200g',name:'Butter'},{qty:'200g',name:'Zucker'},
+        {qty:'4',name:'Eier'},{qty:'150g',name:'Mehl'},{qty:'2 TL',name:'Backpulver'},
+        {qty:'1 Prise',name:'Salz'},{qty:'200ml',name:'Sahne'}]},
+  {id:'r30',name:'Apfelkuchen',emoji:'🍎',cat:'Backen',time:'70 Min',portions:12,
+   ing:[{qty:'4',name:'Äpfel'},{qty:'250g',name:'Mehl'},{qty:'125g',name:'Butter'},
+        {qty:'100g',name:'Zucker'},{qty:'2',name:'Eier'},{qty:'1 Pck',name:'Backpulver'},
+        {qty:'100ml',name:'Milch'},{qty:'1 TL',name:'Zimt'}]},
+  {id:'r31',name:'Bananenbrot',emoji:'🍌',cat:'Backen',time:'65 Min',portions:8,
+   ing:[{qty:'3',name:'überreife Bananen'},{qty:'250g',name:'Mehl'},{qty:'100g',name:'Zucker'},
+        {qty:'2',name:'Eier'},{qty:'100g',name:'Butter'},{qty:'1 TL',name:'Backpulver'},
+        {qty:'1 TL',name:'Zimt'},{qty:'100g',name:'Schokodrops'}]},
+  {id:'r32',name:'Cookies',emoji:'🍪',cat:'Backen',time:'35 Min',portions:24,
+   ing:[{qty:'250g',name:'Mehl'},{qty:'200g',name:'Butter'},{qty:'150g',name:'Zucker'},
+        {qty:'100g',name:'Brauner Zucker'},{qty:'2',name:'Eier'},{qty:'200g',name:'Schokodrops'},
+        {qty:'1 TL',name:'Backpulver'},{qty:'1 TL',name:'Vanilleextrakt'}]},
+];
+
+const RECIPE_CATS = ['Alle', 'Pasta', 'Fleisch', 'Vegetarisch', 'Pizza', 'Fisch', 'Suppe', 'International', 'Frühstück', 'Backen'];
+let _activeRecipeCat = 'Alle';
+let _recipeSearch = '';
+
+function navToRecipes(){
+  showView('recipes');
+  renderRecipeFilters();
+  renderRecipeGrid();
+}
+
+function renderRecipeFilters(){
+  const wrap = document.getElementById('recipe-filters');
+  if(!wrap) return;
+  wrap.innerHTML = RECIPE_CATS.map(cat => `
+    <button class="recipe-filter-btn${_activeRecipeCat===cat?' active':''}" onclick="setRecipeCat('${cat}')">${cat}</button>
+  `).join('');
+}
+
+function setRecipeCat(cat){
+  _activeRecipeCat = cat;
+  renderRecipeFilters();
+  renderRecipeGrid();
+}
+
+function filterRecipes(q){
+  _recipeSearch = q.toLowerCase().trim();
+  renderRecipeGrid();
+}
+
+function renderRecipeGrid(){
+  const grid = document.getElementById('recipe-grid');
+  if(!grid) return;
+  const filtered = RECIPES.filter(r => {
+    const matchCat = _activeRecipeCat === 'Alle' || r.cat === _activeRecipeCat;
+    const matchSearch = !_recipeSearch || r.name.toLowerCase().includes(_recipeSearch) ||
+      r.ing.some(i => i.name.toLowerCase().includes(_recipeSearch));
+    return matchCat && matchSearch;
+  });
+  if(!filtered.length){
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px 0;color:var(--text3)">
+      <div style="font-size:2.5rem;margin-bottom:10px">🔍</div>
+      <div style="font-weight:700">Kein Rezept gefunden</div>
+    </div>`;
+    return;
+  }
+  grid.innerHTML = filtered.map(r => `
+    <div class="recipe-card anim-slide" onclick="openRecipeDetail('${r.id}')">
+      <div class="recipe-card-emoji">${r.emoji}</div>
+      <div class="recipe-card-name">${r.name}</div>
+      <div class="recipe-card-meta">⏱ ${r.time} · ${r.portions} Port.</div>
+      <span class="recipe-card-tag">${r.cat}</span>
+    </div>
+  `).join('');
+}
+
+function openRecipeDetail(id){
+  const r = RECIPES.find(x=>x.id===id);
+  if(!r) return;
+  const sheet = document.getElementById('recipe-detail-sheet');
+  const lists_with_current = lists.length > 0;
+  sheet.innerHTML = `
+    <div class="recipe-detail-hero">
+      <button class="recipe-detail-close" onclick="closeRecipeDetail()">✕</button>
+      <div class="recipe-detail-emoji">${r.emoji}</div>
+      <div class="recipe-detail-name">${r.name}</div>
+      <div class="recipe-detail-meta">
+        <span>⏱ ${r.time}</span>
+        <span>👥 ${r.portions} Portionen</span>
+        <span>🏷 ${r.cat}</span>
+      </div>
+    </div>
+    <div class="recipe-ingredients">
+      <div class="recipe-ing-title">Zutaten (${r.ing.length})</div>
+      ${r.ing.map(i=>`
+        <div class="recipe-ing-item">
+          <div class="recipe-ing-qty">${i.qty}</div>
+          <div class="recipe-ing-name">${i.name}</div>
+        </div>
+      `).join('')}
+    </div>
+    ${lists_with_current ? `
+      <div style="padding:0 22px 6px">
+        <div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);margin-bottom:10px">In Liste eintragen:</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px">
+          ${lists.map(l=>`
+            <button class="voice-target-btn" onclick="addRecipeToList('${r.id}','${l.id}',this)">
+              ${l.emoji} ${l.name}
+            </button>
+          `).join('')}
+        </div>
+      </div>
+    ` : ''}
+    <button class="recipe-add-all-btn" onclick="addRecipeToNewList('${r.id}')">
+      ✚ Neue Liste aus Rezept erstellen
+    </button>
+  `;
+  document.getElementById('recipe-detail-overlay').classList.add('open');
+}
+
+function closeRecipeDetail(){
+  document.getElementById('recipe-detail-overlay').classList.remove('open');
+}
+
+function addRecipeToList(recipeId, listId, btn){
+  const r = RECIPES.find(x=>x.id===recipeId);
+  const list = lists.find(l=>l.id===listId);
+  if(!r||!list) return;
+  const existing = new Set(list.items.map(i=>i.name.toLowerCase()));
+  let added = 0;
+  r.ing.forEach(i=>{
+    if(!existing.has(i.name.toLowerCase())){
+      list.items.push({id:uid(),name:i.name,qty:i.qty,unit:'',cat:autoCategory(i.name),checked:false});
+      added++;
+    }
+  });
+  save();
+  if(btn){ document.querySelectorAll('.voice-target-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); }
+  toast(`✓ ${added} Zutaten zu "${list.name}" hinzugefügt`);
+  setTimeout(()=>{ closeRecipeDetail(); openList(listId); }, 800);
+}
+
+function addRecipeToNewList(recipeId){
+  const r = RECIPES.find(x=>x.id===recipeId);
+  if(!r) return;
+  const COLORS=['#2563eb','#16a34a','#ea580c','#7c3aed','#db2777','#0891b2'];
+  const newList = {
+    id:uid(), name:r.name, emoji:r.emoji,
+    color:COLORS[Math.floor(Math.random()*COLORS.length)],
+    items: r.ing.map(i=>({id:uid(),name:i.name,qty:i.qty,unit:'',cat:autoCategory(i.name),checked:false})),
+    store:null, created:Date.now()
+  };
+  lists.push(newList);
+  save(); renderHome();
+  closeRecipeDetail();
+  toast(`✓ "${r.name}" als Liste erstellt`);
+  openList(newList.id);
+}
+
+// ════════════════════════════════════════════════
+//  INSTALL-BANNER (PWA Prompt)
+// ════════════════════════════════════════════════
+let _deferredInstall = null;
+
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  _deferredInstall = e;
+  if(!localStorage.getItem('install_dismissed')){
+    setTimeout(()=>{
+      document.getElementById('install-banner').classList.add('open');
+    }, 3000);
+  }
+});
+
+document.getElementById('install-banner-btn').addEventListener('click', async () => {
+  if(!_deferredInstall) return;
+  _deferredInstall.prompt();
+  const result = await _deferredInstall.userChoice;
+  if(result.outcome === 'accepted') toast('✓ App installiert!');
+  dismissInstall();
+});
+
+function dismissInstall(){
+  document.getElementById('install-banner').classList.remove('open');
+  localStorage.setItem('install_dismissed','1');
+}
+
+window.addEventListener('appinstalled', () => {
+  document.getElementById('install-banner').classList.remove('open');
+  toast('🎉 App erfolgreich installiert!');
+});
+
 // ── Boot ──────────────────────────────────────────
 applyTheme(CFG.theme);
 applyLayout(CFG.layout||'list');
 applyI18n();
 renderHome();
+checkShareParam(); // ?share= URL prüfen
 
 // Init API toggle state visually
 (()=>{
