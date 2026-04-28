@@ -805,6 +805,16 @@ html[data-theme="dark"] .recipe-detail-sheet{background:#131c30}
 .install-banner-sub{font-size:.75rem;opacity:.8}
 .install-banner-btn{background:#fff;color:#1d4ed8;border:none;border-radius:10px;padding:9px 16px;font-weight:800;font-size:.82rem;cursor:pointer;white-space:nowrap;font-family:inherit}
 .install-banner-close{background:none;border:none;color:rgba(255,255,255,.7);font-size:1.1rem;cursor:pointer;padding:4px;margin-left:4px}
+/* Install Card in Settings */
+.install-card{background:linear-gradient(135deg,#1e3a8a,#1d4ed8);border-radius:var(--r);padding:16px;margin-bottom:18px;display:flex;align-items:center;gap:14px;box-shadow:0 4px 20px rgba(29,78,216,.35)}
+.install-card-left{display:flex;align-items:center;gap:12px;flex:1;min-width:0}
+.install-card-icon{font-size:2rem;flex-shrink:0}
+.install-card-title{font-weight:800;font-size:.88rem;color:#fff;margin-bottom:2px}
+.install-card-sub{font-size:.74rem;color:rgba(255,255,255,.75)}
+.install-card-btn{background:#fff;color:#1d4ed8;border:none;border-radius:10px;padding:10px 16px;font-weight:800;font-size:.82rem;cursor:pointer;white-space:nowrap;font-family:inherit;flex-shrink:0;transition:opacity .15s}
+.install-card-btn:hover{opacity:.88}
+.install-card.hidden{display:none}
+
 /* iOS Install Sheet */
 .ios-install-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);z-index:300;align-items:flex-end;justify-content:center}
 .ios-install-sheet{background:var(--white);border-radius:28px 28px 0 0;width:100%;max-width:520px;padding-bottom:env(safe-area-inset-bottom)}
@@ -965,6 +975,18 @@ html[data-theme="dark"] .ios-install-sheet{background:#1a2332}
     </div>
   </div>
   <div class="settings-body">
+
+    <!-- App installieren -->
+    <div class="install-card" id="install-card">
+      <div class="install-card-left">
+        <div class="install-card-icon">📲</div>
+        <div>
+          <div class="install-card-title">App auf dem Handy / Desktop installieren</div>
+          <div class="install-card-sub">Kein App Store nötig – direkt auf den Homescreen</div>
+        </div>
+      </div>
+      <button class="install-card-btn" id="install-card-btn" onclick="triggerInstall()">Installieren</button>
+    </div>
 
     <!-- Name -->
     <div class="settings-section">
@@ -4288,11 +4310,6 @@ function dismissInstall(){
   localStorage.setItem('install_dismissed_ts', Date.now());
 }
 
-window.addEventListener('appinstalled', () => {
-  document.getElementById('install-banner').classList.remove('open');
-  toast('🎉 App installiert – viel Spaß!');
-});
-
 // ── iOS Safari ──
 (function checkIOSInstall(){
   const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) ||
@@ -4312,6 +4329,50 @@ function dismissIosInstall(){
   if(el) el.style.display='none';
   localStorage.setItem('install_dismissed_ts', Date.now());
 }
+
+function triggerInstall(){
+  // Android / Desktop: nativer Prompt
+  if(_deferredInstall){
+    _deferredInstall.prompt();
+    _deferredInstall.userChoice.then(r=>{
+      if(r.outcome==='accepted'){ toast('🎉 App installiert!'); hideInstallCard(); }
+      dismissInstall();
+    });
+    return;
+  }
+  // iOS Safari: Anleitung zeigen
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) ||
+    (navigator.platform==='MacIntel' && navigator.maxTouchPoints>1);
+  if(isIOS){
+    const el=document.getElementById('ios-install-overlay');
+    if(el){ el.style.display='flex'; }
+    return;
+  }
+  // Bereits installiert oder anderer Browser
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+  if(isStandalone){
+    toast('✓ App ist bereits installiert!');
+  } else {
+    toast('💡 Öffne diese Seite in Chrome oder Safari, um die App zu installieren');
+  }
+}
+
+function hideInstallCard(){
+  const card=document.getElementById('install-card');
+  if(card) card.classList.add('hidden');
+}
+
+// Karte ausblenden wenn App bereits installiert ist
+window.addEventListener('load',()=>{
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+  if(isStandalone) hideInstallCard();
+});
+
+window.addEventListener('appinstalled', ()=>{
+  document.getElementById('install-banner').classList.remove('open');
+  hideInstallCard();
+  toast('🎉 App installiert – viel Spaß!');
+});
 
 // ── Boot ──────────────────────────────────────────
 applyTheme(CFG.theme);
