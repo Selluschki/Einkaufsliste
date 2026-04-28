@@ -764,6 +764,7 @@ html[data-theme="dark"] .recipe-card{background:rgba(30,40,60,.9);border-color:r
 .recipe-card-name{font-weight:800;font-size:.9rem;color:var(--text);line-height:1.25;margin-bottom:4px}
 .recipe-card-meta{font-size:.72rem;color:var(--text3);font-weight:500}
 .recipe-card-tag{display:inline-block;background:var(--greenlt);color:var(--green);font-size:.65rem;font-weight:700;padding:2px 8px;border-radius:50px;margin-top:6px}
+.recipe-card-tag.tm{background:#fff3e0;color:#e65100} /* Thermomix orange */
 
 /* ── Recipe Detail Sheet ── */
 .recipe-detail-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);z-index:200;display:none;align-items:flex-end;justify-content:center}
@@ -3638,9 +3639,79 @@ const RECIPES = [
    ing:[{qty:'250g',name:'Mehl'},{qty:'200g',name:'Butter'},{qty:'150g',name:'Zucker'},
         {qty:'100g',name:'Brauner Zucker'},{qty:'2',name:'Eier'},{qty:'200g',name:'Schokodrops'},
         {qty:'1 TL',name:'Backpulver'},{qty:'1 TL',name:'Vanilleextrakt'}]},
+
+  // 🌀 Thermomix-Klassiker
+  {id:'tm1',name:'Gemüse-Gewürzpaste',emoji:'🧂',cat:'Thermomix',time:'15 Min',portions:20,
+   ing:[{qty:'150g',name:'Karotten'},{qty:'150g',name:'Sellerie'},{qty:'150g',name:'Lauch'},
+        {qty:'100g',name:'Zwiebeln'},{qty:'50g',name:'Petersilie (frisch)'},{qty:'200g',name:'Meersalz'},
+        {qty:'2',name:'Knoblauchzehen'},{qty:'1 EL',name:'Olivenöl'}]},
+
+  {id:'tm2',name:'Béchamelsauce',emoji:'🥛',cat:'Thermomix',time:'12 Min',portions:4,
+   ing:[{qty:'500ml',name:'Milch'},{qty:'40g',name:'Butter'},{qty:'40g',name:'Mehl'},
+        {qty:'1 Prise',name:'Muskatnuss'},{qty:'1 Prise',name:'Salz'},{qty:'1 Prise',name:'Pfeffer'}]},
+
+  {id:'tm3',name:'Hollandaise',emoji:'🍋',cat:'Thermomix',time:'15 Min',portions:4,
+   ing:[{qty:'3',name:'Eigelb'},{qty:'150g',name:'Butter'},{qty:'1',name:'Zitrone'},
+        {qty:'1 EL',name:'Weißweinessig'},{qty:'1 Prise',name:'Salz'},{qty:'1 Prise',name:'Cayennepfeffer'}]},
+
+  {id:'tm4',name:'Hühnerfrikassee',emoji:'🍲',cat:'Thermomix',time:'45 Min',portions:4,
+   ing:[{qty:'600g',name:'Hähnchenbrust'},{qty:'200g',name:'Champignons'},{qty:'150g',name:'Erbsen (TK)'},
+        {qty:'1',name:'Zwiebel'},{qty:'500ml',name:'Hühnerbrühe'},{qty:'200ml',name:'Sahne'},
+        {qty:'2 EL',name:'Mehl'},{qty:'2 EL',name:'Butter'},{qty:'1 Spritzer',name:'Zitronensaft'},
+        {qty:'1 Bund',name:'Petersilie'}]},
+
+  {id:'tm5',name:'Königsberger Klopse',emoji:'🥩',cat:'Thermomix',time:'50 Min',portions:4,
+   ing:[{qty:'500g',name:'Hackfleisch (gemischt)'},{qty:'2',name:'Brötchen (alt)'},{qty:'1',name:'Zwiebel'},
+        {qty:'1',name:'Ei'},{qty:'1 TL',name:'Senf'},{qty:'500ml',name:'Gemüsebrühe'},
+        {qty:'200ml',name:'Sahne'},{qty:'3 EL',name:'Kapern'},{qty:'1',name:'Zitrone'},
+        {qty:'2 EL',name:'Mehl'},{qty:'600g',name:'Kartoffeln'}]},
+
+  {id:'tm6',name:'Kartoffelsuppe mit Würstchen',emoji:'🌭',cat:'Thermomix',time:'35 Min',portions:4,
+   ing:[{qty:'800g',name:'Kartoffeln'},{qty:'2',name:'Karotten'},{qty:'1',name:'Zwiebel'},
+        {qty:'1',name:'Selleriestange'},{qty:'1 Liter',name:'Gemüsebrühe'},{qty:'200ml',name:'Sahne'},
+        {qty:'4 Stk',name:'Wiener Würstchen'},{qty:'1 Bund',name:'Schnittlauch'},
+        {qty:'2 EL',name:'Crème fraîche'}]},
+
+  {id:'tm7',name:'Parmesan-Risotto',emoji:'🍚',cat:'Thermomix',time:'30 Min',portions:4,
+   ing:[{qty:'300g',name:'Risottoreis'},{qty:'1',name:'Zwiebel'},{qty:'2',name:'Knoblauchzehen'},
+        {qty:'800ml',name:'Gemüsebrühe'},{qty:'150ml',name:'Weißwein'},{qty:'100g',name:'Parmesan'},
+        {qty:'50g',name:'Butter'},{qty:'3 EL',name:'Olivenöl'},{qty:'1 Bund',name:'Petersilie'}]},
+
+  {id:'tm8',name:'Tomaten-Mozzarella-Spaghetti',emoji:'🍝',cat:'Thermomix',time:'25 Min',portions:4,
+   ing:[{qty:'500g',name:'Spaghetti'},{qty:'400g',name:'Kirschtomaten'},{qty:'200g',name:'Mozzarella'},
+        {qty:'3',name:'Knoblauchzehen'},{qty:'1 Bund',name:'Basilikum'},{qty:'4 EL',name:'Olivenöl'},
+        {qty:'1 Prise',name:'Chiliflocken'},{qty:'50g',name:'Parmesan'}]},
+
+  {id:'tm9',name:'Hackbällchen Toskana',emoji:'🫕',cat:'Thermomix',time:'40 Min',portions:4,
+   ing:[{qty:'500g',name:'Hackfleisch (Rind)'},{qty:'1',name:'Ei'},{qty:'2 EL',name:'Semmelbrösel'},
+        {qty:'400g',name:'Tomaten (Dose)'},{qty:'100g',name:'Oliven'},{qty:'100g',name:'Feta'},
+        {qty:'2',name:'Knoblauchzehen'},{qty:'1 TL',name:'Oregano'},{qty:'1 Bund',name:'Basilikum'}]},
+
+  {id:'tm10',name:'Smashed Potatoes',emoji:'🥔',cat:'Thermomix',time:'50 Min',portions:4,
+   ing:[{qty:'1 kg',name:'kleine Kartoffeln'},{qty:'4',name:'Knoblauchzehen'},{qty:'4 EL',name:'Olivenöl'},
+        {qty:'1 TL',name:'Rosmarinnadeln'},{qty:'1 Prise',name:'Salz'},{qty:'1 Prise',name:'Pfeffer'}]},
+
+  {id:'tm11',name:'Käsesauce (Mac & Cheese)',emoji:'🧀',cat:'Thermomix',time:'20 Min',portions:4,
+   ing:[{qty:'400g',name:'Makkaroni'},{qty:'300ml',name:'Milch'},{qty:'200g',name:'Cheddar'},
+        {qty:'100g',name:'Schmelzkäse'},{qty:'2 EL',name:'Butter'},{qty:'1 EL',name:'Mehl'},
+        {qty:'1 Prise',name:'Muskatnuss'},{qty:'1 Prise',name:'Paprikapulver'}]},
+
+  {id:'tm12',name:'Pizzasuppe',emoji:'🍕',cat:'Thermomix',time:'30 Min',portions:4,
+   ing:[{qty:'400g',name:'Tomaten (Dose)'},{qty:'150g',name:'Salami'},{qty:'100g',name:'Mozzarella'},
+        {qty:'1',name:'Zwiebel'},{qty:'2',name:'Knoblauchzehen'},{qty:'600ml',name:'Gemüsebrühe'},
+        {qty:'1 TL',name:'Oregano'},{qty:'1 TL',name:'Basilikum'},{qty:'1 EL',name:'Tomatenmark'}]},
+
+  {id:'tm13',name:'Hefeteig (Grundrezept)',emoji:'🥐',cat:'Thermomix',time:'20 Min',portions:1,
+   ing:[{qty:'500g',name:'Mehl (Type 550)'},{qty:'1 Pck',name:'Trockenhefe'},{qty:'250ml',name:'lauwarme Milch'},
+        {qty:'60g',name:'Butter'},{qty:'40g',name:'Zucker'},{qty:'1 TL',name:'Salz'},
+        {qty:'1',name:'Ei'}]},
+
+  {id:'tm14',name:'Mousse au Chocolat',emoji:'🍫',cat:'Thermomix',time:'20 Min',portions:6,
+   ing:[{qty:'200g',name:'Zartbitterschokolade'},{qty:'4',name:'Eier'},{qty:'50g',name:'Zucker'},
+        {qty:'200ml',name:'Schlagsahne'},{qty:'1 Prise',name:'Salz'},{qty:'1 TL',name:'Vanilleextrakt'}]},
 ];
 
-const RECIPE_CATS = ['Alle', 'Pasta', 'Fleisch', 'Vegetarisch', 'Pizza', 'Fisch', 'Suppe', 'International', 'Frühstück', 'Backen'];
+const RECIPE_CATS = ['Alle', 'Pasta', 'Fleisch', 'Vegetarisch', 'Pizza', 'Fisch', 'Suppe', 'International', 'Frühstück', 'Backen', 'Thermomix'];
 let _activeRecipeCat = 'Alle';
 let _recipeSearch = '';
 
@@ -3690,7 +3761,7 @@ function renderRecipeGrid(){
       <div class="recipe-card-emoji">${r.emoji}</div>
       <div class="recipe-card-name">${r.name}</div>
       <div class="recipe-card-meta">⏱ ${r.time} · ${r.portions} Port.</div>
-      <span class="recipe-card-tag">${r.cat}</span>
+      <span class="recipe-card-tag${r.cat==='Thermomix'?' tm':''}">${r.cat==='Thermomix'?'🌀 Thermomix':r.cat}</span>
     </div>
   `).join('');
 }
