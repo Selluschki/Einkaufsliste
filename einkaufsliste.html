@@ -805,6 +805,21 @@ html[data-theme="dark"] .recipe-detail-sheet{background:#131c30}
   .item-row{break-inside:avoid;border-bottom:1px solid #eee;padding:8px 0}
   body{font-family:Arial,sans-serif;font-size:12pt}
 }
+/* ── Store Angebote ── */
+.la-deals-title{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);padding:12px 18px 8px;display:flex;align-items:center;justify-content:space-between}
+.la-deals-note{font-size:.65rem;color:var(--text3);font-weight:400;font-style:italic}
+.la-deals-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 14px 12px}
+.la-deal-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:10px 12px;display:flex;flex-direction:column;gap:4px;position:relative;overflow:hidden}
+.la-deal-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--green2),var(--green))}
+.la-deal-emoji{font-size:1.4rem;line-height:1}
+.la-deal-name{font-size:.82rem;font-weight:700;color:var(--text);line-height:1.2}
+.la-deal-qty{font-size:.7rem;color:var(--text3);font-weight:500}
+.la-deal-price{font-size:.9rem;font-weight:900;color:var(--green);margin-top:2px}
+.la-deal-orig{font-size:.65rem;color:var(--text3);text-decoration:line-through}
+.la-deal-add{margin-top:6px;background:linear-gradient(135deg,var(--green2),var(--green));color:#fff;border:none;border-radius:8px;padding:5px 0;font-size:.75rem;font-weight:700;cursor:pointer;width:100%;font-family:inherit;transition:opacity .15s}
+.la-deal-add:hover{opacity:.88}
+.la-deal-add:active{transform:scale(.96)}
+.la-no-deals{text-align:center;padding:14px;font-size:.82rem;color:var(--text3)}
 </style>
 </head>
 <body>
@@ -1037,6 +1052,8 @@ html[data-theme="dark"] .recipe-detail-sheet{background:#131c30}
           <div class="layout-opt-icon">🇹🇷</div>
           <div class="layout-opt-label">Türkçe</div>
         </div>
+        <button class="layout-opt" data-lang="fr" onclick="setLang('fr')">🇫🇷 Français</button>
+        <button class="layout-opt" data-lang="es" onclick="setLang('es')">🇪🇸 Español</button>
       </div>
     </div>
 
@@ -1178,6 +1195,7 @@ html[data-theme="dark"] .recipe-detail-sheet{background:#131c30}
       </div>
     </div>
     <div id="la-prospekt-wrap"></div>
+    <div id="la-deals-wrap"></div>
     <button class="logo-action-set-btn" id="la-set-btn" onclick="setLogoActiveStore()">
       <span class="btn-icon">🏪</span>
       <span>Als aktiven Markt setzen</span>
@@ -1363,7 +1381,7 @@ function clearAllData(){
 
 // ── i18n ─────────────────────────────────────────
 const storedLang = CFG.lang || (navigator.language||'de').slice(0,2).toLowerCase();
-const lang = ['de','en','tr'].includes(storedLang) ? storedLang : 'de';
+const lang = ['de','en','tr','fr','es'].includes(storedLang) ? storedLang : 'de';
 const i18n = {
   de:{
     appTitle:'Einkaufsliste III',appSub:'Smart sortiert. Einfach einkaufen.',
@@ -1421,7 +1439,45 @@ const i18n = {
     voiceAdd:'Listeye ekle',voiceRetry:'Tekrar dene',voiceDetected:'Tanınan ürünler',
     voiceSelectList:'Önce bir liste seçin:',
     myLists:'Listelerim',searchPlaceholder:'Liste ara …',
-  }
+  },
+  fr:{
+    appTitle:'Liste de courses III',appSub:'Triée intelligemment. Facile.',
+    newList:'Nouvelle liste',listName:'Nom',listEmoji:'Icône',listColor:'Couleur',
+    createList:'Créer la liste',addItem:'Ajouter un article …',
+    chooseStore:'Choisir un magasin',noLists:'Aucune liste',
+    noListsDesc:'Appuyez sur + pour créer votre première liste',
+    emptyList:'Liste vide',emptyListDesc:'Ajoutez votre premier article ci-dessus',
+    done:'fait',of:'sur',deleteList:'Vraiment supprimer cette liste ?',
+    storeLabel:'Choisir un magasin',otherStore:'Autre magasin',
+    route:'Parcours courses',routeDone:'Courses terminées ! 🎉',routeDoneDesc:'Vous avez tout mis dans le panier.',
+    searchStore:'Chercher un magasin …',sortedBy:'Trié par',
+    statLists:'Listes',statItems:'Articles',statDone:'fait',allDone:'Tout fait !',
+    greetMorning:'Bonjour',greetDay:'Bon après-midi',greetEvening:'Bonsoir',
+    voiceHint:'Appuyez sur le micro et parlez',
+    voiceListening:'J\'écoute …',voiceNoSupport:'Reconnaissance vocale non disponible',
+    voiceAdd:'Ajouter à la liste',voiceRetry:'Réessayer',voiceDetected:'Articles détectés',
+    voiceSelectList:'Sélectionnez d\'abord une liste :',
+    myLists:'Mes listes',searchPlaceholder:'Rechercher une liste …',
+  },
+  es:{
+    appTitle:'Lista de compras III',appSub:'Ordenada inteligentemente. Fácil.',
+    newList:'Nueva lista',listName:'Nombre',listEmoji:'Icono',listColor:'Color',
+    createList:'Crear lista',addItem:'Añadir artículo …',
+    chooseStore:'Elegir supermercado',noLists:'Sin listas',
+    noListsDesc:'Toca + para crear tu primera lista',
+    emptyList:'Lista vacía',emptyListDesc:'Añade tu primer artículo arriba',
+    done:'hecho',of:'de',deleteList:'¿Realmente eliminar esta lista?',
+    storeLabel:'Elegir supermercado',otherStore:'Otro mercado',
+    route:'Ruta de compras',routeDone:'¡Compras listas! 🎉',routeDoneDesc:'Has puesto todos los artículos.',
+    searchStore:'Buscar mercado …',sortedBy:'Ordenado por',
+    statLists:'Listas',statItems:'Artículos',statDone:'hecho',allDone:'¡Todo listo!',
+    greetMorning:'Buenos días',greetDay:'Buenas tardes',greetEvening:'Buenas noches',
+    voiceHint:'Toca el micrófono y habla',
+    voiceListening:'Escuchando …',voiceNoSupport:'Reconocimiento de voz no disponible',
+    voiceAdd:'Añadir a la lista',voiceRetry:'Reintentar',voiceDetected:'Artículos detectados',
+    voiceSelectList:'Primero selecciona una lista:',
+    myLists:'Mis listas',searchPlaceholder:'Buscar lista …',
+  },
 };
 const t = i18n[lang]||i18n.de;
 
@@ -2371,7 +2427,7 @@ function toggleListening(){
 function startListening(){
   if(!SR) return;
   recognition=new SR();
-  recognition.lang=lang==='tr'?'tr-TR':lang==='en'?'en-US':'de-DE';
+  recognition.lang=lang==='tr'?'tr-TR':lang==='en'?'en-US':lang==='fr'?'fr-FR':lang==='es'?'es-ES':'de-DE';
   recognition.interimResults=true;
   recognition.maxAlternatives=1;
   recognition.continuous=true;   // ← Hört NICHT automatisch bei Pausen auf
@@ -2476,6 +2532,19 @@ function parseVoiceText(text){
     've','ile','da','de','mi','mu','mü','mı','bir','bu','şu','o','ben','sen','biz',
     'siz','onlar','benim','senin','bizim','sizin','için','ile','den','dan','ten','tan',
     'ya','ya da','veya','ama','fakat','lakin','ancak','sadece','yalnız','hem','ne',
+    // Französische Stopwörter
+    'le','la','les','un','une','des','du','de','et','ou','mais','donc','or','ni','car',
+    'je','tu','il','elle','nous','vous','ils','elles','mon','ton','son','ma','ta','sa',
+    'ce','cet','cette','ces','que','qui','quoi','dont','où','avec','sans','pour','par',
+    'sur','sous','dans','entre','vers','chez','après','avant','pendant','depuis','veux',
+    'voudrais','acheter','prendre','mettre','ajouter','avoir','être','faire','aller',
+    's\'il','vous','plaît','merci','voilà','alors','donc','bien','aussi','encore','très',
+    // Spanische Stopwörter
+    'el','la','los','las','un','una','unos','unas','del','al','que','en','es','son',
+    'yo','tú','él','ella','nosotros','vosotros','ellos','mi','tu','su','mis','tus','sus',
+    'con','sin','para','por','sobre','bajo','entre','desde','hasta','hacia','ante',
+    'quiero','necesito','comprar','poner','agregar','añadir','tener','ser','hacer','ir',
+    'por','favor','gracias','bien','también','todavía','muy','más','menos','ahora',
   ]);
 
   /* ── Filler phrases to strip out entirely (multi-word) ── */
@@ -3208,6 +3277,25 @@ function buildLogoItem(s){
 // ── Logo Action Sheet ─────────────────────────────
 let _laCurrentKey = null;
 
+// Typische Wochen-Angebote pro Markt (repräsentativ, nicht live)
+const STORE_ANGEBOTE = {
+  'REWE':      [{e:'🍓',n:'Erdbeeren',q:'500g',p:'1.79',o:'2.49'},{e:'🥛',n:'Milch 3,5%',q:'1L',p:'0.89',o:'1.19'},{e:'🍗',n:'Hähnchenbrust',q:'400g',p:'2.99',o:'4.49'},{e:'🧀',n:'Gouda jung',q:'400g',p:'1.99',o:'2.79'},{e:'🍌',n:'Bananen',q:'1kg',p:'0.99',o:'1.49'},{e:'🥖',n:'Baguette',q:'1 Stk',p:'0.69',o:'0.99'},{e:'🍅',n:'Rispentomaten',q:'500g',p:'1.29',o:'1.99'},{e:'🧈',n:'Butter',q:'250g',p:'1.79',o:'2.29'}],
+  'EDEKA':     [{e:'🥩',n:'Rinderhack',q:'500g',p:'3.49',o:'4.99'},{e:'🍎',n:'Äpfel Gala',q:'1kg',p:'1.49',o:'1.99'},{e:'🧃',n:'Orangensaft',q:'1L',p:'1.29',o:'1.79'},{e:'🫙',n:'Joghurt',q:'4×150g',p:'1.49',o:'2.19'},{e:'🐟',n:'Lachsfilet',q:'300g',p:'4.99',o:'7.49'},{e:'🥚',n:'Freilandeier',q:'10 Stk',p:'2.49',o:'3.29'},{e:'🧅',n:'Zwiebeln',q:'1kg',p:'0.79',o:'1.29'},{e:'🍞',n:'Toastbrot',q:'500g',p:'1.09',o:'1.49'}],
+  'LIDL':      [{e:'🍊',n:'Orangen Netz',q:'2kg',p:'1.99',o:'2.99'},{e:'🍕',n:'Tiefkühlpizza',q:'400g',p:'1.79',o:'2.99'},{e:'🥗',n:'Rucola',q:'100g',p:'0.79',o:'1.19'},{e:'🧄',n:'Knoblauch',q:'3 Knolle',p:'0.49',o:'0.79'},{e:'🍫',n:'Schokolade',q:'100g',p:'0.59',o:'0.99'},{e:'🫘',n:'Kidneybohnen',q:'400g',p:'0.59',o:'0.89'},{e:'🥜',n:'Erdnüsse',q:'200g',p:'0.99',o:'1.49'},{e:'🧻',n:'Toilettenpapier',q:'8 Rollen',p:'2.49',o:'3.99'}],
+  'ALDI':      [{e:'🥦',n:'Brokkoli',q:'1 Stk',p:'0.79',o:'1.29'},{e:'🍗',n:'Hähnchenschenkel',q:'1kg',p:'2.99',o:'4.49'},{e:'🥛',n:'H-Milch',q:'6×1L',p:'3.99',o:'5.49'},{e:'🍋',n:'Zitronen Netz',q:'500g',p:'0.99',o:'1.49'},{e:'🧇',n:'Waffeln TK',q:'500g',p:'1.49',o:'2.29'},{e:'🫐',n:'Heidelbeeren',q:'125g',p:'1.29',o:'1.99'},{e:'🧊',n:'Erbsen TK',q:'750g',p:'0.99',o:'1.49'},{e:'💧',n:'Mineralwasser',q:'6×1,5L',p:'2.49',o:'3.49'}],
+  'KAUFLAND':  [{e:'🥩',n:'Schweinefilet',q:'500g',p:'4.99',o:'7.99'},{e:'🧀',n:'Mozzarella',q:'125g',p:'0.79',o:'1.19'},{e:'🍇',n:'Trauben blau',q:'500g',p:'1.99',o:'2.99'},{e:'🥖',n:'Körnerbrötchen',q:'6 Stk',p:'0.79',o:'1.19'},{e:'🌽',n:'Maiskolben',q:'2 Stk',p:'1.29',o:'1.99'},{e:'🍵',n:'Tee Auswahl',q:'20 Btl',p:'1.29',o:'1.99'},{e:'🍦',n:'Eis am Stiel',q:'10 Stk',p:'2.49',o:'3.99'},{e:'🧴',n:'Duschgel',q:'300ml',p:'1.49',o:'2.29'}],
+  'PENNY':     [{e:'🍓',n:'Erdbeeren',q:'400g',p:'1.49',o:'2.29'},{e:'🧆',n:'Falafel TK',q:'250g',p:'1.79',o:'2.49'},{e:'🍝',n:'Spaghetti',q:'500g',p:'0.59',o:'0.89'},{e:'🫙',n:'Tomatenmark',q:'70g',p:'0.39',o:'0.59'},{e:'🍾',n:'Sekt Piccolo',q:'0,2L',p:'0.99',o:'1.49'},{e:'🧂',n:'Meersalz',q:'500g',p:'0.69',o:'0.99'},{e:'🐓',n:'Pute Aufschnitt',q:'150g',p:'1.49',o:'2.19'},{e:'🥕',n:'Karotten',q:'1kg',p:'0.79',o:'1.19'}],
+  'NETTO':     [{e:'🍑',n:'Pfirsich',q:'500g',p:'1.49',o:'2.29'},{e:'🍖',n:'Spareribs',q:'600g',p:'3.99',o:'5.99'},{e:'🥯',n:'Laugenstangen',q:'4 Stk',p:'0.99',o:'1.59'},{e:'🧁',n:'Muffins',q:'6 Stk',p:'1.99',o:'2.99'},{e:'🍦',n:'Eiscreme',q:'500ml',p:'1.79',o:'2.79'},{e:'☕',n:'Kaffeepads',q:'36 Stk',p:'3.99',o:'5.99'},{e:'🥒',n:'Salatgurke',q:'1 Stk',p:'0.59',o:'0.89'},{e:'🫙',n:'Marmelade',q:'450g',p:'1.29',o:'1.99'}],
+  'DM':        [{e:'🧴',n:'Balea Duschgel',q:'300ml',p:'0.95',o:'1.35'},{e:'🦷',n:'Elmex Zahnpasta',q:'75ml',p:'2.45',o:'3.49'},{e:'💊',n:'Vitamin C 1000',q:'30 Tbl',p:'3.95',o:'5.49'},{e:'🧼',n:'Handseife Nachf.',q:'500ml',p:'1.75',o:'2.49'},{e:'👶',n:'Pampers Baby-Dry',q:'Gr.3 40Stk',p:'9.95',o:'12.99'},{e:'🌿',n:'Alverde Shampoo',q:'200ml',p:'2.95',o:'3.95'},{e:'🧻',n:'Toilettenpapier',q:'16 Rollen',p:'4.95',o:'6.99'},{e:'☀️',n:'Sonnencreme',q:'LSF50 200ml',p:'5.95',o:'8.99'}],
+  'ROSSMANN':  [{e:'🧴',n:'Isana Duschgel',q:'300ml',p:'0.85',o:'1.25'},{e:'🦷',n:'Oral-B Zahnbürste',q:'1 Stk',p:'3.99',o:'5.49'},{e:'👁',n:'Kontaktlinsen',q:'30 Stk',p:'14.99',o:'19.99'},{e:'💅',n:'Nagellack',q:'10ml',p:'1.99',o:'2.99'},{e:'🧼',n:'Dreft Waschmittel',q:'1,5L',p:'4.99',o:'6.99'},{e:'🌸',n:'Parfüm Hugo Boss',q:'50ml EdT',p:'24.99',o:'39.99'},{e:'🍼',n:'Hipp Babygläs.',q:'190g',p:'0.99',o:'1.39'},{e:'🐾',n:'Whiskas Pouch',q:'12×100g',p:'4.99',o:'7.99'}],
+  'ALDI SÜD':  [{e:'🥬',n:'Römersalat',q:'1 Stk',p:'0.99',o:'1.49'},{e:'🍓',n:'Heidelbeeren',q:'500g',p:'2.49',o:'3.99'},{e:'🍗',n:'Hähnchenbrust',q:'2×200g',p:'3.99',o:'5.99'},{e:'🥛',n:'Alpro Hafer',q:'1L',p:'1.49',o:'2.19'},{e:'🧀',n:'Feta',q:'200g',p:'1.29',o:'1.99'},{e:'🥚',n:'Bio-Eier',q:'6 Stk',p:'2.29',o:'3.29'},{e:'🧊',n:'Spinat TK',q:'750g',p:'1.49',o:'2.29'},{e:'🍰',n:'Quarktorte TK',q:'400g',p:'2.99',o:'4.49'}],
+  'MÜLLER':    [{e:'🎁',n:'Lego Classic',q:'1 Set',p:'19.99',o:'29.99'},{e:'💊',n:'Magnesium 400',q:'60 Tbl',p:'5.99',o:'8.99'},{e:'📚',n:'Buch Bestseller',q:'1 Stk',p:'9.99',o:'14.99'},{e:'🧸',n:'Plüschtier',q:'1 Stk',p:'7.99',o:'12.99'},{e:'🖊',n:'Schreibset',q:'10 Stk',p:'3.99',o:'5.99'},{e:'🎮',n:'Switch Spiel',q:'1 Stk',p:'39.99',o:'59.99'},{e:'🧴',n:'Nivea Body',q:'400ml',p:'3.99',o:'5.99'},{e:'🌸',n:'Blumenstrauß',q:'1 Strauß',p:'7.99',o:'12.99'}],
+  'METRO':     [{e:'🥩',n:'Rinderfilet',q:'1kg',p:'29.99',o:'44.99'},{e:'🦐',n:'Garnelen gegart',q:'500g',p:'9.99',o:'14.99'},{e:'🧀',n:'Parmigiano Reg.',q:'1kg',p:'14.99',o:'19.99'},{e:'☕',n:'Lavazza Espresso',q:'1kg',p:'12.99',o:'17.99'},{e:'🫙',n:'Dosentomaten',q:'12×400g',p:'6.99',o:'9.99'},{e:'🍾',n:'Prosecco Flasche',q:'0,75L',p:'5.99',o:'9.99'},{e:'🧴',n:'Spülmittel 5L',q:'5L',p:'7.99',o:'11.99'},{e:'🐟',n:'Lachsseite',q:'1-1,5kg',p:'14.99',o:'22.99'}],
+  'REWE CITY': [{e:'🥗',n:'Fertigsalat',q:'150g',p:'2.49',o:'3.49'},{e:'🥙',n:'Wrap fertig',q:'220g',p:'2.99',o:'3.99'},{e:'☕',n:'Kaffee to go',q:'0,3L',p:'1.79',o:'2.49'},{e:'🍱',n:'Sushi Box',q:'12 Stk',p:'5.99',o:'8.99'},{e:'🧃',n:'Smoothie',q:'250ml',p:'1.99',o:'2.99'},{e:'🥐',n:'Croissant',q:'1 Stk',p:'0.89',o:'1.29'},{e:'🫙',n:'Hummus',q:'200g',p:'1.99',o:'2.79'},{e:'🍊',n:'Frisch-O-Saft',q:'1L',p:'2.49',o:'3.49'}],
+  'TARGET':    [{e:'🏠',n:'Yankee Candle',q:'1 Stk',p:'14.99',o:'24.99'},{e:'🧦',n:'Socken-Pack',q:'6 Paar',p:'9.99',o:'14.99'},{e:'🪣',n:'Putzeimer',q:'1 Stk',p:'4.99',o:'7.99'},{e:'🍕',n:'Digiorno Pizza',q:'800g',p:'6.99',o:'9.99'},{e:'🧃',n:'Tropicana OJ',q:'1,7L',p:'3.99',o:'5.99'},{e:'☕',n:'Starbucks K-Cups',q:'24 Stk',p:'12.99',o:'17.99'},{e:'🥜',n:'Peanut Butter',q:'500g',p:'3.99',o:'5.49'},{e:'🧴',n:'Dove Body Wash',q:'650ml',p:'5.99',o:'8.99'}],
+  'WHOLE FOODS':[{e:'🥑',n:'Bio Avocados',q:'4 Stk',p:'5.99',o:'8.99'},{e:'🫐',n:'Bio Blueberries',q:'170g',p:'3.99',o:'5.99'},{e:'🥩',n:'Grass-Fed Beef',q:'500g',p:'12.99',o:'17.99'},{e:'🌿',n:'Fresh Basil',q:'1 Bund',p:'1.99',o:'2.99'},{e:'🧀',n:'Aged Cheddar',q:'200g',p:'6.99',o:'9.99'},{e:'🫙',n:'Almond Butter',q:'350g',p:'8.99',o:'12.99'},{e:'🥛',n:'Oat Milk',q:'1L',p:'3.99',o:'5.49'},{e:'🌾',n:'Quinoa Bio',q:'400g',p:'5.99',o:'8.99'}],
+};
+
 function showLogoAction(key, domain, bg, fg){
   _laCurrentKey = key;
   const abbr = key.replace(/[^A-Z0-9]/gi,'').slice(0,4).toUpperCase();
@@ -3248,6 +3336,33 @@ function showLogoAction(key, domain, bg, fg){
     pWrap.innerHTML = `<div class="logo-action-no-prospekt">📰 Kein direkter Prospekt-Link verfügbar</div>`;
   }
 
+  // Angebote-Sektion
+  const dealsKey = Object.keys(STORE_ANGEBOTE).find(k => key.toUpperCase().includes(k) || k.includes(key.toUpperCase())) || null;
+  const deals = STORE_ANGEBOTE[key] || STORE_ANGEBOTE[dealsKey] || null;
+  const dWrap = document.getElementById('la-deals-wrap');
+  if(dWrap) {
+    if(deals){
+      dWrap.innerHTML = `
+        <div class="la-deals-title">
+          🏷 Typische Angebote
+          <span class="la-deals-note">zur Inspiration</span>
+        </div>
+        <div class="la-deals-grid">
+          ${deals.map((d,i)=>`
+            <div class="la-deal-card">
+              <div class="la-deal-emoji">${d.e}</div>
+              <div class="la-deal-name">${d.n}</div>
+              <div class="la-deal-qty">${d.q}</div>
+              <div class="la-deal-price">€${d.p} <span class="la-deal-orig">€${d.o}</span></div>
+              <button class="la-deal-add" onclick="addDealToList('${d.n.replace(/'/g,"\\'")}','${d.q}')">+ Zur Liste</button>
+            </div>
+          `).join('')}
+        </div>`;
+    } else {
+      dWrap.innerHTML = `<div class="la-no-deals">Keine Angebote für diesen Markt verfügbar</div>`;
+    }
+  }
+
   // Set-button label
   const setBtn = document.getElementById('la-set-btn');
   if(selectedStoreLogo === key){
@@ -3262,6 +3377,25 @@ function showLogoAction(key, domain, bg, fg){
 function closeLogoAction(){
   document.getElementById('logo-action-overlay').classList.remove('open');
   _laCurrentKey = null;
+}
+
+function addDealToList(name, qty){
+  const targetId = currentListId || (lists.length>0 ? lists[lists.length-1].id : null);
+  if(!targetId){
+    toast('⚠️ Bitte zuerst eine Liste öffnen');
+    return;
+  }
+  const list = lists.find(l=>l.id===targetId);
+  if(!list) return;
+  // Duplikat prüfen
+  if(list.items.some(i=>i.name.toLowerCase()===name.toLowerCase())){
+    toast('ℹ️ '+name+' ist bereits in der Liste');
+    return;
+  }
+  list.items.push({id:uid(),name,qty:qty||'1',unit:'',cat:autoCategory(name),checked:false});
+  save();
+  if(document.getElementById('view-list').classList.contains('active')) renderListView();
+  toast('✓ '+name+' hinzugefügt');
 }
 
 function openProspekt(url){
