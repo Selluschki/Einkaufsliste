@@ -315,6 +315,17 @@ html[data-theme="dark"] .route-item.checked{background:rgba(31,41,55,.4)}
 .route-done-banner .icon{font-size:2.4rem;margin-bottom:8px}
 .route-done-banner h3{font-size:1.1rem;font-weight:800}
 .route-done-banner p{font-size:.82rem;opacity:.85;margin-top:4px}
+.route-done-banner .done-actions{display:flex;gap:10px;margin-top:16px;justify-content:center;flex-wrap:wrap}
+.done-btn-end{background:rgba(255,255,255,.22);color:#fff;border:2px solid rgba(255,255,255,.55);border-radius:12px;padding:11px 18px;font-size:.88rem;font-weight:700;cursor:pointer;font-family:inherit;transition:background .15s}
+.done-btn-end:hover{background:rgba(255,255,255,.35)}
+.done-btn-new{background:#fff;color:var(--green);border:none;border-radius:12px;padding:11px 18px;font-size:.88rem;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 2px 8px rgba(0,0,0,.12);transition:opacity .15s}
+.done-btn-new:hover{opacity:.88}
+/* Abschluss-Banner in der normalen Listenansicht */
+.list-done-banner{background:linear-gradient(135deg,var(--green2),var(--green));color:#fff;border-radius:var(--r);padding:20px;text-align:center;margin:0 0 16px;animation:pop .4s ease}
+.list-done-banner .icon{font-size:2.2rem;margin-bottom:8px}
+.list-done-banner h3{font-size:1.05rem;font-weight:800}
+.list-done-banner p{font-size:.8rem;opacity:.85;margin-top:4px}
+.list-done-banner .done-actions{display:flex;gap:10px;margin-top:14px;justify-content:center;flex-wrap:wrap}
 
 /* ════ SETTINGS VIEW ════ */
 .settings-body{flex:1;padding:20px 16px 40px}
@@ -2204,6 +2215,20 @@ function renderItems(){
       </div>`).join('')}
     </div>`;
   });
+
+  // ── Abschluss-Banner wenn alle erledigt ──
+  if(total>0 && done===total){
+    html+=`<div class="list-done-banner">
+      <div class="icon">🎉</div>
+      <h3>${t.routeDone||'Einkauf erledigt!'}</h3>
+      <p>${t.routeDoneDesc||'Du hast alle Artikel eingepackt.'}</p>
+      <div class="done-actions">
+        <button class="done-btn-end" onclick="finishShopping()">🏁 Einkaufsroute beenden</button>
+        <button class="done-btn-new" onclick="addNewShoppingRoute()">➕ Neue Einkaufsliste</button>
+      </div>
+    </div>`;
+  }
+
   body.innerHTML=html;
 }
 
@@ -2284,7 +2309,13 @@ function renderRoute(){
   let html='';
   if(list.items.every(i=>i.checked)){
     html=`<div class="route-done-banner show">
-      <div class="icon">🎉</div><h3>${t.routeDone}</h3><p>${t.routeDoneDesc}</p>
+      <div class="icon">🎉</div>
+      <h3>${t.routeDone}</h3>
+      <p>${t.routeDoneDesc}</p>
+      <div class="done-actions">
+        <button class="done-btn-end" onclick="finishShopping()">🏁 Einkaufsroute beenden</button>
+        <button class="done-btn-new" onclick="addNewShoppingRoute()">➕ Neue Einkaufsliste</button>
+      </div>
     </div>`;
   }
 
@@ -2324,6 +2355,26 @@ function toggleRouteItem(id){
   if(list.items.every(i=>i.checked)){
     setTimeout(()=>{const b=document.querySelector('.route-done-banner');if(b){b.classList.add('show');b.scrollIntoView({behavior:'smooth'});}},200);
   }
+}
+
+// ── Einkauf beenden / Neue Route ──────────────────
+function finishShopping(){
+  showView('home'); renderHome();
+  toast('🏁 Einkauf beendet – gut gemacht!');
+}
+
+function addNewShoppingRoute(){
+  const now=new Date();
+  const pad=n=>String(n).padStart(2,'0');
+  const autoName=`Einkauf ${pad(now.getDate())}.${pad(now.getMonth()+1)}.${now.getFullYear()} ${pad(now.getHours())}:${pad(now.getMinutes())}`;
+  const COLORS=['#2563eb','#16a34a','#ea580c','#7c3aed','#db2777','#0891b2','#ca8a04'];
+  const newId=uid();
+  const newList={id:newId,name:autoName,emoji:'🛒',color:COLORS[Math.floor(Math.random()*COLORS.length)],items:[],store:null,created:Date.now()};
+  lists.push(newList);
+  currentListId=newId;
+  save(); renderHome();
+  renderListView(); showView('list');
+  toast('✓ Neue Liste erstellt');
 }
 
 // ══════════════════════════════════════════════════
@@ -2876,14 +2927,20 @@ function addVoiceItems(){
     toast('✓ Liste "'+voiceNewListName+'" mit '+(voiceItems.length||0)+' Artikeln erstellt');
     return;
   }
-  // Case 2: Add to existing list
+  // Case 2: Add to existing list (or auto-create one)
   const targetId=voiceTargetListId||currentListId;
-  const list=targetId?lists.find(l=>l.id===targetId):null;
+  let list=targetId?lists.find(l=>l.id===targetId):null;
   if(!list){
-    // No list at all → show quick list picker inside voice modal
-    const banner=document.getElementById('voice-cmd-banner');
-    if(banner){ banner.className='voice-cmd-banner'; banner.innerHTML='⚠️ Bitte zuerst eine Zielliste auswählen'; }
-    return;
+    // ── Auto-create list with current date+time ──
+    const now=new Date();
+    const pad=n=>String(n).padStart(2,'0');
+    const autoName=`Einkauf ${pad(now.getDate())}.${pad(now.getMonth()+1)}.${now.getFullYear()} ${pad(now.getHours())}:${pad(now.getMinutes())}`;
+    const COLORS=['#2563eb','#16a34a','#ea580c','#7c3aed','#db2777','#0891b2','#ca8a04'];
+    const newId=uid();
+    list={id:newId,name:autoName,emoji:'🛒',color:COLORS[0],items:[],store:null,created:Date.now()};
+    lists.push(list);
+    currentListId=newId;
+    voiceTargetListId=newId;
   }
   if(!voiceItems.length){ closeVoice(); return; }
   voiceItems.forEach(({name,qty})=>{
