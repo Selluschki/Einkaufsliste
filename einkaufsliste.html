@@ -909,9 +909,97 @@ html[data-theme="dark"] .item-price-badge{background:#14532d;color:#4ade80;borde
 .template-btns{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}
 .template-btn{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:10px 8px;font-size:.8rem;font-weight:600;cursor:pointer;font-family:inherit;color:var(--text);transition:all .15s;text-align:left}
 .template-btn:hover{border-color:var(--green);background:var(--greenlt);color:var(--green)}
+
+/* ════ ONBOARDING ════ */
+.onboarding-overlay{position:fixed;inset:0;z-index:1000;background:linear-gradient(160deg,#0f1f5c 0%,#1d4ed8 50%,#1e3a8a 100%);display:flex;align-items:center;justify-content:center;padding:24px}
+.onboarding-wrap{width:100%;max-width:420px;text-align:center;overflow:hidden}
+.onboarding-slides{display:flex;transition:transform .4s cubic-bezier(.4,0,.2,1)}
+.onboarding-slide{min-width:100%;padding:0 8px}
+.ob-hero{font-size:5rem;margin-bottom:20px;filter:drop-shadow(0 4px 20px rgba(255,255,255,.2));animation:pulse-dot 2s ease infinite}
+.ob-title{font-size:1.7rem;font-weight:900;color:#fff;line-height:1.2;margin-bottom:12px}
+.ob-brand{background:linear-gradient(135deg,#93c5fd,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.ob-desc{font-size:.95rem;color:rgba(255,255,255,.82);line-height:1.6;margin-bottom:20px}
+.ob-feature-list{display:flex;flex-direction:column;gap:8px;margin-bottom:12px;text-align:left}
+.ob-feature{font-size:.88rem;color:rgba(255,255,255,.9);background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:9px 14px;font-weight:500}
+.ob-dots{display:flex;justify-content:center;gap:8px;margin:24px 0 16px}
+.ob-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.3);cursor:pointer;transition:all .3s}
+.ob-dot.active{background:#fff;width:24px;border-radius:4px}
+.ob-btn-primary{width:100%;background:#fff;color:#1d4ed8;border:none;border-radius:16px;padding:16px;font-size:1rem;font-weight:800;cursor:pointer;font-family:inherit;transition:all .2s;box-shadow:0 4px 20px rgba(0,0,0,.2)}
+.ob-btn-primary:hover{transform:scale(1.02);box-shadow:0 6px 28px rgba(0,0,0,.3)}
+.ob-btn-skip{background:none;border:none;color:rgba(255,255,255,.55);font-size:.85rem;cursor:pointer;font-family:inherit;margin-top:14px;padding:8px;display:block;width:100%}
+.ob-btn-skip:hover{color:rgba(255,255,255,.85)}
+
+/* ════ OFFLINE BANNER ════ */
+.offline-banner{position:fixed;top:0;left:0;right:0;z-index:999;background:#dc2626;color:#fff;text-align:center;padding:7px 16px;font-size:.8rem;font-weight:700;animation:slideDown .3s ease}
+@keyframes slideDown{from{transform:translateY(-100%)}to{transform:translateY(0)}}
+
+/* ════ UNDO TOAST ════ */
+.undo-toast{position:fixed;bottom:calc(var(--nav-h)+16px);left:16px;right:16px;z-index:500;background:#1e293b;color:#fff;border-radius:14px;padding:13px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 8px 32px rgba(0,0,0,.3);transform:translateY(120%);transition:transform .35s cubic-bezier(.32,1.2,.64,1);max-width:520px;margin:0 auto}
+.undo-toast.visible{transform:translateY(0)}
+.undo-toast span{font-size:.88rem;font-weight:500;flex:1}
+.undo-toast button{background:#3b82f6;border:none;color:#fff;border-radius:8px;padding:7px 14px;font-size:.82rem;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;flex-shrink:0}
+
+/* ════ RATE OVERLAY ════ */
+.rate-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(6px);z-index:400;display:flex;align-items:center;justify-content:center;padding:24px}
+.rate-sheet{background:var(--white);border-radius:24px;padding:28px 24px;max-width:340px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+html[data-theme="dark"] .rate-sheet{background:#1a2332}
+.ob-style-btn{width:100%;border:none;border-radius:14px;padding:14px;font-size:.92rem;font-weight:700;cursor:pointer;font-family:inherit;transition:opacity .15s}
+.ob-style-btn:hover{opacity:.88}
+
+/* ════ HOME STATS EXTENDED ════ */
+.home-stats-row{display:flex;gap:8px;margin-top:10px;justify-content:center;flex-wrap:wrap}
+.home-stat-card{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:14px;padding:10px 16px;text-align:center;backdrop-filter:blur(8px);min-width:80px}
+.home-stat-card-val{font-size:1.4rem;font-weight:900;color:#fff;line-height:1}
+.home-stat-card-lbl{font-size:.65rem;color:rgba(255,255,255,.7);margin-top:3px;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
 </style>
 </head>
 <body>
+
+<div class="onboarding-overlay" id="onboarding-overlay" style="display:none">
+  <div class="onboarding-wrap">
+    <div class="onboarding-slides" id="onboarding-slides">
+      <!-- Slide 1 -->
+      <div class="onboarding-slide">
+        <div class="ob-hero">🛒</div>
+        <h1 class="ob-title">Willkommen bei<br><span class="ob-brand">Einkaufsliste III</span></h1>
+        <p class="ob-desc">Die smarteste Einkaufsliste – mit Spracherkennung, automatischer Sortierung und Barcode-Scanner.</p>
+      </div>
+      <!-- Slide 2 -->
+      <div class="onboarding-slide">
+        <div class="ob-hero">🎤</div>
+        <h1 class="ob-title">Einfach sprechen</h1>
+        <p class="ob-desc">Sage einfach „Milch, Eier, Brot und Butter" – die App erkennt alle Produkte automatisch und sortiert sie nach Supermarkt-Bereichen.</p>
+        <div class="ob-feature-list">
+          <div class="ob-feature">✅ Spracherkennung in 5 Sprachen</div>
+          <div class="ob-feature">✅ Mengenangaben werden erkannt</div>
+          <div class="ob-feature">✅ Automatische Kategorisierung</div>
+        </div>
+      </div>
+      <!-- Slide 3 -->
+      <div class="onboarding-slide">
+        <div class="ob-hero">🗺️</div>
+        <h1 class="ob-title">Smart einkaufen</h1>
+        <p class="ob-desc">Wähle deinen Supermarkt und die App sortiert deine Liste nach dem optimalen Laufweg – spart Zeit und Nerven.</p>
+        <div class="ob-feature-list">
+          <div class="ob-feature">🏪 30+ Supermärkte weltweit</div>
+          <div class="ob-feature">📷 Barcode-Scanner mit Produktsuche</div>
+          <div class="ob-feature">📴 100% offline nutzbar</div>
+        </div>
+      </div>
+    </div>
+    <div class="ob-dots" id="ob-dots">
+      <div class="ob-dot active" onclick="goToSlide(0)"></div>
+      <div class="ob-dot" onclick="goToSlide(1)"></div>
+      <div class="ob-dot" onclick="goToSlide(2)"></div>
+    </div>
+    <button class="ob-btn-primary" id="ob-btn-primary" onclick="obNext()">Weiter →</button>
+    <button class="ob-btn-skip" onclick="finishOnboarding()">Überspringen</button>
+  </div>
+</div>
+
+<div class="offline-banner" id="offline-banner" style="display:none">
+  📵 Offline – Änderungen werden lokal gespeichert
+</div>
 
 <!-- ══════════════════════════════════════
      VIEW 1: HOME
@@ -930,6 +1018,7 @@ html[data-theme="dark"] .item-price-badge{background:#14532d;color:#4ade80;borde
       <div class="stat-pill" id="stat-items">🛍 0 Artikel</div>
       <div class="stat-pill" id="stat-done">✅ 0 erledigt</div>
     </div>
+    <div class="home-stats-row" id="home-stats-row" style="display:none"></div>
     <div class="home-search-wrap">
       <span class="home-search-icon">🔍</span>
       <input class="home-search" id="home-search" placeholder="Liste suchen …" autocomplete="off" oninput="filterLists(this.value)"/>
@@ -1218,11 +1307,27 @@ html[data-theme="dark"] .item-price-badge{background:#14532d;color:#4ade80;borde
         <div class="about-logo">🛒</div>
         <div class="about-title">Einkaufsliste III</div>
         <div class="about-sub">Smart sortiert. Einfach einkaufen.</div>
-        <div class="about-sub" style="margin-top:5px">30+ Supermärkte · Spracherkennung · Offline-fähig · PWA</div>
-        <div class="about-version">Version 3.2</div>
+        <div class="about-sub" style="margin-top:5px">30+ Supermärkte · Spracherkennung · Barcode-Scanner · Offline · 5 Sprachen</div>
+        <div class="about-version">Version 4.0</div>
       </div>
     </div>
 
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     OVERLAY: Bewerte uns
+══════════════════════════════════════ -->
+<div class="rate-overlay" id="rate-overlay" style="display:none" onclick="if(event.target===this)dismissRate()">
+  <div class="rate-sheet">
+    <div style="font-size:3rem;margin-bottom:12px">⭐</div>
+    <h3 style="font-weight:800;font-size:1.1rem;margin-bottom:8px;color:var(--text)">Gefällt dir die App?</h3>
+    <p style="font-size:.85rem;color:var(--text2);margin-bottom:20px;line-height:1.5">Du hast bereits 3 Einkäufe erledigt – super! Magst du die App weiterempfehlen?</p>
+    <div style="display:flex;flex-direction:column;gap:9px">
+      <button class="ob-style-btn" style="background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff" onclick="rateAction('share')">📤 App weiterempfehlen</button>
+      <button class="ob-style-btn" style="background:var(--surface);border:1.5px solid var(--border);color:var(--text)" onclick="dismissRate()">Vielleicht später</button>
+      <button style="background:none;border:none;color:var(--text3);font-size:.78rem;cursor:pointer;font-family:inherit;padding:4px" onclick="neverRate()">Nicht mehr fragen</button>
+    </div>
   </div>
 </div>
 
@@ -2307,6 +2412,23 @@ function renderHome(){
   document.getElementById('stat-items').textContent='🛍 '+total+' '+t.statItems;
   document.getElementById('stat-done').textContent ='✅ '+done+' '+t.statDone;
 
+  const row = document.getElementById('home-stats-row');
+  if(row && lists.length > 0){
+    const totalItems = lists.reduce((a,l)=>a+l.items.length,0);
+    const totalDone = lists.reduce((a,l)=>a+l.items.filter(i=>i.checked).length,0);
+    const rate = totalItems>0?Math.round(totalDone/totalItems*100):0;
+    const budget = lists.reduce((a,l)=>a+l.items.reduce((s,i)=>s+(i.price?parseFloat(i.price):0),0),0);
+    row.innerHTML=`
+      <div class="home-stat-card"><div class="home-stat-card-val">${lists.length}</div><div class="home-stat-card-lbl">Listen</div></div>
+      <div class="home-stat-card"><div class="home-stat-card-val">${totalItems}</div><div class="home-stat-card-lbl">Artikel</div></div>
+      <div class="home-stat-card"><div class="home-stat-card-val">${rate}%</div><div class="home-stat-card-lbl">Erledigt</div></div>
+      ${budget>0?`<div class="home-stat-card"><div class="home-stat-card-val">€${budget.toFixed(0)}</div><div class="home-stat-card-lbl">Budget</div></div>`:''}
+    `;
+    row.style.display='flex';
+  } else if(row){
+    row.style.display='none';
+  }
+
   const filtered=searchQuery ? lists.filter(l=>l.name.toLowerCase().includes(searchQuery)) : lists;
   const container=document.getElementById('home-lists');
 
@@ -2483,10 +2605,40 @@ function toggleItem(id){
   }
 }
 
+let _lastDeleted = null;
+let _lastDeletedTimer = null;
 function deleteItem(id){
   const list=getList();
+  const item=list.items.find(i=>i.id===id);
+  if(!item) return;
+  _lastDeleted={item:{...item},listId:list.id,index:list.items.indexOf(item)};
   list.items=list.items.filter(i=>i.id!==id);
   save(); renderItems();
+  // Undo-Toast
+  if(_lastDeletedTimer) clearTimeout(_lastDeletedTimer);
+  showUndoToast(`🗑 "${item.name}" gelöscht`);
+  _lastDeletedTimer=setTimeout(()=>{_lastDeleted=null; hideUndoToast();},5000);
+}
+function undoDelete(){
+  if(!_lastDeleted) return;
+  const list=lists.find(l=>l.id===_lastDeleted.listId);
+  if(list){
+    list.items.splice(_lastDeleted.index,0,_lastDeleted.item);
+    save(); renderItems();
+  }
+  clearTimeout(_lastDeletedTimer);
+  _lastDeleted=null; hideUndoToast();
+  toast('↩ Wiederhergestellt!');
+}
+function showUndoToast(msg){
+  let el=document.getElementById('undo-toast');
+  if(!el){el=document.createElement('div');el.id='undo-toast';el.className='undo-toast';document.body.appendChild(el);}
+  el.innerHTML=`<span>${msg}</span><button onclick="undoDelete()">↩ Rückgängig</button>`;
+  el.classList.add('visible');
+}
+function hideUndoToast(){
+  const el=document.getElementById('undo-toast');
+  if(el) el.classList.remove('visible');
 }
 
 // ── Store ─────────────────────────────────────────
@@ -2590,6 +2742,9 @@ function toggleRouteItem(id){
 function finishShopping(){
   showView('home'); renderHome();
   toast('🏁 Einkauf beendet – gut gemacht!');
+  const fc=(parseInt(localStorage.getItem('finished_count')||'0'))+1;
+  localStorage.setItem('finished_count',fc);
+  checkRatePrompt();
 }
 
 function addNewShoppingRoute(){
@@ -3225,12 +3380,39 @@ document.getElementById('cam-input').addEventListener('change', function(){
         const barcodes = await bd.detect(imgEl);
         if(barcodes.length){
           const raw = barcodes[0].rawValue;
-          badge.textContent = '✅ Barcode erkannt';
-          badge.className = 'photo-scan-badge found';
+          badge.textContent = '🔍 Produkt wird gesucht …';
+          badge.className = 'photo-scan-badge';
           scanInfo.style.display = 'flex';
           scanInfo.className = 'photo-scan-info';
-          scanInfo.innerHTML = `🔖 Barcode: <strong>${raw}</strong> – trage den Namen ein`;
-          input.placeholder = 'Produktname für Barcode '+raw+' …';
+          scanInfo.innerHTML = '⏳ Produktdaten werden geladen …';
+          input.placeholder = 'Suche …';
+          // Open Food Facts API lookup
+          try {
+            const res = await fetch(`https://world.openfoodfacts.net/api/v2/product/${raw}?fields=product_name,product_name_de,brands`, {signal: AbortSignal.timeout(5000)});
+            const data = await res.json();
+            const pName = data?.product?.product_name_de || data?.product?.product_name || '';
+            const brand = data?.product?.brands || '';
+            if(pName){
+              const fullName = brand ? `${pName}` : pName;
+              input.value = fullName;
+              badge.textContent = '✅ Produkt gefunden!';
+              badge.className = 'photo-scan-badge found';
+              scanInfo.innerHTML = `🛒 <strong>${fullName}</strong>${brand?' ('+brand+')':''} – bereit zum Hinzufügen`;
+              scanInfo.className = 'photo-scan-info';
+            } else {
+              badge.textContent = '📷 Barcode erkannt';
+              badge.className = 'photo-scan-badge found';
+              scanInfo.innerHTML = `🔖 Barcode <strong>${raw}</strong> – Produkt nicht in Datenbank, Name eingeben`;
+              scanInfo.className = 'photo-scan-info warn';
+              input.placeholder = 'Produktname eingeben …';
+            }
+          } catch(err) {
+            badge.textContent = '📷 Barcode: ' + raw;
+            badge.className = 'photo-scan-badge found';
+            scanInfo.innerHTML = '⚠️ Offline – Name manuell eingeben';
+            scanInfo.className = 'photo-scan-info warn';
+            input.placeholder = 'Produktname für Barcode ' + raw + ' …';
+          }
           input.focus();
         } else {
           badge.textContent = '📷 Kein Barcode';
@@ -4719,6 +4901,68 @@ checkShareParam(); // ?share= URL prüfen
   if(toggleEl) toggleEl.style.background = _apiEnabled ? 'var(--green)' : 'var(--text3)';
   if(dot) dot.style.right = _apiEnabled ? '3px' : '21px';
 })();
+
+// ── Onboarding ──────────────────────────────────
+let _obSlide = 0;
+function goToSlide(i){
+  _obSlide = i;
+  const slides = document.getElementById('onboarding-slides');
+  if(slides) slides.style.transform = `translateX(-${i*100}%)`;
+  document.querySelectorAll('.ob-dot').forEach((d,idx)=>d.classList.toggle('active',idx===i));
+  const btn = document.getElementById('ob-btn-primary');
+  if(btn) btn.textContent = i===2 ? '🚀 Los geht\'s!' : 'Weiter →';
+}
+function obNext(){
+  if(_obSlide < 2) goToSlide(_obSlide+1);
+  else finishOnboarding();
+}
+function finishOnboarding(){
+  localStorage.setItem('onboarding_v1','1');
+  const el = document.getElementById('onboarding-overlay');
+  if(el){ el.style.opacity='0'; el.style.transition='opacity .4s'; setTimeout(()=>el.style.display='none',400); }
+}
+// Onboarding beim Start prüfen
+if(!localStorage.getItem('onboarding_v1')){
+  document.getElementById('onboarding-overlay').style.display='flex';
+}
+
+// ── Online/Offline Indikator ─────────────────────
+function updateOnlineStatus(){
+  const el=document.getElementById('offline-banner');
+  if(!el) return;
+  if(navigator.onLine){
+    el.style.display='none';
+  } else {
+    el.style.display='block';
+  }
+}
+window.addEventListener('online', updateOnlineStatus);
+window.addEventListener('offline', updateOnlineStatus);
+updateOnlineStatus();
+
+// ── Bewerte uns Dialog ───────────────────────────
+function checkRatePrompt(){
+  if(localStorage.getItem('rate_never')||localStorage.getItem('rate_done')) return;
+  const count=parseInt(localStorage.getItem('finished_count')||'0');
+  if(count===3){
+    setTimeout(()=>{
+      const el=document.getElementById('rate-overlay');
+      if(el) el.style.display='flex';
+    },1200);
+  }
+}
+function rateAction(type){
+  localStorage.setItem('rate_done','1');
+  document.getElementById('rate-overlay').style.display='none';
+  if(type==='share') openAppShareSheet();
+}
+function dismissRate(){
+  document.getElementById('rate-overlay').style.display='none';
+}
+function neverRate(){
+  localStorage.setItem('rate_never','1');
+  document.getElementById('rate-overlay').style.display='none';
+}
 
 // Service Worker – Pfad automatisch ermitteln (lokal + GitHub Pages)
 if('serviceWorker' in navigator){
