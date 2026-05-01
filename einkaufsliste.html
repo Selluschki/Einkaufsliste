@@ -880,6 +880,35 @@ html[data-theme="dark"] .ios-install-sheet{background:#1a2332}
 .la-deal-add:hover{opacity:.88}
 .la-deal-add:active{transform:scale(.96)}
 .la-no-deals{text-align:center;padding:14px;font-size:.82rem;color:var(--text3)}
+
+/* ── Feature: Autocomplete Dropdown ── */
+.ac-dropdown{position:sticky;top:112px;z-index:29;background:var(--white);border:1.5px solid var(--border);border-radius:0 0 16px 16px;max-height:200px;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.1);margin:0 16px}
+html[data-theme="dark"] .ac-dropdown{background:#1a2332}
+.ac-item{padding:11px 16px;cursor:pointer;font-size:.88rem;display:flex;align-items:center;gap:10px;transition:background .12s}
+.ac-item:hover,.ac-item:active{background:var(--greenlt)}
+.ac-item-icon{font-size:1.1rem;width:24px;text-align:center;flex-shrink:0}
+.ac-item-name{flex:1;font-weight:500;color:var(--text)}
+.ac-item-cat{font-size:.72rem;color:var(--text3)}
+
+/* ── Feature: Recent Chips ── */
+.recent-chips-bar{display:flex;flex-wrap:nowrap;gap:6px;padding:8px 16px 4px;overflow-x:auto;scrollbar-width:none;background:var(--white);border-bottom:1px solid var(--border)}
+html[data-theme="dark"] .recent-chips-bar{background:rgba(31,41,55,.94)}
+.recent-chips-bar::-webkit-scrollbar{display:none}
+.recent-chip{flex-shrink:0;background:var(--greenlt);border:1.5px solid var(--green3);color:var(--green);border-radius:50px;padding:5px 12px;font-size:.78rem;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .15s}
+.recent-chip:hover{background:var(--green);color:#fff}
+.recent-chips-label{font-size:.7rem;color:var(--text3);font-weight:700;align-self:center;flex-shrink:0;white-space:nowrap}
+
+/* ── Feature: Price/Budget Tracking ── */
+.item-price-badge{font-size:.74rem;font-weight:700;color:#16a34a;background:#dcfce7;border:1px solid #86efac;border-radius:8px;padding:2px 8px;flex-shrink:0}
+html[data-theme="dark"] .item-price-badge{background:#14532d;color:#4ade80;border-color:#166534}
+.budget-total{font-size:.78rem;font-weight:700;color:var(--green);background:var(--greenlt);border:1.5px solid var(--green3);border-radius:8px;padding:4px 10px;display:inline-flex;align-items:center;gap:4px}
+.add-price{width:58px;background:var(--surface);border:1.5px solid var(--border);border-radius:50px;padding:10px 8px;font-size:.86rem;font-family:inherit;outline:none;text-align:center;color:var(--text);transition:border-color .2s}
+.add-price:focus{border-color:var(--green)}
+
+/* ── Feature: List Templates ── */
+.template-btns{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}
+.template-btn{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:10px 8px;font-size:.8rem;font-weight:600;cursor:pointer;font-family:inherit;color:var(--text);transition:all .15s;text-align:left}
+.template-btn:hover{border-color:var(--green);background:var(--greenlt);color:var(--green)}
 </style>
 </head>
 <body>
@@ -939,13 +968,18 @@ html[data-theme="dark"] .ios-install-sheet{background:#1a2332}
         </div>
         <div class="list-progress-bar"><div class="list-progress-fill" id="list-progress-fill" style="width:0%"></div></div>
       </div>
-      <div class="store-chip" id="store-chip" onclick="openStoreModal()">
-        <span>🏪</span><span id="store-chip-label">Supermarkt wählen</span><span>›</span>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px">
+        <div class="store-chip" id="store-chip" onclick="openStoreModal()">
+          <span>🏪</span><span id="store-chip-label">Supermarkt wählen</span><span>›</span>
+        </div>
+        <div id="budget-display" class="budget-total" style="display:none"></div>
       </div>
     </div>
   </div>
+  <div class="recent-chips-bar" id="recent-chips-bar" style="display:none"></div>
   <div class="add-bar">
     <input class="add-input" id="add-input" placeholder="Artikel hinzufügen …" autocomplete="off"/>
+    <input class="add-price" id="add-price" type="number" placeholder="€" step="0.01" min="0" style="display:none"/>
     <div class="add-qty-wrap">
       <input class="add-qty" id="add-qty" type="text" placeholder="Mng" value="1"/>
       <select class="add-unit" id="add-unit">
@@ -958,6 +992,7 @@ html[data-theme="dark"] .ios-install-sheet{background:#1a2332}
     <button class="mic-btn" id="btn-mic" title="Spracheingabe">🎤</button>
     <button class="add-btn" id="btn-add-item">+</button>
   </div>
+  <div class="ac-dropdown" id="ac-dropdown" style="display:none"></div>
   <!-- Hidden camera input -->
   <input type="file" id="cam-input" accept="image/*" capture="environment" style="display:none"/>
   <div id="avail-hint" style="display:none"></div>
@@ -1184,7 +1219,7 @@ html[data-theme="dark"] .ios-install-sheet{background:#1a2332}
         <div class="about-title">Einkaufsliste III</div>
         <div class="about-sub">Smart sortiert. Einfach einkaufen.</div>
         <div class="about-sub" style="margin-top:5px">30+ Supermärkte · Spracherkennung · Offline-fähig · PWA</div>
-        <div class="about-version">Version 3.1</div>
+        <div class="about-version">Version 3.2</div>
       </div>
     </div>
 
@@ -1209,6 +1244,17 @@ html[data-theme="dark"] .ios-install-sheet{background:#1a2332}
       <label class="modal-label" id="lbl-color">Farbe</label>
       <div class="color-picker" id="color-picker"></div>
       <button class="btn-primary" id="btn-create-list">Liste erstellen</button>
+      <div style="margin-top:16px">
+        <div class="modal-label">📋 Schnellstart mit Vorlage</div>
+        <div class="template-btns">
+          <button class="template-btn" onclick="useTemplate('woche')">🛒 Wocheneinkauf</button>
+          <button class="template-btn" onclick="useTemplate('bbq')">🔥 BBQ &amp; Grillen</button>
+          <button class="template-btn" onclick="useTemplate('backen')">🎂 Backen</button>
+          <button class="template-btn" onclick="useTemplate('baby')">👶 Baby &amp; Kind</button>
+          <button class="template-btn" onclick="useTemplate('reinigung')">🧹 Reinigung</button>
+          <button class="template-btn" onclick="useTemplate('fruehstueck')">🍳 Frühstück</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -2324,6 +2370,28 @@ function renderItems(){
   document.getElementById('list-progress-label').textContent=`${done} ${t.of} ${total} ${t.done}`;
   document.getElementById('list-progress-pct').textContent=pct+'%';
   document.getElementById('list-progress-fill').style.width=pct+'%';
+  const fill=document.getElementById('list-progress-fill');
+  if(fill){
+    fill.style.background=pct===100
+      ? 'linear-gradient(90deg,#16a34a,#22c55e)'
+      : pct>=50
+        ? 'linear-gradient(90deg,#ca8a04,#f59e0b)'
+        : 'linear-gradient(90deg,var(--green),var(--green2))';
+  }
+
+  // Budget tracking
+  const budget=list.items.reduce((s,i)=>s+(i.price?parseFloat(i.price):0),0);
+  const budgetDone=list.items.filter(i=>i.checked).reduce((s,i)=>s+(i.price?parseFloat(i.price):0),0);
+  const hasPrices=list.items.some(i=>i.price);
+  const budgetEl=document.getElementById('budget-display');
+  if(budgetEl){
+    if(hasPrices){
+      budgetEl.style.display='inline-flex';
+      budgetEl.innerHTML=`💰 ${budgetDone.toFixed(2)} / ${budget.toFixed(2)} €`;
+    } else {
+      budgetEl.style.display='none';
+    }
+  }
 
   const body=document.getElementById('items-body');
   if(total===0){
@@ -2361,6 +2429,7 @@ function renderItems(){
         <div class="item-check${item.checked?' done':''}"></div>
         <div class="item-name">${item.name}</div>
         ${(item.qty&&item.qty!=='1')||item.unit!=='Stk'?`<div class="item-qty-badge">${item.qty} ${item.unit}</div>`:''}
+        ${item.price?`<div class="item-price-badge">€ ${parseFloat(item.price).toFixed(2)}</div>`:''}
         <button class="item-delete" onclick="event.stopPropagation();deleteItem('${item.id}')">✕</button>
       </div>`).join('')}
     </div>`;
@@ -2389,10 +2458,15 @@ function addItem(){
   const list=getList();
   const qty=document.getElementById('add-qty').value||'1';
   const unit=document.getElementById('add-unit').value||'Stk';
-  list.items.push({id:uid(),name,qty,unit,cat:autoCategory(name),checked:false});
+  const price=document.getElementById('add-price')?.value||'';
+  list.items.push({id:uid(),name,qty,unit,cat:autoCategory(name),checked:false,price});
+  addToRecent(name);
   save(); renderItems();
-  input.value=''; input.focus();
+  input.value='';
+  const priceEl=document.getElementById('add-price');if(priceEl)priceEl.value='';
+  input.focus();
   const hel=document.getElementById('avail-hint'); if(hel) hel.style.display='none';
+  hideAcDropdown();
   toast('✓ '+name);
 }
 
@@ -2401,8 +2475,12 @@ function toggleItem(id){
   const item=list.items.find(i=>i.id===id);
   if(!item) return;
   item.checked=!item.checked;
+  if(navigator.vibrate) navigator.vibrate(item.checked?[30]:[15,10,15]);
   save(); renderItems();
-  if(list.items.length>0&&list.items.every(i=>i.checked)) toast('🎉 '+t.allDone);
+  if(list.items.length>0&&list.items.every(i=>i.checked)){
+    navigator.vibrate&&navigator.vibrate([50,30,50,30,100]);
+    toast('🎉 '+t.allDone);
+  }
 }
 
 function deleteItem(id){
@@ -2501,6 +2579,7 @@ function toggleRouteItem(id){
   const item=list.items.find(i=>i.id===id);
   if(!item) return;
   item.checked=!item.checked;
+  if(navigator.vibrate) navigator.vibrate(item.checked?[30]:[15,10,15]);
   save(); renderRoute();
   if(list.items.every(i=>i.checked)){
     setTimeout(()=>{const b=document.querySelector('.route-done-banner');if(b){b.classList.add('show');b.scrollIntoView({behavior:'smooth'});}},200);
@@ -3234,12 +3313,115 @@ document.getElementById('btn-delete-list').addEventListener('click',()=>{
   save(); showView('home'); renderHome();
 });
 
+// ══════════════════════════════════════════════════
+//  FEATURE 1: GROCERY_DB AUTOCOMPLETE
+// ══════════════════════════════════════════════════
+const GROCERY_DB=[
+  {n:'Milch',c:'dairy'},{n:'Butter',c:'dairy'},{n:'Joghurt',c:'dairy'},{n:'Käse',c:'dairy'},{n:'Quark',c:'dairy'},{n:'Sahne',c:'dairy'},{n:'Schmand',c:'dairy'},{n:'Mozzarella',c:'dairy'},{n:'Parmesan',c:'dairy'},{n:'Frischkäse',c:'dairy'},{n:'Kefir',c:'dairy'},{n:'Skyr',c:'dairy'},
+  {n:'Eier',c:'dairy'},{n:'Hühnereier',c:'dairy'},
+  {n:'Äpfel',c:'produce'},{n:'Bananen',c:'produce'},{n:'Tomaten',c:'produce'},{n:'Karotten',c:'produce'},{n:'Kartoffeln',c:'produce'},{n:'Zwiebeln',c:'produce'},{n:'Knoblauch',c:'produce'},{n:'Paprika',c:'produce'},{n:'Gurke',c:'produce'},{n:'Salat',c:'produce'},{n:'Spinat',c:'produce'},{n:'Brokkoli',c:'produce'},{n:'Blumenkohl',c:'produce'},{n:'Zucchini',c:'produce'},{n:'Aubergine',c:'produce'},{n:'Champignons',c:'produce'},{n:'Erdbeeren',c:'produce'},{n:'Trauben',c:'produce'},{n:'Orangen',c:'produce'},{n:'Zitronen',c:'produce'},{n:'Birnen',c:'produce'},{n:'Pfirsiche',c:'produce'},{n:'Kirschen',c:'produce'},{n:'Wassermelone',c:'produce'},{n:'Ananas',c:'produce'},{n:'Mango',c:'produce'},{n:'Avocado',c:'produce'},{n:'Rucola',c:'produce'},{n:'Lauch',c:'produce'},{n:'Sellerie',c:'produce'},{n:'Kohlrabi',c:'produce'},{n:'Rosenkohl',c:'produce'},{n:'Erbsen',c:'produce'},{n:'Bohnen',c:'produce'},{n:'Mais',c:'produce'},
+  {n:'Hähnchenbrust',c:'meat'},{n:'Hackfleisch',c:'meat'},{n:'Schweineschnitzel',c:'meat'},{n:'Rinderfilet',c:'meat'},{n:'Lachs',c:'meat'},{n:'Thunfisch',c:'meat'},{n:'Garnelen',c:'meat'},{n:'Salami',c:'meat'},{n:'Schinken',c:'meat'},{n:'Fleischwurst',c:'meat'},{n:'Bratwurst',c:'meat'},{n:'Leberwurst',c:'meat'},
+  {n:'Brot',c:'bakery'},{n:'Brötchen',c:'bakery'},{n:'Toastbrot',c:'bakery'},{n:'Laugenbrezel',c:'bakery'},{n:'Croissant',c:'bakery'},{n:'Baguette',c:'bakery'},{n:'Vollkornbrot',c:'bakery'},
+  {n:'Nudeln',c:'grains'},{n:'Spaghetti',c:'grains'},{n:'Penne',c:'grains'},{n:'Reis',c:'grains'},{n:'Mehl',c:'grains'},{n:'Haferflocken',c:'grains'},{n:'Müsli',c:'grains'},{n:'Cornflakes',c:'grains'},{n:'Quinoa',c:'grains'},{n:'Couscous',c:'grains'},{n:'Linsen',c:'grains'},{n:'Kichererbsen',c:'grains'},
+  {n:'Olivenöl',c:'condiments'},{n:'Sonnenblumenöl',c:'condiments'},{n:'Ketchup',c:'condiments'},{n:'Senf',c:'condiments'},{n:'Mayonnaise',c:'condiments'},{n:'Sojasoße',c:'condiments'},{n:'Essig',c:'condiments'},{n:'Salz',c:'condiments'},{n:'Pfeffer',c:'condiments'},{n:'Paprikapulver',c:'condiments'},{n:'Zucker',c:'condiments'},{n:'Honig',c:'condiments'},{n:'Tomatenmark',c:'condiments'},{n:'Tomatensauce',c:'condiments'},{n:'Curry',c:'condiments'},{n:'Zimt',c:'condiments'},{n:'Vanille',c:'condiments'},{n:'Backpulver',c:'condiments'},{n:'Hefe',c:'condiments'},
+  {n:'Cola',c:'beverage'},{n:'Wasser',c:'beverage'},{n:'Orangensaft',c:'beverage'},{n:'Apfelsaft',c:'beverage'},{n:'Kaffee',c:'beverage'},{n:'Tee',c:'beverage'},{n:'Bier',c:'beverage'},{n:'Wein',c:'beverage'},{n:'Mineralwasser',c:'beverage'},{n:'Limonade',c:'beverage'},
+  {n:'Chips',c:'snacks'},{n:'Schokolade',c:'snacks'},{n:'Gummibärchen',c:'snacks'},{n:'Kekse',c:'snacks'},{n:'Popcorn',c:'snacks'},{n:'Nüsse',c:'snacks'},{n:'Erdnüsse',c:'snacks'},{n:'Mandeln',c:'snacks'},{n:'Müsliriegel',c:'snacks'},
+  {n:'Spülmittel',c:'household'},{n:'Waschmittel',c:'household'},{n:'Toilettenpapier',c:'household'},{n:'Küchentücher',c:'household'},{n:'Müllbeutel',c:'household'},{n:'Zahnpasta',c:'household'},{n:'Shampoo',c:'household'},{n:'Duschgel',c:'household'},{n:'Handseife',c:'household'},
+  {n:'Tiefkühlpizza',c:'frozen'},{n:'Eis',c:'frozen'},{n:'Pommes',c:'frozen'},{n:'Tiefkühlgemüse',c:'frozen'}
+];
+
+function showAcSuggestions(val){
+  const dd=document.getElementById('ac-dropdown');
+  if(!dd) return;
+  if(!val||val.length<2){dd.style.display='none';return;}
+  const q=val.toLowerCase();
+  const matches=GROCERY_DB.filter(x=>x.n.toLowerCase().startsWith(q)||x.n.toLowerCase().includes(q)).slice(0,6);
+  if(!matches.length){dd.style.display='none';return;}
+  const cats=typeof CATS!=='undefined'?CATS:{};
+  dd.innerHTML=matches.map(x=>{
+    const c=cats[x.c]||{icon:'📦'};
+    return `<div class="ac-item" onmousedown="pickAcSuggestion('${x.n.replace(/'/g,"\\'")}')">
+      <span class="ac-item-icon">${c.icon}</span>
+      <span class="ac-item-name">${x.n}</span>
+    </div>`;
+  }).join('');
+  dd.style.display='block';
+}
+function hideAcDropdown(){
+  const dd=document.getElementById('ac-dropdown');
+  if(dd) dd.style.display='none';
+}
+function pickAcSuggestion(name){
+  const input=document.getElementById('add-input');
+  if(input){input.value=name;input.focus();}
+  hideAcDropdown();
+}
+
+// ══════════════════════════════════════════════════
+//  FEATURE 2: ZULETZT VERWENDET CHIPS
+// ══════════════════════════════════════════════════
+function getRecentItems(){
+  try{return JSON.parse(localStorage.getItem('_recentItems')||'[]');}catch{return [];}
+}
+function addToRecent(name){
+  let r=getRecentItems();
+  r=r.filter(x=>x.toLowerCase()!==name.toLowerCase());
+  r.unshift(name);
+  r=r.slice(0,12);
+  localStorage.setItem('_recentItems',JSON.stringify(r));
+}
+function showRecentChips(){
+  const bar=document.getElementById('recent-chips-bar');
+  if(!bar) return;
+  const r=getRecentItems();
+  if(!r.length){bar.style.display='none';return;}
+  bar.innerHTML='<span class="recent-chips-label">Zuletzt:</span>'+
+    r.slice(0,8).map(name=>`<button class="recent-chip" onclick="pickRecent('${name.replace(/'/g,"\\'")}')">⊕ ${name}</button>`).join('');
+  bar.style.display='flex';
+}
+function pickRecent(name){
+  const input=document.getElementById('add-input');
+  if(input){input.value=name;input.focus();}
+  hideAcDropdown();
+}
+
+// ══════════════════════════════════════════════════
+//  FEATURE 5: LISTEN-VORLAGEN
+// ══════════════════════════════════════════════════
+const TEMPLATES={
+  woche:{name:'Wocheneinkauf',emoji:'🛒',items:['Milch','Butter','Eier','Brot','Joghurt','Käse','Hähnchenbrust','Hackfleisch','Tomaten','Gurke','Paprika','Äpfel','Bananen','Nudeln','Reis','Ketchup','Olivenöl','Salz','Spülmittel','Toilettenpapier']},
+  bbq:{name:'BBQ & Grillen',emoji:'🔥',items:['Bratwurst','Hähnchenschenkel','Hackfleisch','Salat','Tomaten','Brot','Ketchup','Senf','Mayonnaise','Bier','Cola','Chips','Alufolie','Holzkohle']},
+  backen:{name:'Backen',emoji:'🎂',items:['Mehl','Zucker','Butter','Eier','Backpulver','Vanille','Milch','Sahne','Schokolade','Backpapier','Hefe','Salz']},
+  baby:{name:'Baby & Kind',emoji:'👶',items:['Windeln','Babynahrung','Babymilch','Feuchttücher','Babybrei','Apfelsaft','Haferflocken','Joghurt','Bananen','Babyöl']},
+  reinigung:{name:'Reinigung',emoji:'🧹',items:['Spülmittel','Waschmittel','Weichspüler','WC-Reiniger','Allzweckreiniger','Schwämme','Müllbeutel','Küchentücher','Toilettenpapier']},
+  fruehstueck:{name:'Frühstück',emoji:'🍳',items:['Brot','Butter','Eier','Marmelade','Honig','Milch','Kaffee','Orangensaft','Joghurt','Müsli','Bananen','Käse','Schinken']}
+};
+function useTemplate(key){
+  const tpl=TEMPLATES[key];
+  if(!tpl) return;
+  closeModal('new');
+  const COLORS=['#2563eb','#16a34a','#ea580c','#7c3aed','#db2777','#0891b2','#ca8a04'];
+  const newId=uid();
+  const newList={
+    id:newId,name:tpl.name,emoji:tpl.emoji,
+    color:COLORS[Math.floor(Math.random()*COLORS.length)],
+    items:tpl.items.map(n=>({id:uid(),name:n,qty:'1',unit:'Stk',cat:autoCategory(n),checked:false,price:''})),
+    store:null,created:Date.now()
+  };
+  lists.push(newList);
+  currentListId=newId;
+  save(); renderHome();
+  renderListView(); showView('list');
+  toast('✓ Liste "'+tpl.name+'" mit '+tpl.items.length+' Artikeln erstellt');
+}
+
 // ── Btn handlers ──────────────────────────────────
 document.getElementById('btn-sort-route').addEventListener('click',startRoute);
 document.getElementById('btn-add-item').addEventListener('click',addItem);
-document.getElementById('add-input').addEventListener('keydown',e=>{if(e.key==='Enter'){hideSuggestions();addItem();}});
-document.getElementById('add-input').addEventListener('blur',()=>{setTimeout(()=>{const el=document.getElementById('avail-hint');if(el)el.style.display='none';hideSuggestions();},300);});
-document.getElementById('add-input').addEventListener('focus',e=>{if(e.target.value.length>1) updateAvailHint(e.target.value);});
+document.getElementById('add-input').addEventListener('keydown',e=>{if(e.key==='Enter'){hideSuggestions();hideAcDropdown();addItem();}});
+document.getElementById('add-input').addEventListener('blur',()=>{setTimeout(()=>{const el=document.getElementById('avail-hint');if(el)el.style.display='none';hideSuggestions();hideAcDropdown();const b=document.getElementById('recent-chips-bar');if(b)b.style.display='none';},300);});
+document.getElementById('add-input').addEventListener('focus',e=>{if(e.target.value.length>1) updateAvailHint(e.target.value);showRecentChips();});
+document.getElementById('add-input').addEventListener('input',e=>{showAcSuggestions(e.target.value);});
 document.getElementById('btn-mic').addEventListener('click',openVoice);
 document.getElementById('btn-cam').addEventListener('click',openCamera);
 document.getElementById('btn-back-home').addEventListener('click',()=>{showView('home');renderHome();});
