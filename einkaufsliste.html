@@ -289,6 +289,22 @@ html[data-theme="dark"] #avail-hint.ok  {background:rgba(22,163,74,.15);color:#8
 html[data-theme="dark"] #avail-hint.warn{background:rgba(234,179,8,.12);color:#fde047}
 html[data-theme="dark"] #avail-hint.info{background:rgba(59,130,246,.15);color:var(--green3)}
 
+/* ── Availability Badge per Item ── */
+.avail-warn-badge{
+  display:inline-flex;align-items:center;justify-content:center;
+  font-size:.78rem;cursor:pointer;margin-left:5px;vertical-align:middle;
+  line-height:1;transition:transform .15s;flex-shrink:0;
+}
+.avail-warn-badge:active{transform:scale(.8)}
+.avail-summary-banner{
+  display:flex;align-items:flex-start;gap:9px;
+  background:#fffbeb;border:1px solid #fde68a;border-radius:14px;
+  padding:10px 14px;margin:0 0 8px;font-size:.8rem;color:#92400e;line-height:1.5;
+}
+.avail-summary-banner strong{color:#78350f}
+html[data-theme="dark"] .avail-summary-banner{background:rgba(234,179,8,.1);border-color:rgba(234,179,8,.3);color:#fde047}
+html[data-theme="dark"] .avail-summary-banner strong{color:#fbbf24}
+
 /* ── Item List ── */
 .items-body{flex:1;padding:12px 16px 100px;display:flex;flex-direction:column;gap:4px}
 .category-group{margin-bottom:14px}
@@ -2349,6 +2365,17 @@ function fmtStores(arr){
   return show.join(', ')+(rest>0?' +'+rest+' weitere':'');
 }
 
+// ── Per-item availability badge ─────────────────────
+let _availTipMap={};
+function availBadge(name,store,itemId){
+  if(!store) return '';
+  const r=checkAvail(name,store);
+  if(!r||r.everywhere||r.available) return '';
+  const msg=r.tip||('Möglicherweise nicht bei '+store+' · Erhältlich bei: '+fmtStores(r.stores));
+  _availTipMap[itemId]=msg;
+  return `<span class="avail-warn-badge" onclick="event.stopPropagation();toast('🏪 '+_availTipMap['${itemId}'],5000)">⚠️</span>`;
+}
+
 let _hintT=null;
 function updateAvailHint(val){
   clearTimeout(_hintT);
@@ -2594,7 +2621,16 @@ function renderItems(){
   });
 
   let html='';
+  _availTipMap={};
   if(list.store){
+    // Availability summary
+    const unavail=list.items.filter(i=>{const r=checkAvail(i.name,list.store);return r&&!r.available&&!r.everywhere;});
+    if(unavail.length>0){
+      html+=`<div class="avail-summary-banner">
+        <span>⚠️</span>
+        <div><strong>${unavail.length} Artikel</strong> auf deiner Liste möglicherweise nicht bei <strong>${list.store}</strong> erhältlich — tippe auf ⚠️ am Artikel für Alternativen</div>
+      </div>`;
+    }
     html+=`<div class="sort-banner" onclick="startRoute()">
       <div class="sort-banner-icon">🗺</div>
       <div class="sort-banner-text">
@@ -2612,7 +2648,7 @@ function renderItems(){
       ${items.map(item=>`
       <div class="item-row${item.checked?' checked':''}" onclick="toggleItem('${item.id}')">
         <div class="item-check${item.checked?' done':''}"></div>
-        <div class="item-name">${item.name}</div>
+        <div class="item-name">${item.name}${availBadge(item.name,list.store,item.id)}</div>
         ${(item.qty&&item.qty!=='1')||item.unit!=='Stk'?`<div class="item-qty-badge">${item.qty} ${item.unit}</div>`:''}
         ${item.price?`<div class="item-price-badge">€ ${parseFloat(item.price).toFixed(2)}</div>`:''}
         <button class="item-delete" onclick="event.stopPropagation();deleteItem('${item.id}')">✕</button>
@@ -2762,6 +2798,16 @@ function renderRoute(){
     </div>`;
   }
 
+  // Availability summary for route view
+  _availTipMap={};
+  const routeUnavail=list.items.filter(i=>{const r=checkAvail(i.name,list.store);return r&&!r.available&&!r.everywhere;});
+  if(routeUnavail.length>0){
+    html=`<div class="avail-summary-banner">
+      <span>⚠️</span>
+      <div><strong>${routeUnavail.length} Artikel</strong> möglicherweise nicht bei <strong>${list.store}</strong> — tippe auf ⚠️ am Artikel</div>
+    </div>`+html;
+  }
+
   let num=0;
   order.forEach(cat=>{
     const items=grouped[cat];
@@ -2780,7 +2826,7 @@ function renderRoute(){
         ${items.map(item=>`
         <div class="route-item${item.checked?' checked':''}" onclick="toggleRouteItem('${item.id}')">
           <div class="route-item-check${item.checked?' done':''}"></div>
-          <div class="route-item-name">${item.name}</div>
+          <div class="route-item-name">${item.name}${availBadge(item.name,list.store,item.id)}</div>
           ${(item.qty&&item.qty!=='1')||item.unit!=='Stk'?`<div class="route-item-qty">${item.qty} ${item.unit}</div>`:''}
         </div>`).join('')}
       </div>
