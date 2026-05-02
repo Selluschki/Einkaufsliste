@@ -1,4 +1,4 @@
-const CACHE = 'einkaufsliste-v29';
+const CACHE = 'einkaufsliste-v30';
 
 // Automatisch den richtigen Basispfad erkennen
 // → lokal: '/'  |  GitHub Pages: '/Einkaufsliste/'
@@ -37,4 +37,9 @@ self.addEventListener('fetch', e => {
   e.respondWith(
     caches.match(e.request).then(cached => cached || fetch(e.request))
   );
+});
+
+// Update-Befehl von der App empfangen
+self.addEventListener('message', e => {
+  if(e.data === 'SKIP_WAITING') self.skipWaiting();
 });

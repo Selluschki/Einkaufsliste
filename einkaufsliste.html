@@ -503,6 +503,46 @@ html[data-theme="dark"] .settings-section{background:#0f1f4a;box-shadow:0 2px 12
 .about-sub{font-size:.82rem;color:var(--text3);line-height:1.5}
 .about-version{display:inline-block;background:var(--greenlt);color:var(--green);font-size:.7rem;font-weight:700;padding:3px 10px;border-radius:50px;margin-top:10px}
 
+/* ════ UPDATE BANNER ════ */
+.update-banner{
+  position:fixed;top:0;left:0;right:0;z-index:9999;
+  background:linear-gradient(135deg,#0f1f5c,#1a3a8f);
+  color:#fff;padding:12px 16px;
+  display:flex;align-items:center;gap:10px;
+  box-shadow:0 4px 20px rgba(0,0,0,.35);
+  transform:translateY(-110%);transition:transform .35s cubic-bezier(.32,1.2,.64,1);
+  font-size:.85rem;
+}
+.update-banner.show{transform:translateY(0)}
+.update-banner-text{flex:1;line-height:1.4}
+.update-banner-title{font-weight:800;font-size:.9rem}
+.update-banner-sub{font-size:.75rem;opacity:.8}
+.update-banner-btn{
+  background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#0f1f5c;
+  border:none;border-radius:50px;padding:8px 16px;font-weight:800;
+  font-size:.78rem;cursor:pointer;white-space:nowrap;font-family:inherit;
+  box-shadow:0 2px 8px rgba(245,158,11,.4);transition:transform .15s;flex-shrink:0;
+}
+.update-banner-btn:active{transform:scale(.93)}
+.update-banner-dismiss{background:none;border:none;color:rgba(255,255,255,.6);
+  font-size:1.1rem;cursor:pointer;padding:4px 6px;line-height:1;flex-shrink:0;}
+/* Update-Indikator in Settings */
+.update-status-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.update-status-dot.up-to-date{background:#22c55e}
+.update-status-dot.pending{background:#f59e0b;animation:pulseDot 1s infinite}
+@keyframes pulseDot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.7)}}
+.update-btn{
+  display:flex;align-items:center;gap:7px;background:linear-gradient(135deg,var(--navy),#1a3a8f);
+  color:#fff;border:none;border-radius:12px;padding:10px 18px;font-weight:700;
+  font-size:.82rem;cursor:pointer;font-family:inherit;transition:all .2s;
+  box-shadow:0 2px 8px rgba(15,31,92,.25);
+}
+.update-btn:hover{box-shadow:0 4px 16px rgba(15,31,92,.35);transform:translateY(-1px)}
+.update-btn:active{transform:scale(.96)}
+.update-btn:disabled{opacity:.5;pointer-events:none}
+.update-btn.available{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#0f1f5c}
+html[data-theme="dark"] .update-btn{box-shadow:0 2px 8px rgba(0,0,0,.4)}
+
 /* ════ VOICE MODAL ════ */
 .voice-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.58);backdrop-filter:blur(6px);z-index:200;align-items:flex-end;justify-content:center}
 .voice-overlay.open{display:flex;animation:fadeIn .2s ease}
@@ -1092,6 +1132,19 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
 </head>
 <body>
 
+<!-- ══════════════════════════════════════
+     UPDATE BANNER (automatisch eingeblendet)
+══════════════════════════════════════ -->
+<div class="update-banner" id="update-banner" role="alert" aria-live="polite">
+  <span style="font-size:1.4rem;flex-shrink:0">🆕</span>
+  <div class="update-banner-text">
+    <div class="update-banner-title">Update verfügbar!</div>
+    <div class="update-banner-sub">Neue Version bereit – jetzt installieren</div>
+  </div>
+  <button class="update-banner-btn" onclick="applyUpdate()">Installieren</button>
+  <button class="update-banner-dismiss" onclick="dismissUpdateBanner()" aria-label="Schließen">✕</button>
+</div>
+
 <div class="onboarding-overlay" id="onboarding-overlay" style="display:none">
   <div class="onboarding-wrap">
     <div class="onboarding-slides" id="onboarding-slides">
@@ -1448,6 +1501,28 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
       <div class="settings-row clickable danger" onclick="clearAllData()">
         <span class="srow-icon">🗑</span>
         <div><div class="srow-label" style="color:var(--red)">Alle Daten löschen</div><div class="srow-sub">Alle Listen &amp; Einstellungen entfernen</div></div>
+      </div>
+    </div>
+
+    <!-- App-Updates -->
+    <div class="settings-section">
+      <div class="settings-sec-title">🔄 App-Updates</div>
+      <div class="settings-row" style="flex-direction:column;align-items:flex-start;gap:12px;padding:14px 16px 16px">
+        <div style="display:flex;align-items:center;gap:10px;width:100%">
+          <div class="update-status-dot up-to-date" id="update-dot"></div>
+          <div style="flex:1">
+            <div style="font-size:.88rem;font-weight:700;color:var(--text)" id="update-status-text">App ist aktuell</div>
+            <div style="font-size:.75rem;color:var(--text3);margin-top:2px" id="update-status-sub">Zuletzt geprüft: noch nie</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;width:100%;flex-wrap:wrap">
+          <button class="update-btn" id="update-check-btn" onclick="checkForUpdate()">
+            🔍 Nach Updates suchen
+          </button>
+          <button class="update-btn available" id="update-apply-btn" onclick="applyUpdate()" style="display:none">
+            ⚡ Jetzt installieren
+          </button>
+        </div>
       </div>
     </div>
 
@@ -5414,10 +5489,109 @@ function neverRate(){
   document.getElementById('rate-overlay').style.display='none';
 }
 
+// ══════════════════════════════════════════════════
+//  APP-UPDATE SYSTEM
+// ══════════════════════════════════════════════════
+let _swReg = null;
+let _updateWaiting = false;
+
+function _setUpdateDot(state){
+  // state: 'up-to-date' | 'pending' | 'checking'
+  const dot = document.getElementById('update-dot');
+  if(!dot) return;
+  dot.className = 'update-status-dot ' + state;
+}
+
+function _setUpdateStatusText(title, sub){
+  const t = document.getElementById('update-status-text');
+  const s = document.getElementById('update-status-sub');
+  if(t) t.textContent = title;
+  if(s) s.textContent = sub;
+}
+
+function _showUpdateAvailable(){
+  _updateWaiting = true;
+  _setUpdateDot('pending');
+  _setUpdateStatusText('Update verfügbar!', 'Neue Version wurde heruntergeladen');
+  // Apply-Button einblenden
+  const applyBtn = document.getElementById('update-apply-btn');
+  if(applyBtn) applyBtn.style.display = '';
+  // Banner einblenden
+  const banner = document.getElementById('update-banner');
+  if(banner) banner.classList.add('show');
+}
+
+function dismissUpdateBanner(){
+  const banner = document.getElementById('update-banner');
+  if(banner) banner.classList.remove('show');
+}
+
+function applyUpdate(){
+  if(!_updateWaiting || !_swReg || !_swReg.waiting){
+    // Fallback: Seite neu laden
+    window.location.reload();
+    return;
+  }
+  // SW anweisen, sofort zu aktivieren
+  _swReg.waiting.postMessage('SKIP_WAITING');
+}
+
+async function checkForUpdate(){
+  const btn = document.getElementById('update-check-btn');
+  const now = new Date().toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
+  if(btn){ btn.disabled = true; btn.textContent = '⏳ Prüfe…'; }
+  _setUpdateDot('checking');
+  _setUpdateStatusText('Suche nach Updates…', 'Bitte warten');
+  try{
+    if(!_swReg){ throw new Error('SW nicht registriert'); }
+    await _swReg.update();
+    if(_updateWaiting){
+      // Schon bekannt
+    } else if(_swReg.waiting){
+      _showUpdateAvailable();
+    } else {
+      _setUpdateDot('up-to-date');
+      _setUpdateStatusText('App ist aktuell', 'Zuletzt geprüft: ' + now + ' Uhr');
+      toast('✅ Alles aktuell – du hast die neueste Version!', 3000);
+    }
+  } catch(e){
+    _setUpdateDot('up-to-date');
+    _setUpdateStatusText('Prüfung fehlgeschlagen', 'Bitte Internetverbindung prüfen');
+    toast('⚠️ Update-Prüfung fehlgeschlagen', 3000);
+  }
+  if(btn){ btn.disabled = false; btn.textContent = '🔍 Nach Updates suchen'; }
+}
+
 // Service Worker – Pfad automatisch ermitteln (lokal + GitHub Pages)
 if('serviceWorker' in navigator){
   const swPath = location.pathname.replace(/einkaufsliste\.html$/, '') + 'sw.js';
-  navigator.serviceWorker.register(swPath).catch(()=>{});
+  navigator.serviceWorker.register(swPath).then(reg => {
+    _swReg = reg;
+
+    // Update bereits beim Laden wartend?
+    if(reg.waiting) _showUpdateAvailable();
+
+    // Neues Update im Hintergrund gefunden
+    reg.addEventListener('updatefound', () => {
+      const newSW = reg.installing;
+      if(!newSW) return;
+      newSW.addEventListener('statechange', () => {
+        if(newSW.state === 'installed' && navigator.serviceWorker.controller){
+          _showUpdateAvailable();
+        }
+      });
+    });
+
+    // Nach SW-Aktivierung → Seite neu laden
+    let refreshing = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if(!refreshing){
+        refreshing = true;
+        window.location.reload();
+      }
+    });
+
+  }).catch(()=>{});
 }
 </script>
 </body>
