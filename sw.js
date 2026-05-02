@@ -1,4 +1,4 @@
-const CACHE = 'einkaufsliste-v27';
+const CACHE = 'einkaufsliste-v28';
 
 // Automatisch den richtigen Basispfad erkennen
 // → lokal: '/'  |  GitHub Pages: '/Einkaufsliste/'
@@ -13,7 +13,8 @@ const FILES = [
   BASE + 'Einkaufswagenbild.jpg',
   BASE + 'datenschutz.html',
   BASE + 'impressum.html',
-  BASE + 'agb.html'
+  BASE + 'agb.html',
+  BASE + 'offers.json'
 ];
 
 self.addEventListener('install', e => {

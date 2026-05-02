@@ -158,6 +158,14 @@ html[data-theme="orange"] body{background:#fff7ed}
 .home-greeting{font-size:.78rem;opacity:.75;font-weight:600;margin-bottom:4px;letter-spacing:.04em;text-transform:uppercase}
 .home-hero-name{font-size:1.75rem;font-weight:900;line-height:1.18;margin-bottom:6px;letter-spacing:-.02em}
 .home-hero-sub{font-size:.8rem;opacity:.68;font-weight:500}
+/* Slogan Badge */
+.home-slogan{
+  display:inline-flex;align-items:center;gap:7px;margin-top:10px;
+  background:rgba(245,158,11,.13);border:1px solid rgba(245,158,11,.35);
+  border-radius:50px;padding:6px 14px;font-size:.72rem;font-weight:700;
+  color:#fbbf24;letter-spacing:.01em;line-height:1.4;max-width:100%;
+}
+.home-slogan span{color:rgba(255,255,255,.9)}
 .home-stats{display:flex;gap:7px;margin-top:18px;flex-wrap:wrap}
 .stat-pill{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);border-radius:50px;padding:6px 14px;font-size:.74rem;font-weight:600;color:#fff;display:flex;align-items:center;gap:5px;backdrop-filter:blur(8px)}
 .home-search-wrap{margin-top:16px;position:relative}
@@ -288,6 +296,59 @@ html[data-theme="dark"] .add-bar{background:rgba(31,41,55,.94)}
 html[data-theme="dark"] #avail-hint.ok  {background:rgba(22,163,74,.15);color:#86efac}
 html[data-theme="dark"] #avail-hint.warn{background:rgba(234,179,8,.12);color:#fde047}
 html[data-theme="dark"] #avail-hint.info{background:rgba(59,130,246,.15);color:var(--green3)}
+
+/* ════ ANGEBOTE DER WOCHE ════ */
+.offers-wrap{padding:0 0 4px;background:var(--surface);border-bottom:1px solid var(--border)}
+.offers-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px}
+.offers-header-left{display:flex;align-items:center;gap:8px}
+.offers-fire{font-size:1.15rem}
+.offers-title{font-size:.82rem;font-weight:900;color:var(--navy);letter-spacing:.01em}
+.offers-week{font-size:.68rem;font-weight:600;color:var(--text3);background:var(--border);border-radius:50px;padding:2px 10px}
+.offers-scroll{display:flex;gap:10px;overflow-x:auto;padding:0 16px 14px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.offers-scroll::-webkit-scrollbar{display:none}
+.offer-card{
+  flex-shrink:0;width:140px;background:#fff;border-radius:16px;
+  border:1.5px solid var(--border);overflow:hidden;cursor:pointer;
+  transition:all .2s cubic-bezier(.4,0,.2,1);position:relative;
+}
+html[data-theme="dark"] .offer-card{background:#0f1f4a;border-color:#1e3a6e}
+.offer-card:active{transform:scale(.96)}
+.offer-card:hover{border-color:rgba(245,158,11,.5);box-shadow:0 4px 18px rgba(245,158,11,.18)}
+.offer-card-top{padding:12px 12px 6px;position:relative}
+.offer-discount-badge{
+  position:absolute;top:8px;right:8px;
+  background:linear-gradient(135deg,#ef4444,#dc2626);
+  color:#fff;font-size:.62rem;font-weight:900;border-radius:50px;
+  padding:2px 7px;letter-spacing:.02em;
+}
+.offer-emoji{font-size:1.9rem;line-height:1;margin-bottom:6px;display:block}
+.offer-store-lbl{font-size:.62rem;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px}
+.offer-name{font-size:.78rem;font-weight:700;color:var(--navy);line-height:1.3;margin-bottom:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+html[data-theme="dark"] .offer-name{color:#e8eeff}
+.offer-desc{font-size:.62rem;color:var(--text3);line-height:1.3;margin-bottom:6px;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+.offer-prices{display:flex;align-items:baseline;gap:5px;margin-bottom:2px}
+.offer-sale{font-size:1rem;font-weight:900;color:#16a34a}
+.offer-normal{font-size:.7rem;color:var(--text3);text-decoration:line-through}
+.offer-unit{font-size:.62rem;color:var(--text3)}
+.offer-add-btn{
+  width:100%;border:none;border-top:1px solid var(--border);
+  background:linear-gradient(135deg,rgba(245,158,11,.1),rgba(245,158,11,.05));
+  color:var(--gold);font-size:.72rem;font-weight:800;padding:8px;
+  cursor:pointer;font-family:inherit;transition:all .15s;letter-spacing:.01em;
+}
+.offer-add-btn:hover{background:linear-gradient(135deg,var(--gold),#d97706);color:#fff}
+.offers-empty{padding:12px 16px;font-size:.82rem;color:var(--text3);text-align:center}
+/* Badge on list/route items */
+.offer-item-badge{
+  display:inline-flex;align-items:center;gap:3px;
+  background:linear-gradient(135deg,rgba(22,163,74,.12),rgba(22,163,74,.06));
+  border:1px solid rgba(22,163,74,.3);border-radius:50px;
+  padding:1px 7px;font-size:.65rem;font-weight:800;color:#15803d;
+  margin-left:5px;vertical-align:middle;cursor:pointer;white-space:nowrap;
+  transition:all .15s;flex-shrink:0;
+}
+.offer-item-badge:active{transform:scale(.88)}
+html[data-theme="dark"] .offer-item-badge{background:rgba(22,163,74,.15);border-color:rgba(22,163,74,.4);color:#86efac}
 
 /* ── Availability Badge per Item ── */
 .avail-warn-badge{
@@ -1089,6 +1150,7 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
     <div class="home-greeting" id="home-greeting">Guten Tag!</div>
     <div class="home-hero-name" id="home-hero-name">🛒 Einkaufsliste III</div>
     <div class="home-hero-sub" id="home-sub">Smart sortiert. Einfach einkaufen.</div>
+    <div class="home-slogan">🏪 <span>Die einzige App die weiß, wie dein Supermarkt von innen aussieht</span></div>
     <div class="home-stats">
       <div class="stat-pill" id="stat-lists">📋 0 Listen</div>
       <div class="stat-pill" id="stat-items">🛍 0 Artikel</div>
@@ -1103,6 +1165,20 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
     <!-- Store Logo Strip -->
     <div class="store-logo-strip" id="store-logo-strip"></div>
   </div>
+  <!-- ── Angebote der Woche ── -->
+  <div class="offers-wrap" id="offers-wrap" style="display:none">
+    <div class="offers-header">
+      <div class="offers-header-left">
+        <span class="offers-fire">🔥</span>
+        <span class="offers-title">Angebote diese Woche</span>
+      </div>
+      <span class="offers-week" id="offers-week-label">KW –</span>
+    </div>
+    <div class="offers-scroll" id="offers-scroll">
+      <div class="offers-empty">Lade Angebote …</div>
+    </div>
+  </div>
+
   <div class="home-body">
     <div id="home-lists"></div>
   </div>
@@ -2487,6 +2563,97 @@ function initSettings(){
   if(ni) ni.value=CFG.name||'';
 }
 
+// ════════════════════════════════════════════════
+//  ANGEBOTE DER WOCHE
+// ════════════════════════════════════════════════
+let offersData = null;
+let _offerTipMap = {};
+
+async function loadOffers(){
+  try{
+    const res = await fetch('offers.json?_='+Date.now());
+    if(!res.ok) return;
+    offersData = await res.json();
+    renderOffersSection();
+    renderHome();
+  } catch(e){ /* offline oder nicht verfügbar */ }
+}
+
+function getOfferForItem(name, storeName){
+  if(!offersData || !name) return null;
+  const nl = name.toLowerCase();
+  // 1. Im ausgewählten Markt suchen
+  const storeKey = storeName ? Object.keys(offersData.stores).find(k=>k.toLowerCase()===storeName.toLowerCase()) : null;
+  const searchStores = storeKey ? [storeKey] : Object.keys(offersData.stores);
+  let best = null;
+  for(const sk of searchStores){
+    const storeOffers = offersData.stores[sk]||[];
+    for(const o of storeOffers){
+      const match = nl.includes(o.name.toLowerCase()) ||
+                    o.name.toLowerCase().includes(nl.slice(0,Math.min(nl.length,8))) ||
+                    (o.keywords||[]).some(k=>nl.includes(k)||k.includes(nl.slice(0,6)));
+      if(match){
+        if(!best || o.discount > best.discount) best = {...o, store:sk};
+      }
+    }
+  }
+  return best;
+}
+
+function offerItemBadge(name, store, itemId){
+  const o = getOfferForItem(name, store);
+  if(!o) return '';
+  const msg = `💰 ${o.store}: ${o.name} für ${o.salePrice.toFixed(2)}€ statt ${o.normalPrice.toFixed(2)}€ (-${o.discount}%)`;
+  _offerTipMap[itemId+'_offer'] = msg;
+  return `<span class="offer-item-badge" onclick="event.stopPropagation();toast(_offerTipMap['${itemId}_offer'],5000)">💰 -${o.discount}%</span>`;
+}
+
+function renderOffersSection(){
+  const wrap = document.getElementById('offers-wrap');
+  const scroll = document.getElementById('offers-scroll');
+  const weekLbl = document.getElementById('offers-week-label');
+  if(!wrap || !scroll || !offersData) return;
+  wrap.style.display='block';
+  weekLbl.textContent = offersData.meta?.week || 'Diese Woche';
+  // Alle Angebote flach, sortiert nach Discount
+  const all=[];
+  Object.entries(offersData.stores).forEach(([store,offers])=>{
+    (offers||[]).forEach(o=>all.push({...o,store}));
+  });
+  all.sort((a,b)=>b.discount-a.discount);
+  if(!all.length){ scroll.innerHTML='<div class="offers-empty">Keine Angebote verfügbar</div>'; return; }
+  scroll.innerHTML = all.map(o=>`
+    <div class="offer-card" onclick="addOfferToCurrentList(${JSON.stringify(o).replace(/"/g,'&quot;')})">
+      <div class="offer-card-top">
+        <span class="offer-discount-badge">-${o.discount}%</span>
+        <span class="offer-emoji">${o.emoji||'🛒'}</span>
+        <div class="offer-store-lbl">${o.store}</div>
+        <div class="offer-name">${o.name}</div>
+        <div class="offer-desc">${o.desc||''}</div>
+        <div class="offer-prices">
+          <span class="offer-sale">${o.salePrice.toFixed(2)}€</span>
+          <span class="offer-normal">${o.normalPrice.toFixed(2)}€</span>
+          <span class="offer-unit">/ ${o.unit}</span>
+        </div>
+      </div>
+      <button class="offer-add-btn">+ Zur Liste hinzufügen</button>
+    </div>`).join('');
+}
+
+function addOfferToCurrentList(offer){
+  // Wenn aktuell eine Liste offen ist, dort hinzufügen; sonst auf Home
+  const list = getList();
+  if(list){
+    list.items.push({id:uid(),name:offer.name,qty:'1',unit:offer.unit||'Stk',cat:offer.cat||'other',checked:false,price:String(offer.salePrice)});
+    addToRecent(offer.name);
+    save(); renderItems();
+    toast(`✅ ${offer.name} hinzugefügt · ${offer.salePrice.toFixed(2)}€ bei ${offer.store}`);
+  } else {
+    // Zur Startseite navigieren und Modal öffnen
+    toast(`💡 Öffne eine Liste und tippe nochmal auf das Angebot!`, 3500);
+  }
+}
+
 // ── Home ──────────────────────────────────────────
 function filterLists(q){
   searchQuery=q.toLowerCase().trim();
@@ -2648,7 +2815,7 @@ function renderItems(){
       ${items.map(item=>`
       <div class="item-row${item.checked?' checked':''}" onclick="toggleItem('${item.id}')">
         <div class="item-check${item.checked?' done':''}"></div>
-        <div class="item-name">${item.name}${availBadge(item.name,list.store,item.id)}</div>
+        <div class="item-name">${item.name}${offerItemBadge(item.name,list.store,item.id)}${availBadge(item.name,list.store,item.id)}</div>
         ${(item.qty&&item.qty!=='1')||item.unit!=='Stk'?`<div class="item-qty-badge">${item.qty} ${item.unit}</div>`:''}
         ${item.price?`<div class="item-price-badge">€ ${parseFloat(item.price).toFixed(2)}</div>`:''}
         <button class="item-delete" onclick="event.stopPropagation();deleteItem('${item.id}')">✕</button>
@@ -2826,7 +2993,7 @@ function renderRoute(){
         ${items.map(item=>`
         <div class="route-item${item.checked?' checked':''}" onclick="toggleRouteItem('${item.id}')">
           <div class="route-item-check${item.checked?' done':''}"></div>
-          <div class="route-item-name">${item.name}${availBadge(item.name,list.store,item.id)}</div>
+          <div class="route-item-name">${item.name}${offerItemBadge(item.name,list.store,item.id)}${availBadge(item.name,list.store,item.id)}</div>
           ${(item.qty&&item.qty!=='1')||item.unit!=='Stk'?`<div class="route-item-qty">${item.qty} ${item.unit}</div>`:''}
         </div>`).join('')}
       </div>
@@ -5002,6 +5169,7 @@ applyLayout(CFG.layout||'list');
 applyI18n();
 renderHome();
 checkShareParam(); // ?share= URL prüfen
+loadOffers();     // Wochenangebote asynchron laden
 
 // Init API toggle state visually
 (()=>{

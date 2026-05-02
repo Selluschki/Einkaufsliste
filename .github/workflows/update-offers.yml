@@ -1,0 +1,45 @@
+name: Wöchentliche Angebote aktualisieren
+
+on:
+  schedule:
+    # Jeden Samstag um 23:30 Uhr deutscher Zeit (CEST = UTC+2 → 21:30 UTC)
+    - cron: '30 21 * * 6'
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: 'Grund für manuelles Update'
+        required: false
+        default: 'Manuell ausgelöst'
+
+permissions:
+  contents: write
+
+jobs:
+  update-offers:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Node.js einrichten
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Angebote aktualisieren
+        run: node update-offers.js
+
+      - name: Änderungen committen
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "Angebote Bot 🛒"
+          git add offers.json
+          git diff --staged --quiet || git commit -m "🛒 Wochenangebote aktualisiert $(date +'%d.%m.%Y')"
+
+      - name: Zu GitHub Pages pushen
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
