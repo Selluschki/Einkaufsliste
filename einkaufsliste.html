@@ -230,17 +230,22 @@ html[data-layout="tiles-sm"] .list-card-del{display:none} /* zu klein */
 html[data-layout="grid"] .list-card-prog{display:block}
 
 /* ── FAB ── */
-.fab{
-  position:fixed;bottom:calc(var(--nav-h)+16px);right:20px;z-index:90;
-  width:56px;height:56px;border-radius:50%;
+.fab{display:none!important}
+/* ── Nav: Neue Liste Button ── */
+.nav-add-list{color:var(--gold)!important}
+.nav-add-list:hover{color:var(--gold2)!important}
+.nav-add-icon{
+  font-size:1.6rem;line-height:1;
+  width:36px;height:36px;border-radius:50%;
   background:linear-gradient(135deg,#fbbf24,#f59e0b);
-  color:#0f1f5c;border:none;font-size:1.8rem;font-weight:300;
-  box-shadow:0 6px 24px rgba(245,158,11,.5),0 2px 8px rgba(245,158,11,.3);
-  cursor:pointer;display:flex;align-items:center;justify-content:center;
-  transition:all .2s cubic-bezier(.32,1.2,.64,1);
+  color:#0f1f5c!important;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 3px 10px rgba(245,158,11,.4);
+  transition:transform .2s cubic-bezier(.32,1.2,.64,1),box-shadow .2s;
+  font-weight:700;
 }
-.fab:hover{transform:scale(1.1) rotate(90deg);box-shadow:0 10px 32px rgba(245,158,11,.6)}
-.fab:active{transform:scale(.94)}
+.nav-add-list:hover .nav-add-icon{transform:scale(1.12) rotate(90deg);box-shadow:0 5px 16px rgba(245,158,11,.55)}
+.nav-add-list:active .nav-add-icon{transform:scale(.92)}
 
 /* ── Empty State ── */
 .empty-state{text-align:center;padding:48px 24px}
@@ -912,7 +917,7 @@ html[data-theme="dark"] .ios-install-sheet{background:#1a2332}
 
 /* ════ EXPORT / PRINT ════ */
 @media print {
-  .bottom-nav,.fab,.header,.add-bar,.header-btn,.photo-overlay,
+  .bottom-nav,.header,.add-bar,.header-btn,.photo-overlay,
   .share-overlay,.recipe-detail-overlay,.voice-overlay,.modal-overlay,
   .install-banner,.import-banner,.toast{display:none!important}
   .view:not(.active){display:none!important}
@@ -1085,7 +1090,6 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
   <div class="home-body">
     <div id="home-lists"></div>
   </div>
-  <button class="fab" id="fab-new" title="Neue Liste">+</button>
 </div>
 
 <!-- ══════════════════════════════════════
@@ -1679,6 +1683,10 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
   </button>
   <button class="nav-item nav-voice" data-tab="voice" onclick="openVoice()">
     <span class="nav-icon">🎤</span>
+  </button>
+  <button class="nav-item nav-add-list" onclick="openModal('new')">
+    <span class="nav-icon nav-add-icon">＋</span>
+    <span class="nav-label">Neue Liste</span>
   </button>
   <button class="nav-item" data-tab="settings" onclick="navTo('settings')">
     <span class="nav-icon">⚙️</span>
@@ -3533,7 +3541,7 @@ document.getElementById('photo-item-input').addEventListener('keydown', e=>{
 });
 
 // ── New List ──────────────────────────────────────
-document.getElementById('fab-new').addEventListener('click',()=>openModal('new'));
+// Neue Liste: via nav-add-list Button in Bottom Nav
 document.getElementById('btn-create-list').addEventListener('click',()=>{
   const name=document.getElementById('new-list-name').value.trim();
   if(!name){document.getElementById('new-list-name').style.animation='shake .3s ease';setTimeout(()=>document.getElementById('new-list-name').style.animation='',300);return;}
