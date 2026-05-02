@@ -1,4 +1,4 @@
-const CACHE = 'einkaufsliste-v24';
+const CACHE = 'einkaufsliste-v25';
 
 // Automatisch den richtigen Basispfad erkennen
 // → lokal: '/'  |  GitHub Pages: '/Einkaufsliste/'
@@ -6,10 +6,14 @@ const BASE = self.location.pathname.replace(/sw\.js$/, '');
 
 const FILES = [
   BASE + 'einkaufsliste.html',
+  BASE + 'index.html',
   BASE + 'manifest.json',
   BASE + 'icon-192.png',
   BASE + 'icon-512.png',
-  BASE + 'Einkaufswagenbild.jpg'
+  BASE + 'Einkaufswagenbild.jpg',
+  BASE + 'datenschutz.html',
+  BASE + 'impressum.html',
+  BASE + 'agb.html'
 ];
 
 self.addEventListener('install', e => {
