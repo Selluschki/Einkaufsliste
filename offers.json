@@ -1,9 +1,9 @@
 {
   "meta": {
-    "updated": "2026-05-03T23:30:00+02:00",
-    "week": "KW 19 · 5.–11. Mai 2026",
-    "validFrom": "2026-05-05",
-    "validUntil": "2026-05-11",
+    "updated": "2026-05-03T00:02:55+02:00",
+    "week": "KW 18 · 27.4.–2. Mai 2026",
+    "validFrom": "2026-04-27",
+    "validUntil": "2026-05-02",
     "source": "auto-updated"
   },
   "stores": {
@@ -17,7 +17,12 @@
         "discount": 40,
         "cat": "meat",
         "emoji": "🥩",
-        "keywords": ["schwein", "filet", "schweinefilet", "pork"],
+        "keywords": [
+          "schwein",
+          "filet",
+          "schweinefilet",
+          "pork"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-10"
       },
@@ -30,7 +35,12 @@
         "discount": 29,
         "cat": "dairy",
         "emoji": "🥛",
-        "keywords": ["milch", "vollmilch", "milk", "frischmilch"],
+        "keywords": [
+          "milch",
+          "vollmilch",
+          "milk",
+          "frischmilch"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-11"
       },
@@ -43,7 +53,13 @@
         "discount": 40,
         "cat": "produce",
         "emoji": "🍓",
-        "keywords": ["erdbeere", "erdbeeren", "strawberry", "obst", "beeren"],
+        "keywords": [
+          "erdbeere",
+          "erdbeeren",
+          "strawberry",
+          "obst",
+          "beeren"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-10"
       },
@@ -56,7 +72,13 @@
         "discount": 34,
         "cat": "bakery",
         "emoji": "🍞",
-        "keywords": ["toast", "toastbrot", "brot", "weizen", "bread"],
+        "keywords": [
+          "toast",
+          "toastbrot",
+          "brot",
+          "weizen",
+          "bread"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-11"
       },
@@ -69,7 +91,12 @@
         "discount": 34,
         "cat": "household",
         "emoji": "🫙",
-        "keywords": ["öl", "sonnenblumenöl", "speiseöl", "oil"],
+        "keywords": [
+          "öl",
+          "sonnenblumenöl",
+          "speiseöl",
+          "oil"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-11"
       },
@@ -82,7 +109,14 @@
         "discount": 30,
         "cat": "beverages",
         "emoji": "🥤",
-        "keywords": ["cola", "limonade", "limo", "dose", "kasten", "freeway"],
+        "keywords": [
+          "cola",
+          "limonade",
+          "limo",
+          "dose",
+          "kasten",
+          "freeway"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-10"
       }
@@ -97,7 +131,13 @@
         "discount": 33,
         "cat": "meat",
         "emoji": "🍗",
-        "keywords": ["hähnchen", "hühnchen", "chicken", "brust", "hähnchenbrust"],
+        "keywords": [
+          "hähnchen",
+          "hühnchen",
+          "chicken",
+          "brust",
+          "hähnchenbrust"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-10"
       },
@@ -110,7 +150,13 @@
         "discount": 35,
         "cat": "produce",
         "emoji": "🍅",
-        "keywords": ["tomaten", "rispen", "rispentomaten", "tomate", "gemüse"],
+        "keywords": [
+          "tomaten",
+          "rispen",
+          "rispentomaten",
+          "tomate",
+          "gemüse"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-11"
       },
@@ -123,7 +169,13 @@
         "discount": 33,
         "cat": "dairy",
         "emoji": "🧀",
-        "keywords": ["gouda", "käse", "cheese", "milbona", "schnittkäse"],
+        "keywords": [
+          "gouda",
+          "käse",
+          "cheese",
+          "milbona",
+          "schnittkäse"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-11"
       },
@@ -136,7 +188,13 @@
         "discount": 40,
         "cat": "beverages",
         "emoji": "🍊",
-        "keywords": ["orange", "saft", "orangensaft", "juice", "direktsaft"],
+        "keywords": [
+          "orange",
+          "saft",
+          "orangensaft",
+          "juice",
+          "direktsaft"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-11"
       },
@@ -149,7 +207,13 @@
         "discount": 36,
         "cat": "frozen",
         "emoji": "🐟",
-        "keywords": ["lachs", "fisch", "salmon", "filet", "tiefkühl"],
+        "keywords": [
+          "lachs",
+          "fisch",
+          "salmon",
+          "filet",
+          "tiefkühl"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-10"
       },
@@ -162,7 +226,12 @@
         "discount": 45,
         "cat": "produce",
         "emoji": "🍌",
-        "keywords": ["banane", "bananen", "banana", "obst"],
+        "keywords": [
+          "banane",
+          "bananen",
+          "banana",
+          "obst"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-11"
       }
@@ -177,7 +246,14 @@
         "discount": 29,
         "cat": "meat",
         "emoji": "🥩",
-        "keywords": ["rind", "hack", "hackfleisch", "bio", "beef", "rinderhack"],
+        "keywords": [
+          "rind",
+          "hack",
+          "hackfleisch",
+          "bio",
+          "beef",
+          "rinderhack"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-10"
       },
@@ -190,7 +266,13 @@
         "discount": 35,
         "cat": "produce",
         "emoji": "🥬",
-        "keywords": ["spinat", "bio", "salat", "gemüse", "spinach"],
+        "keywords": [
+          "spinat",
+          "bio",
+          "salat",
+          "gemüse",
+          "spinach"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-11"
       },
@@ -203,7 +285,13 @@
         "discount": 33,
         "cat": "dairy",
         "emoji": "🥣",
-        "keywords": ["joghurt", "griechisch", "greek", "yogurt", "ehrmann"],
+        "keywords": [
+          "joghurt",
+          "griechisch",
+          "greek",
+          "yogurt",
+          "ehrmann"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-11"
       },
@@ -216,7 +304,13 @@
         "discount": 33,
         "cat": "beverages",
         "emoji": "💧",
-        "keywords": ["san pellegrino", "wasser", "mineralwasser", "sprudel", "italian"],
+        "keywords": [
+          "san pellegrino",
+          "wasser",
+          "mineralwasser",
+          "sprudel",
+          "italian"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-11"
       },
@@ -229,7 +323,13 @@
         "discount": 40,
         "cat": "snacks",
         "emoji": "🍝",
-        "keywords": ["pasta", "spaghetti", "barilla", "nudeln", "noodles"],
+        "keywords": [
+          "pasta",
+          "spaghetti",
+          "barilla",
+          "nudeln",
+          "noodles"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-11"
       },
@@ -242,7 +342,13 @@
         "discount": 33,
         "cat": "meat",
         "emoji": "🐠",
-        "keywords": ["forelle", "lachsforelle", "fisch", "fish", "filet"],
+        "keywords": [
+          "forelle",
+          "lachsforelle",
+          "fisch",
+          "fish",
+          "filet"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-10"
       }
@@ -257,7 +363,13 @@
         "discount": 31,
         "cat": "meat",
         "emoji": "🥩",
-        "keywords": ["steak", "rind", "beef", "rindersteak", "nacken"],
+        "keywords": [
+          "steak",
+          "rind",
+          "beef",
+          "rindersteak",
+          "nacken"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-10"
       },
@@ -270,7 +382,13 @@
         "discount": 36,
         "cat": "dairy",
         "emoji": "🧀",
-        "keywords": ["camembert", "käse", "cheese", "president", "weichkäse"],
+        "keywords": [
+          "camembert",
+          "käse",
+          "cheese",
+          "president",
+          "weichkäse"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-11"
       },
@@ -283,7 +401,14 @@
         "discount": 33,
         "cat": "frozen",
         "emoji": "🐟",
-        "keywords": ["lachs", "wildlachs", "salmon", "alaska", "fisch", "tiefkühl"],
+        "keywords": [
+          "lachs",
+          "wildlachs",
+          "salmon",
+          "alaska",
+          "fisch",
+          "tiefkühl"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-10"
       },
@@ -296,7 +421,14 @@
         "discount": 40,
         "cat": "produce",
         "emoji": "🫑",
-        "keywords": ["paprika", "gemüse", "pepper", "bunt", "rot", "gelb"],
+        "keywords": [
+          "paprika",
+          "gemüse",
+          "pepper",
+          "bunt",
+          "rot",
+          "gelb"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-11"
       },
@@ -309,7 +441,12 @@
         "discount": 32,
         "cat": "dairy",
         "emoji": "🧈",
-        "keywords": ["butter", "markenbutter", "fett", "dairy"],
+        "keywords": [
+          "butter",
+          "markenbutter",
+          "fett",
+          "dairy"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-11"
       },
@@ -322,7 +459,14 @@
         "discount": 38,
         "cat": "beverages",
         "emoji": "🍷",
-        "keywords": ["wein", "weißwein", "grauburgunder", "wine", "pinot", "trocken"],
+        "keywords": [
+          "wein",
+          "weißwein",
+          "grauburgunder",
+          "wine",
+          "pinot",
+          "trocken"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-11"
       }
@@ -337,7 +481,13 @@
         "discount": 38,
         "cat": "meat",
         "emoji": "🥩",
-        "keywords": ["schwein", "nacken", "schweinenacken", "pork", "braten"],
+        "keywords": [
+          "schwein",
+          "nacken",
+          "schweinenacken",
+          "pork",
+          "braten"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-10"
       },
@@ -350,7 +500,13 @@
         "discount": 40,
         "cat": "produce",
         "emoji": "🥔",
-        "keywords": ["kartoffel", "kartoffeln", "potato", "festkochend", "sack"],
+        "keywords": [
+          "kartoffel",
+          "kartoffeln",
+          "potato",
+          "festkochend",
+          "sack"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-11"
       },
@@ -363,7 +519,14 @@
         "discount": 36,
         "cat": "beverages",
         "emoji": "💧",
-        "keywords": ["wasser", "mineralwasser", "kasten", "still", "medium", "k-classic"],
+        "keywords": [
+          "wasser",
+          "mineralwasser",
+          "kasten",
+          "still",
+          "medium",
+          "k-classic"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-11"
       },
@@ -376,7 +539,13 @@
         "discount": 43,
         "cat": "frozen",
         "emoji": "🍕",
-        "keywords": ["pizza", "tiefkühl", "tk", "wagner", "steinofen"],
+        "keywords": [
+          "pizza",
+          "tiefkühl",
+          "tk",
+          "wagner",
+          "steinofen"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-10"
       },
@@ -389,7 +558,12 @@
         "discount": 44,
         "cat": "produce",
         "emoji": "🧅",
-        "keywords": ["zwiebel", "zwiebeln", "onion", "gemüse"],
+        "keywords": [
+          "zwiebel",
+          "zwiebeln",
+          "onion",
+          "gemüse"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-11"
       },
@@ -402,7 +576,13 @@
         "discount": 36,
         "cat": "bakery",
         "emoji": "🍞",
-        "keywords": ["brot", "dinkel", "vollkorn", "dinkelbrot", "bread"],
+        "keywords": [
+          "brot",
+          "dinkel",
+          "vollkorn",
+          "dinkelbrot",
+          "bread"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-11"
       }
@@ -417,7 +597,12 @@
         "discount": 34,
         "cat": "meat",
         "emoji": "🥪",
-        "keywords": ["wurst", "leberwurst", "aufschnitt", "brotbelag"],
+        "keywords": [
+          "wurst",
+          "leberwurst",
+          "aufschnitt",
+          "brotbelag"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-10"
       },
@@ -430,7 +615,12 @@
         "discount": 40,
         "cat": "snacks",
         "emoji": "🍟",
-        "keywords": ["chips", "pringles", "snack", "knabberei"],
+        "keywords": [
+          "chips",
+          "pringles",
+          "snack",
+          "knabberei"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-10"
       },
@@ -443,7 +633,12 @@
         "discount": 39,
         "cat": "dairy",
         "emoji": "🥣",
-        "keywords": ["quark", "magerquark", "speisequark", "dairy"],
+        "keywords": [
+          "quark",
+          "magerquark",
+          "speisequark",
+          "dairy"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-11"
       },
@@ -456,7 +651,13 @@
         "discount": 40,
         "cat": "produce",
         "emoji": "🥒",
-        "keywords": ["gurke", "gurken", "salatgurke", "gemüse", "cucumber"],
+        "keywords": [
+          "gurke",
+          "gurken",
+          "salatgurke",
+          "gemüse",
+          "cucumber"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-11"
       },
@@ -469,7 +670,13 @@
         "discount": 40,
         "cat": "snacks",
         "emoji": "🥣",
-        "keywords": ["müsli", "knusper", "frühstück", "breakfast", "cerealien"],
+        "keywords": [
+          "müsli",
+          "knusper",
+          "frühstück",
+          "breakfast",
+          "cerealien"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-11"
       },
@@ -482,7 +689,13 @@
         "discount": 28,
         "cat": "dairy",
         "emoji": "🥚",
-        "keywords": ["eier", "ei", "freiland", "eggs", "egg"],
+        "keywords": [
+          "eier",
+          "ei",
+          "freiland",
+          "eggs",
+          "egg"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-11"
       }
@@ -497,7 +710,13 @@
         "discount": 39,
         "cat": "meat",
         "emoji": "🍖",
-        "keywords": ["wurst", "lyoner", "geflügel", "aufschnitt", "chicken"],
+        "keywords": [
+          "wurst",
+          "lyoner",
+          "geflügel",
+          "aufschnitt",
+          "chicken"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-10"
       },
@@ -510,7 +729,14 @@
         "discount": 39,
         "cat": "produce",
         "emoji": "🥕",
-        "keywords": ["möhren", "karotten", "möhre", "karotte", "carrot", "gemüse"],
+        "keywords": [
+          "möhren",
+          "karotten",
+          "möhre",
+          "karotte",
+          "carrot",
+          "gemüse"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-11"
       },
@@ -523,7 +749,13 @@
         "discount": 33,
         "cat": "beverages",
         "emoji": "☕",
-        "keywords": ["kaffee", "coffee", "bohnen", "gemahlen", "espresso"],
+        "keywords": [
+          "kaffee",
+          "coffee",
+          "bohnen",
+          "gemahlen",
+          "espresso"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-11"
       },
@@ -536,7 +768,14 @@
         "discount": 44,
         "cat": "frozen",
         "emoji": "🥦",
-        "keywords": ["gemüse", "tiefkühl", "tk", "mix", "frozen", "mischung"],
+        "keywords": [
+          "gemüse",
+          "tiefkühl",
+          "tk",
+          "mix",
+          "frozen",
+          "mischung"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-10"
       },
@@ -549,7 +788,13 @@
         "discount": 40,
         "cat": "dairy",
         "emoji": "🧀",
-        "keywords": ["frischkäse", "käse", "natur", "brotbelag", "cream cheese"],
+        "keywords": [
+          "frischkäse",
+          "käse",
+          "natur",
+          "brotbelag",
+          "cream cheese"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-11"
       },
@@ -562,7 +807,14 @@
         "discount": 40,
         "cat": "beverages",
         "emoji": "🍎",
-        "keywords": ["apfelsaft", "saft", "apfel", "apple", "juice", "naturtrüb"],
+        "keywords": [
+          "apfelsaft",
+          "saft",
+          "apfel",
+          "apple",
+          "juice",
+          "naturtrüb"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-11"
       }
@@ -577,7 +829,14 @@
         "discount": 34,
         "cat": "personal",
         "emoji": "🧴",
-        "keywords": ["nivea", "lotion", "bodylotion", "pflege", "body", "creme"],
+        "keywords": [
+          "nivea",
+          "lotion",
+          "bodylotion",
+          "pflege",
+          "body",
+          "creme"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-11"
       },
@@ -590,7 +849,14 @@
         "discount": 28,
         "cat": "personal",
         "emoji": "👶",
-        "keywords": ["pampers", "windeln", "baby", "windel", "gr 4", "diaper"],
+        "keywords": [
+          "pampers",
+          "windeln",
+          "baby",
+          "windel",
+          "gr 4",
+          "diaper"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-11"
       },
@@ -603,7 +869,14 @@
         "discount": 37,
         "cat": "personal",
         "emoji": "🦷",
-        "keywords": ["zahnpasta", "elmex", "zähne", "karies", "dental", "toothpaste"],
+        "keywords": [
+          "zahnpasta",
+          "elmex",
+          "zähne",
+          "karies",
+          "dental",
+          "toothpaste"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-11"
       },
@@ -616,7 +889,14 @@
         "discount": 38,
         "cat": "personal",
         "emoji": "🧖",
-        "keywords": ["shampoo", "alverde", "haar", "haarpflege", "naturkosmetik", "bio"],
+        "keywords": [
+          "shampoo",
+          "alverde",
+          "haar",
+          "haarpflege",
+          "naturkosmetik",
+          "bio"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-11"
       },
@@ -629,7 +909,14 @@
         "discount": 36,
         "cat": "personal",
         "emoji": "🌞",
-        "keywords": ["sonnencreme", "sunscreen", "lsf", "sonne", "sun", "schutz"],
+        "keywords": [
+          "sonnencreme",
+          "sunscreen",
+          "lsf",
+          "sonne",
+          "sun",
+          "schutz"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-11"
       },
@@ -642,7 +929,14 @@
         "discount": 34,
         "cat": "personal",
         "emoji": "💊",
-        "keywords": ["magnesium", "tabletten", "supplement", "mivolis", "mineral", "gesundheit"],
+        "keywords": [
+          "magnesium",
+          "tabletten",
+          "supplement",
+          "mivolis",
+          "mineral",
+          "gesundheit"
+        ],
         "validFrom": "2026-05-05",
         "validUntil": "2026-05-11"
       }
