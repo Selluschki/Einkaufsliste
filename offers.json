@@ -11,934 +11,400 @@
       {
         "name": "Schweinefilet",
         "desc": "Schweinefilet, kühlfrisch, ca. 400 g",
-        "normalPrice": 4.99,
-        "salePrice": 2.99,
-        "unit": "Stück",
-        "discount": 40,
-        "cat": "meat",
-        "emoji": "🥩",
-        "keywords": [
-          "schwein",
-          "filet",
-          "schweinefilet",
-          "pork"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-10"
+        "normalPrice": 4.99, "salePrice": 2.99, "unit": "Stück", "discount": 40, "cat": "meat", "emoji": "🥩",
+        "image": "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["schwein","filet","schweinefilet","pork"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-10"
       },
       {
         "name": "Vollmilch",
         "desc": "ALDI Vollmilch 3,5 % Fett, 1 L",
-        "normalPrice": 1.19,
-        "salePrice": 0.85,
-        "unit": "L",
-        "discount": 29,
-        "cat": "dairy",
-        "emoji": "🥛",
-        "keywords": [
-          "milch",
-          "vollmilch",
-          "milk",
-          "frischmilch"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-11"
+        "normalPrice": 1.19, "salePrice": 0.85, "unit": "L", "discount": 29, "cat": "dairy", "emoji": "🥛",
+        "image": "https://images.unsplash.com/photo-1563636619-e9143da7973b?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["milch","vollmilch","milk","frischmilch"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-11"
       },
       {
         "name": "Erdbeeren",
         "desc": "Erdbeeren aus Deutschland, 500 g Schale",
-        "normalPrice": 2.49,
-        "salePrice": 1.49,
-        "unit": "500 g",
-        "discount": 40,
-        "cat": "produce",
-        "emoji": "🍓",
-        "keywords": [
-          "erdbeere",
-          "erdbeeren",
-          "strawberry",
-          "obst",
-          "beeren"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-10"
+        "normalPrice": 2.49, "salePrice": 1.49, "unit": "500 g", "discount": 40, "cat": "produce", "emoji": "🍓",
+        "image": "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["erdbeere","erdbeeren","strawberry","obst","beeren"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-10"
       },
       {
         "name": "Toastbrot",
         "desc": "ALDI Toastbrot Weizen, 750 g",
-        "normalPrice": 1.49,
-        "salePrice": 0.99,
-        "unit": "750 g",
-        "discount": 34,
-        "cat": "bakery",
-        "emoji": "🍞",
-        "keywords": [
-          "toast",
-          "toastbrot",
-          "brot",
-          "weizen",
-          "bread"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-11"
+        "normalPrice": 1.49, "salePrice": 0.99, "unit": "750 g", "discount": 34, "cat": "bakery", "emoji": "🍞",
+        "image": "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["toast","toastbrot","brot","weizen","bread"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-11"
       },
       {
         "name": "Sonnenblumenöl",
         "desc": "ALDI Sonnenblumenöl, 1 L Flasche",
-        "normalPrice": 1.79,
-        "salePrice": 1.19,
-        "unit": "L",
-        "discount": 34,
-        "cat": "household",
-        "emoji": "🫙",
-        "keywords": [
-          "öl",
-          "sonnenblumenöl",
-          "speiseöl",
-          "oil"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-11"
+        "normalPrice": 1.79, "salePrice": 1.19, "unit": "L", "discount": 34, "cat": "condiments", "emoji": "🫙",
+        "image": "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["öl","sonnenblumenöl","speiseöl","oil"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-11"
       },
       {
         "name": "Cola / Limo Kasten",
         "desc": "Freeway Cola oder Limo, 24 × 0,33 L Dosen",
-        "normalPrice": 9.99,
-        "salePrice": 6.99,
-        "unit": "Kasten",
-        "discount": 30,
-        "cat": "beverages",
-        "emoji": "🥤",
-        "keywords": [
-          "cola",
-          "limonade",
-          "limo",
-          "dose",
-          "kasten",
-          "freeway"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-10"
+        "normalPrice": 9.99, "salePrice": 6.99, "unit": "Kasten", "discount": 30, "cat": "beverages", "emoji": "🥤",
+        "image": "https://images.unsplash.com/photo-1581006852262-e4307cf6283a?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["cola","limonade","limo","dose","kasten","freeway"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-10"
       }
     ],
     "LIDL": [
       {
         "name": "Hähnchenbrust",
         "desc": "Frische Hähnchenbrust, 1 kg Packung",
-        "normalPrice": 8.99,
-        "salePrice": 5.99,
-        "unit": "kg",
-        "discount": 33,
-        "cat": "meat",
-        "emoji": "🍗",
-        "keywords": [
-          "hähnchen",
-          "hühnchen",
-          "chicken",
-          "brust",
-          "hähnchenbrust"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-10"
+        "normalPrice": 8.99, "salePrice": 5.99, "unit": "kg", "discount": 33, "cat": "meat", "emoji": "🍗",
+        "image": "https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["hähnchen","hühnchen","chicken","brust","hähnchenbrust"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-10"
       },
       {
         "name": "Rispentomaten",
         "desc": "Rispentomaten, 500 g",
-        "normalPrice": 1.99,
-        "salePrice": 1.29,
-        "unit": "500 g",
-        "discount": 35,
-        "cat": "produce",
-        "emoji": "🍅",
-        "keywords": [
-          "tomaten",
-          "rispen",
-          "rispentomaten",
-          "tomate",
-          "gemüse"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-11"
+        "normalPrice": 1.99, "salePrice": 1.29, "unit": "500 g", "discount": 35, "cat": "produce", "emoji": "🍅",
+        "image": "https://images.unsplash.com/photo-1546094096-0df4bcaaa337?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["tomaten","rispen","rispentomaten","tomate","gemüse"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-11"
       },
       {
         "name": "Gouda jung",
         "desc": "Milbona Gouda jung, am Stück, 400 g",
-        "normalPrice": 3.29,
-        "salePrice": 2.19,
-        "unit": "400 g",
-        "discount": 33,
-        "cat": "dairy",
-        "emoji": "🧀",
-        "keywords": [
-          "gouda",
-          "käse",
-          "cheese",
-          "milbona",
-          "schnittkäse"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-11"
+        "normalPrice": 3.29, "salePrice": 2.19, "unit": "400 g", "discount": 33, "cat": "dairy", "emoji": "🧀",
+        "image": "https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["gouda","käse","cheese","milbona","schnittkäse"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-11"
       },
       {
         "name": "Orangensaft",
         "desc": "Freshona Orangensaft 100 % Direktsaft, 1 L",
-        "normalPrice": 2.49,
-        "salePrice": 1.49,
-        "unit": "L",
-        "discount": 40,
-        "cat": "beverages",
-        "emoji": "🍊",
-        "keywords": [
-          "orange",
-          "saft",
-          "orangensaft",
-          "juice",
-          "direktsaft"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-11"
+        "normalPrice": 2.49, "salePrice": 1.49, "unit": "L", "discount": 40, "cat": "beverages", "emoji": "🍊",
+        "image": "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["orange","saft","orangensaft","juice","direktsaft"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-11"
       },
       {
         "name": "Lachs Filets",
         "desc": "Atlantik-Lachs Filets, tiefgefroren, 400 g",
-        "normalPrice": 6.99,
-        "salePrice": 4.49,
-        "unit": "400 g",
-        "discount": 36,
-        "cat": "frozen",
-        "emoji": "🐟",
-        "keywords": [
-          "lachs",
-          "fisch",
-          "salmon",
-          "filet",
-          "tiefkühl"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-10"
+        "normalPrice": 6.99, "salePrice": 4.49, "unit": "400 g", "discount": 36, "cat": "frozen", "emoji": "🐟",
+        "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["lachs","fisch","salmon","filet","tiefkühl"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-10"
       },
       {
         "name": "Bananen",
         "desc": "Bananen aus Ecuador, 1 kg Netz",
-        "normalPrice": 1.79,
-        "salePrice": 0.99,
-        "unit": "kg",
-        "discount": 45,
-        "cat": "produce",
-        "emoji": "🍌",
-        "keywords": [
-          "banane",
-          "bananen",
-          "banana",
-          "obst"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-11"
+        "normalPrice": 1.79, "salePrice": 0.99, "unit": "kg", "discount": 45, "cat": "produce", "emoji": "🍌",
+        "image": "https://images.unsplash.com/photo-1528825871115-3581a5387919?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["banane","bananen","banana","obst"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-11"
       }
     ],
     "REWE": [
       {
         "name": "Bio Rinderhackfleisch",
         "desc": "REWE Bio Rinderhackfleisch, 400 g",
-        "normalPrice": 6.99,
-        "salePrice": 4.99,
-        "unit": "400 g",
-        "discount": 29,
-        "cat": "meat",
-        "emoji": "🥩",
-        "keywords": [
-          "rind",
-          "hack",
-          "hackfleisch",
-          "bio",
-          "beef",
-          "rinderhack"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-10"
+        "normalPrice": 6.99, "salePrice": 4.99, "unit": "400 g", "discount": 29, "cat": "meat", "emoji": "🥩",
+        "image": "https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["rind","hack","hackfleisch","bio","beef","rinderhack"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-10"
       },
       {
         "name": "Bio Spinat",
         "desc": "REWE Bio Blattspinat, 300 g Beutel",
-        "normalPrice": 2.29,
-        "salePrice": 1.49,
-        "unit": "300 g",
-        "discount": 35,
-        "cat": "produce",
-        "emoji": "🥬",
-        "keywords": [
-          "spinat",
-          "bio",
-          "salat",
-          "gemüse",
-          "spinach"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-11"
+        "normalPrice": 2.29, "salePrice": 1.49, "unit": "300 g", "discount": 35, "cat": "produce", "emoji": "🥬",
+        "image": "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["spinat","bio","salat","gemüse","spinach"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-11"
       },
       {
         "name": "Griechischer Joghurt",
         "desc": "Ehrmann Grand Dessert Griechischer Joghurt 10 % Fett, 500 g",
-        "normalPrice": 2.99,
-        "salePrice": 1.99,
-        "unit": "500 g",
-        "discount": 33,
-        "cat": "dairy",
-        "emoji": "🥣",
-        "keywords": [
-          "joghurt",
-          "griechisch",
-          "greek",
-          "yogurt",
-          "ehrmann"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-11"
+        "normalPrice": 2.99, "salePrice": 1.99, "unit": "500 g", "discount": 33, "cat": "dairy", "emoji": "🥣",
+        "image": "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["joghurt","griechisch","greek","yogurt","ehrmann"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-11"
       },
       {
         "name": "San Pellegrino",
         "desc": "San Pellegrino Mineralwasser, 6 × 1 L Glasflaschen",
-        "normalPrice": 7.49,
-        "salePrice": 4.99,
-        "unit": "6er-Pack",
-        "discount": 33,
-        "cat": "beverages",
-        "emoji": "💧",
-        "keywords": [
-          "san pellegrino",
-          "wasser",
-          "mineralwasser",
-          "sprudel",
-          "italian"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-11"
+        "normalPrice": 7.49, "salePrice": 4.99, "unit": "6er-Pack", "discount": 33, "cat": "beverages", "emoji": "💧",
+        "image": "https://images.unsplash.com/photo-1548369937-47519962c11a?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["san pellegrino","wasser","mineralwasser","sprudel","italian"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-11"
       },
       {
         "name": "Pasta Barilla",
         "desc": "Barilla Spaghetti Nr. 5, 500 g",
-        "normalPrice": 1.99,
-        "salePrice": 1.19,
-        "unit": "500 g",
-        "discount": 40,
-        "cat": "snacks",
-        "emoji": "🍝",
-        "keywords": [
-          "pasta",
-          "spaghetti",
-          "barilla",
-          "nudeln",
-          "noodles"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-11"
+        "normalPrice": 1.99, "salePrice": 1.19, "unit": "500 g", "discount": 40, "cat": "dry", "emoji": "🍝",
+        "image": "https://images.unsplash.com/photo-1551462147-ff29053bfc14?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["pasta","spaghetti","barilla","nudeln","noodles"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-11"
       },
       {
         "name": "Lachsforelle",
         "desc": "Frische Lachsforellenfilets, ca. 300 g, aus nachhaltiger Aquakultur",
-        "normalPrice": 5.99,
-        "salePrice": 3.99,
-        "unit": "Stück",
-        "discount": 33,
-        "cat": "meat",
-        "emoji": "🐠",
-        "keywords": [
-          "forelle",
-          "lachsforelle",
-          "fisch",
-          "fish",
-          "filet"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-10"
+        "normalPrice": 5.99, "salePrice": 3.99, "unit": "Stück", "discount": 33, "cat": "seafood", "emoji": "🐠",
+        "image": "https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["forelle","lachsforelle","fisch","fish","filet"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-10"
       }
     ],
     "EDEKA": [
       {
         "name": "Rindersteaks",
         "desc": "EDEKA Rindernackensteaks, 2 Stück, ca. 350 g",
-        "normalPrice": 7.99,
-        "salePrice": 5.49,
-        "unit": "350 g",
-        "discount": 31,
-        "cat": "meat",
-        "emoji": "🥩",
-        "keywords": [
-          "steak",
-          "rind",
-          "beef",
-          "rindersteak",
-          "nacken"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-10"
+        "normalPrice": 7.99, "salePrice": 5.49, "unit": "350 g", "discount": 31, "cat": "meat", "emoji": "🥩",
+        "image": "https://images.unsplash.com/photo-1544025162-d76538579e6e?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["steak","rind","beef","rindersteak","nacken"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-10"
       },
       {
         "name": "Camembert",
         "desc": "Président Camembert 45 % Fett, 250 g",
-        "normalPrice": 2.79,
-        "salePrice": 1.79,
-        "unit": "250 g",
-        "discount": 36,
-        "cat": "dairy",
-        "emoji": "🧀",
-        "keywords": [
-          "camembert",
-          "käse",
-          "cheese",
-          "president",
-          "weichkäse"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-11"
+        "normalPrice": 2.79, "salePrice": 1.79, "unit": "250 g", "discount": 36, "cat": "dairy", "emoji": "🧀",
+        "image": "https://images.unsplash.com/photo-1552767059-ce182ead6c1b?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["camembert","käse","cheese","president","weichkäse"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-11"
       },
       {
         "name": "Wildlachs",
         "desc": "Alaskan Wildlachs, tiefgefroren, 2 Filets à 125 g",
-        "normalPrice": 5.99,
-        "salePrice": 3.99,
-        "unit": "250 g",
-        "discount": 33,
-        "cat": "frozen",
-        "emoji": "🐟",
-        "keywords": [
-          "lachs",
-          "wildlachs",
-          "salmon",
-          "alaska",
-          "fisch",
-          "tiefkühl"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-10"
+        "normalPrice": 5.99, "salePrice": 3.99, "unit": "250 g", "discount": 33, "cat": "frozen", "emoji": "🐟",
+        "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["lachs","wildlachs","salmon","alaska","fisch","tiefkühl"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-10"
       },
       {
         "name": "Paprika mix",
         "desc": "Bunte Paprika, 3er-Pack rot/gelb/grün",
-        "normalPrice": 2.49,
-        "salePrice": 1.49,
-        "unit": "3er-Pack",
-        "discount": 40,
-        "cat": "produce",
-        "emoji": "🫑",
-        "keywords": [
-          "paprika",
-          "gemüse",
-          "pepper",
-          "bunt",
-          "rot",
-          "gelb"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-11"
+        "normalPrice": 2.49, "salePrice": 1.49, "unit": "3er-Pack", "discount": 40, "cat": "produce", "emoji": "🫑",
+        "image": "https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["paprika","gemüse","pepper","bunt","rot","gelb"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-11"
       },
       {
         "name": "Butter",
         "desc": "EDEKA Markenbutter 82 % Fett, 250 g",
-        "normalPrice": 2.49,
-        "salePrice": 1.69,
-        "unit": "250 g",
-        "discount": 32,
-        "cat": "dairy",
-        "emoji": "🧈",
-        "keywords": [
-          "butter",
-          "markenbutter",
-          "fett",
-          "dairy"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-11"
+        "normalPrice": 2.49, "salePrice": 1.69, "unit": "250 g", "discount": 32, "cat": "dairy", "emoji": "🧈",
+        "image": "https://images.unsplash.com/photo-1628088062854-d1870b4553da?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["butter","markenbutter","fett","dairy"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-11"
       },
       {
         "name": "Weißwein Grauburgunder",
         "desc": "Baden Grauburgunder trocken, 0,75 L Flasche",
-        "normalPrice": 7.99,
-        "salePrice": 4.99,
-        "unit": "0,75 L",
-        "discount": 38,
-        "cat": "beverages",
-        "emoji": "🍷",
-        "keywords": [
-          "wein",
-          "weißwein",
-          "grauburgunder",
-          "wine",
-          "pinot",
-          "trocken"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-11"
+        "normalPrice": 7.99, "salePrice": 4.99, "unit": "0,75 L", "discount": 38, "cat": "alcohol", "emoji": "🍷",
+        "image": "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["wein","weißwein","grauburgunder","wine","pinot","trocken"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-11"
       }
     ],
     "KAUFLAND": [
       {
         "name": "Schweinenacken",
         "desc": "Schweinenacken am Stück, ca. 1,5 kg",
-        "normalPrice": 12.99,
-        "salePrice": 7.99,
-        "unit": "kg",
-        "discount": 38,
-        "cat": "meat",
-        "emoji": "🥩",
-        "keywords": [
-          "schwein",
-          "nacken",
-          "schweinenacken",
-          "pork",
-          "braten"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-10"
+        "normalPrice": 12.99, "salePrice": 7.99, "unit": "kg", "discount": 38, "cat": "meat", "emoji": "🥩",
+        "image": "https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["schwein","nacken","schweinenacken","pork","braten"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-10"
       },
       {
         "name": "Kartoffeln",
         "desc": "Speisekartoffeln festkochend, 5 kg Sack",
-        "normalPrice": 4.99,
-        "salePrice": 2.99,
-        "unit": "5 kg",
-        "discount": 40,
-        "cat": "produce",
-        "emoji": "🥔",
-        "keywords": [
-          "kartoffel",
-          "kartoffeln",
-          "potato",
-          "festkochend",
-          "sack"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-11"
+        "normalPrice": 4.99, "salePrice": 2.99, "unit": "5 kg", "discount": 40, "cat": "produce", "emoji": "🥔",
+        "image": "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["kartoffel","kartoffeln","potato","festkochend","sack"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-11"
       },
       {
         "name": "Wasserkasten",
         "desc": "K-Classic Mineralwasser still oder medium, 12 × 1,5 L",
-        "normalPrice": 5.49,
-        "salePrice": 3.49,
-        "unit": "Kasten",
-        "discount": 36,
-        "cat": "beverages",
-        "emoji": "💧",
-        "keywords": [
-          "wasser",
-          "mineralwasser",
-          "kasten",
-          "still",
-          "medium",
-          "k-classic"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-11"
+        "normalPrice": 5.49, "salePrice": 3.49, "unit": "Kasten", "discount": 36, "cat": "beverages", "emoji": "💧",
+        "image": "https://images.unsplash.com/photo-1548369937-47519962c11a?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["wasser","mineralwasser","kasten","still","medium","k-classic"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-11"
       },
       {
         "name": "Tiefkühlpizza",
         "desc": "Wagner Steinofenpizza versch. Sorten, 300–370 g",
-        "normalPrice": 3.49,
-        "salePrice": 1.99,
-        "unit": "Stück",
-        "discount": 43,
-        "cat": "frozen",
-        "emoji": "🍕",
-        "keywords": [
-          "pizza",
-          "tiefkühl",
-          "tk",
-          "wagner",
-          "steinofen"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-10"
+        "normalPrice": 3.49, "salePrice": 1.99, "unit": "Stück", "discount": 43, "cat": "frozen", "emoji": "🍕",
+        "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["pizza","tiefkühl","tk","wagner","steinofen"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-10"
       },
       {
         "name": "Zwiebeln",
         "desc": "Gemüsezwiebeln, 2 kg Netz",
-        "normalPrice": 2.29,
-        "salePrice": 1.29,
-        "unit": "2 kg",
-        "discount": 44,
-        "cat": "produce",
-        "emoji": "🧅",
-        "keywords": [
-          "zwiebel",
-          "zwiebeln",
-          "onion",
-          "gemüse"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-11"
+        "normalPrice": 2.29, "salePrice": 1.29, "unit": "2 kg", "discount": 44, "cat": "produce", "emoji": "🧅",
+        "image": "https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["zwiebel","zwiebeln","onion","gemüse"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-11"
       },
       {
         "name": "Dinkelbrot",
         "desc": "Kaufland Dinkelvollkornbrot, 750 g",
-        "normalPrice": 2.49,
-        "salePrice": 1.59,
-        "unit": "750 g",
-        "discount": 36,
-        "cat": "bakery",
-        "emoji": "🍞",
-        "keywords": [
-          "brot",
-          "dinkel",
-          "vollkorn",
-          "dinkelbrot",
-          "bread"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-11"
+        "normalPrice": 2.49, "salePrice": 1.59, "unit": "750 g", "discount": 36, "cat": "bakery", "emoji": "🍞",
+        "image": "https://images.unsplash.com/photo-1603569283847-aa295f0d016a?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["brot","dinkel","vollkorn","dinkelbrot","bread"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-11"
       }
     ],
     "PENNY": [
       {
         "name": "Leberwurst",
         "desc": "Penny Feine Leberwurst, 200 g",
-        "normalPrice": 1.49,
-        "salePrice": 0.99,
-        "unit": "200 g",
-        "discount": 34,
-        "cat": "meat",
-        "emoji": "🥪",
-        "keywords": [
-          "wurst",
-          "leberwurst",
-          "aufschnitt",
-          "brotbelag"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-10"
+        "normalPrice": 1.49, "salePrice": 0.99, "unit": "200 g", "discount": 34, "cat": "meat", "emoji": "🥪",
+        "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["wurst","leberwurst","aufschnitt","brotbelag"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-10"
       },
       {
         "name": "Chips",
         "desc": "Pringles Original oder Sour Cream, 165 g Dose",
-        "normalPrice": 2.99,
-        "salePrice": 1.79,
-        "unit": "165 g",
-        "discount": 40,
-        "cat": "snacks",
-        "emoji": "🍟",
-        "keywords": [
-          "chips",
-          "pringles",
-          "snack",
-          "knabberei"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-10"
+        "normalPrice": 2.99, "salePrice": 1.79, "unit": "165 g", "discount": 40, "cat": "snacks", "emoji": "🍟",
+        "image": "https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["chips","pringles","snack","knabberei"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-10"
       },
       {
         "name": "Speisequark",
         "desc": "Penny Magerquark 0,2 % Fett, 500 g",
-        "normalPrice": 1.29,
-        "salePrice": 0.79,
-        "unit": "500 g",
-        "discount": 39,
-        "cat": "dairy",
-        "emoji": "🥣",
-        "keywords": [
-          "quark",
-          "magerquark",
-          "speisequark",
-          "dairy"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-11"
+        "normalPrice": 1.29, "salePrice": 0.79, "unit": "500 g", "discount": 39, "cat": "dairy", "emoji": "🥣",
+        "image": "https://images.unsplash.com/photo-1571050580-2fda9e95dbdb?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["quark","magerquark","speisequark","dairy"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-11"
       },
       {
         "name": "Gurken",
         "desc": "Salatgurken, Stück",
-        "normalPrice": 0.99,
-        "salePrice": 0.59,
-        "unit": "Stück",
-        "discount": 40,
-        "cat": "produce",
-        "emoji": "🥒",
-        "keywords": [
-          "gurke",
-          "gurken",
-          "salatgurke",
-          "gemüse",
-          "cucumber"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-11"
+        "normalPrice": 0.99, "salePrice": 0.59, "unit": "Stück", "discount": 40, "cat": "produce", "emoji": "🥒",
+        "image": "https://images.unsplash.com/photo-1449300079323-02e209d9d3a6?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["gurke","gurken","salatgurke","gemüse","cucumber"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-11"
       },
       {
         "name": "Müsli",
         "desc": "Knusper-Müsli Schoko oder Beeren, 600 g",
-        "normalPrice": 2.49,
-        "salePrice": 1.49,
-        "unit": "600 g",
-        "discount": 40,
-        "cat": "snacks",
-        "emoji": "🥣",
-        "keywords": [
-          "müsli",
-          "knusper",
-          "frühstück",
-          "breakfast",
-          "cerealien"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-11"
+        "normalPrice": 2.49, "salePrice": 1.49, "unit": "600 g", "discount": 40, "cat": "dry", "emoji": "🥣",
+        "image": "https://images.unsplash.com/photo-1517673132405-a56a62b18caf?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["müsli","knusper","frühstück","breakfast","cerealien"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-11"
       },
       {
         "name": "Eier",
         "desc": "Penny Freiland-Eier Größe M, 10 Stück",
-        "normalPrice": 2.49,
-        "salePrice": 1.79,
-        "unit": "10er",
-        "discount": 28,
-        "cat": "dairy",
-        "emoji": "🥚",
-        "keywords": [
-          "eier",
-          "ei",
-          "freiland",
-          "eggs",
-          "egg"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-11"
+        "normalPrice": 2.49, "salePrice": 1.79, "unit": "10er", "discount": 28, "cat": "eggs", "emoji": "🥚",
+        "image": "https://images.unsplash.com/photo-1506976785307-8732e854ad03?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["eier","ei","freiland","eggs","egg"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-11"
       }
     ],
     "NETTO": [
       {
         "name": "Geflügelwurst",
         "desc": "Netto Geflügellyoner, 200 g",
-        "normalPrice": 1.29,
-        "salePrice": 0.79,
-        "unit": "200 g",
-        "discount": 39,
-        "cat": "meat",
-        "emoji": "🍖",
-        "keywords": [
-          "wurst",
-          "lyoner",
-          "geflügel",
-          "aufschnitt",
-          "chicken"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-10"
+        "normalPrice": 1.29, "salePrice": 0.79, "unit": "200 g", "discount": 39, "cat": "meat", "emoji": "🍖",
+        "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["wurst","lyoner","geflügel","aufschnitt","chicken"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-10"
       },
       {
         "name": "Möhren",
         "desc": "Karotten / Möhren, 1 kg Beutel",
-        "normalPrice": 1.29,
-        "salePrice": 0.79,
-        "unit": "kg",
-        "discount": 39,
-        "cat": "produce",
-        "emoji": "🥕",
-        "keywords": [
-          "möhren",
-          "karotten",
-          "möhre",
-          "karotte",
-          "carrot",
-          "gemüse"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-11"
+        "normalPrice": 1.29, "salePrice": 0.79, "unit": "kg", "discount": 39, "cat": "produce", "emoji": "🥕",
+        "image": "https://images.unsplash.com/photo-1447175008436-054170c2e979?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["möhren","karotten","möhre","karotte","carrot","gemüse"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-11"
       },
       {
         "name": "Kaffee",
         "desc": "Netto Café Crème ganze Bohnen oder gemahlen, 500 g",
-        "normalPrice": 5.99,
-        "salePrice": 3.99,
-        "unit": "500 g",
-        "discount": 33,
-        "cat": "beverages",
-        "emoji": "☕",
-        "keywords": [
-          "kaffee",
-          "coffee",
-          "bohnen",
-          "gemahlen",
-          "espresso"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-11"
+        "normalPrice": 5.99, "salePrice": 3.99, "unit": "500 g", "discount": 33, "cat": "beverages", "emoji": "☕",
+        "image": "https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["kaffee","coffee","bohnen","gemahlen","espresso"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-11"
       },
       {
         "name": "TK Gemüsemischung",
         "desc": "Netto Tiefkühl-Gemüse-Mix, 750 g Beutel",
-        "normalPrice": 2.29,
-        "salePrice": 1.29,
-        "unit": "750 g",
-        "discount": 44,
-        "cat": "frozen",
-        "emoji": "🥦",
-        "keywords": [
-          "gemüse",
-          "tiefkühl",
-          "tk",
-          "mix",
-          "frozen",
-          "mischung"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-10"
+        "normalPrice": 2.29, "salePrice": 1.29, "unit": "750 g", "discount": 44, "cat": "frozen", "emoji": "🥦",
+        "image": "https://images.unsplash.com/photo-1584649404854-98d5bab5a22e?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["gemüse","tiefkühl","tk","mix","frozen","mischung"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-10"
       },
       {
         "name": "Frischkäse",
         "desc": "Netto Frischkäse Natur, 200 g",
-        "normalPrice": 0.99,
-        "salePrice": 0.59,
-        "unit": "200 g",
-        "discount": 40,
-        "cat": "dairy",
-        "emoji": "🧀",
-        "keywords": [
-          "frischkäse",
-          "käse",
-          "natur",
-          "brotbelag",
-          "cream cheese"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-11"
+        "normalPrice": 0.99, "salePrice": 0.59, "unit": "200 g", "discount": 40, "cat": "dairy", "emoji": "🧀",
+        "image": "https://images.unsplash.com/photo-1571050580-2fda9e95dbdb?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["frischkäse","käse","natur","brotbelag","cream cheese"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-11"
       },
       {
         "name": "Apfelsaft",
         "desc": "Netto Apfelsaft naturtrüb, 1 L",
-        "normalPrice": 1.49,
-        "salePrice": 0.89,
-        "unit": "L",
-        "discount": 40,
-        "cat": "beverages",
-        "emoji": "🍎",
-        "keywords": [
-          "apfelsaft",
-          "saft",
-          "apfel",
-          "apple",
-          "juice",
-          "naturtrüb"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-11"
+        "normalPrice": 1.49, "salePrice": 0.89, "unit": "L", "discount": 40, "cat": "beverages", "emoji": "🍎",
+        "image": "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["apfelsaft","saft","apfel","apple","juice","naturtrüb"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-11"
       }
     ],
     "DM": [
       {
         "name": "Nivea Bodylotion",
         "desc": "Nivea Intensiv Pflegelotion, 400 ml Spender",
-        "normalPrice": 5.95,
-        "salePrice": 3.95,
-        "unit": "400 ml",
-        "discount": 34,
-        "cat": "personal",
-        "emoji": "🧴",
-        "keywords": [
-          "nivea",
-          "lotion",
-          "bodylotion",
-          "pflege",
-          "body",
-          "creme"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-11"
+        "normalPrice": 5.95, "salePrice": 3.95, "unit": "400 ml", "discount": 34, "cat": "personal", "emoji": "🧴",
+        "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["nivea","lotion","bodylotion","pflege","body","creme"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-11"
       },
       {
         "name": "Pampers Windeln",
         "desc": "Pampers Active Fit Gr. 4 (9–14 kg), 44 Stück",
-        "normalPrice": 17.95,
-        "salePrice": 12.95,
-        "unit": "44er-Pack",
-        "discount": 28,
-        "cat": "personal",
-        "emoji": "👶",
-        "keywords": [
-          "pampers",
-          "windeln",
-          "baby",
-          "windel",
-          "gr 4",
-          "diaper"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-11"
+        "normalPrice": 17.95, "salePrice": 12.95, "unit": "44er-Pack", "discount": 28, "cat": "baby", "emoji": "👶",
+        "image": "https://images.unsplash.com/photo-1555252333-9f8e92e65df9?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["pampers","windeln","baby","windel","gr 4","diaper"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-11"
       },
       {
         "name": "Elmex Zahnpasta",
         "desc": "Elmex Kariesschutz Zahnpasta, 2 × 75 ml",
-        "normalPrice": 5.45,
-        "salePrice": 3.45,
-        "unit": "2 × 75 ml",
-        "discount": 37,
-        "cat": "personal",
-        "emoji": "🦷",
-        "keywords": [
-          "zahnpasta",
-          "elmex",
-          "zähne",
-          "karies",
-          "dental",
-          "toothpaste"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-11"
+        "normalPrice": 5.45, "salePrice": 3.45, "unit": "2 × 75 ml", "discount": 37, "cat": "personal", "emoji": "🦷",
+        "image": "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["zahnpasta","elmex","zähne","karies","dental","toothpaste"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-11"
       },
       {
         "name": "Alverde Shampoo",
         "desc": "Alverde Naturkosmetik Shampoo versch. Typen, 200 ml",
-        "normalPrice": 3.95,
-        "salePrice": 2.45,
-        "unit": "200 ml",
-        "discount": 38,
-        "cat": "personal",
-        "emoji": "🧖",
-        "keywords": [
-          "shampoo",
-          "alverde",
-          "haar",
-          "haarpflege",
-          "naturkosmetik",
-          "bio"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-11"
+        "normalPrice": 3.95, "salePrice": 2.45, "unit": "200 ml", "discount": 38, "cat": "personal", "emoji": "🧖",
+        "image": "https://images.unsplash.com/photo-1522338242992-e1a54906a8da?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["shampoo","alverde","haar","haarpflege","naturkosmetik","bio"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-11"
       },
       {
         "name": "dm Sonnencreme",
         "desc": "Sun Dance Sonnencreme LSF 30 oder 50, 200 ml",
-        "normalPrice": 6.95,
-        "salePrice": 4.45,
-        "unit": "200 ml",
-        "discount": 36,
-        "cat": "personal",
-        "emoji": "🌞",
-        "keywords": [
-          "sonnencreme",
-          "sunscreen",
-          "lsf",
-          "sonne",
-          "sun",
-          "schutz"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-11"
+        "normalPrice": 6.95, "salePrice": 4.45, "unit": "200 ml", "discount": 36, "cat": "personal", "emoji": "🌞",
+        "image": "https://images.unsplash.com/photo-1521616098-e7bfd5ed4fce?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["sonnencreme","sunscreen","lsf","sonne","sun","schutz"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-11"
       },
       {
         "name": "Magnesium 400",
         "desc": "mivolis Magnesium 400 mg, 90 Tabletten",
-        "normalPrice": 8.95,
-        "salePrice": 5.95,
-        "unit": "90 Stück",
-        "discount": 34,
-        "cat": "personal",
-        "emoji": "💊",
-        "keywords": [
-          "magnesium",
-          "tabletten",
-          "supplement",
-          "mivolis",
-          "mineral",
-          "gesundheit"
-        ],
-        "validFrom": "2026-05-05",
-        "validUntil": "2026-05-11"
+        "normalPrice": 8.95, "salePrice": 5.95, "unit": "90 Stück", "discount": 34, "cat": "pharmacy", "emoji": "💊",
+        "image": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["magnesium","tabletten","supplement","mivolis","mineral","gesundheit"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-11"
       }
     ]
   }

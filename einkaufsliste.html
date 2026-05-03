@@ -357,6 +357,16 @@ html[data-theme="dark"] .offer-name{color:#e8eeff}
 .offer-item-badge:active{transform:scale(.88)}
 html[data-theme="dark"] .offer-item-badge{background:rgba(22,163,74,.15);border-color:rgba(22,163,74,.4);color:#86efac}
 
+/* ── Store-Angebots-Badge (dauerhaft auf Artikel wenn aus Angebot hinzugefügt) ── */
+.item-store-offer-badge{
+  display:inline-flex;align-items:center;gap:3px;
+  background:linear-gradient(135deg,rgba(245,158,11,.15),rgba(245,158,11,.07));
+  border:1px solid rgba(245,158,11,.4);border-radius:50px;
+  padding:1px 7px;font-size:.62rem;font-weight:800;color:#b45309;
+  margin-left:5px;vertical-align:middle;white-space:nowrap;flex-shrink:0;cursor:default;
+}
+html[data-theme="dark"] .item-store-offer-badge{background:rgba(245,158,11,.18);border-color:rgba(245,158,11,.45);color:#fcd34d}
+
 /* ── Availability Badge per Item ── */
 .avail-warn-badge{
   display:inline-flex;align-items:center;justify-content:center;
@@ -3554,6 +3564,13 @@ function availBadge(name,store,itemId){
   return `<span class="avail-warn-badge" onclick="event.stopPropagation();toast('🏪 '+_availTipMap['${itemId}'],5000)">⚠️</span>`;
 }
 
+// ── Store-Angebots-Badge (dauerhaft wenn Artikel aus Angebot stammt) ──────────
+function offerStoreBadge(item){
+  if(!item.offerStore) return '';
+  const pct = item.offerDiscount ? ` -${item.offerDiscount}%` : '';
+  return `<span class="item-store-offer-badge" title="${item.offerStore}${pct}">🏪 ${item.offerStore}${pct}</span>`;
+}
+
 let _hintT=null;
 function updateAvailHint(val){
   clearTimeout(_hintT);
@@ -3790,10 +3807,16 @@ function addOfferToCurrentList(offer){
   // Wenn aktuell eine Liste offen ist, dort hinzufügen; sonst auf Home
   const list = getList();
   if(list){
-    list.items.push({id:uid(),name:offer.name,qty:'1',unit:offer.unit||'Stk',cat:offer.cat||'other',checked:false,price:String(offer.salePrice)});
+    list.items.push({
+      id:uid(), name:offer.name, qty:'1', unit:offer.unit||'Stk',
+      cat:offer.cat||'other', checked:false, price:String(offer.salePrice),
+      offerStore: offer.store,
+      offerDiscount: offer.discount,
+      offerUntil: offer.validUntil || offersData?.meta?.validUntil || ''
+    });
     addToRecent(offer.name);
     save(); renderItems();
-    toast(`✅ ${offer.name} ${t.offerAdded} · ${offer.salePrice.toFixed(2)}€ bei ${offer.store}`);
+    toast(`✅ ${offer.name} ${t.offerAdded} · ${offer.salePrice.toFixed(2)}€ 🏪 ${offer.store}`);
   } else {
     // Zur Startseite navigieren und Modal öffnen
     toast(`💡 ${t.offerOpenList}`, 3500);
@@ -3961,7 +3984,7 @@ function renderItems(){
       ${items.map(item=>`
       <div class="item-row${item.checked?' checked':''}" onclick="toggleItem('${item.id}')">
         <div class="item-check${item.checked?' done':''}"></div>
-        <div class="item-name">${item.name}${offerItemBadge(item.name,list.store,item.id)}${availBadge(item.name,list.store,item.id)}</div>
+        <div class="item-name">${item.name}${offerItemBadge(item.name,list.store,item.id)}${availBadge(item.name,list.store,item.id)}${offerStoreBadge(item)}</div>
         ${(item.qty&&item.qty!=='1')||item.unit!=='Stk'?`<div class="item-qty-badge">${item.qty} ${item.unit}</div>`:''}
         ${item.price?`<div class="item-price-badge">€ ${parseFloat(item.price).toFixed(2)}</div>`:''}
         <button class="item-delete" onclick="event.stopPropagation();deleteItem('${item.id}')">✕</button>
@@ -4139,7 +4162,7 @@ function renderRoute(){
         ${items.map(item=>`
         <div class="route-item${item.checked?' checked':''}" onclick="toggleRouteItem('${item.id}')">
           <div class="route-item-check${item.checked?' done':''}"></div>
-          <div class="route-item-name">${item.name}${offerItemBadge(item.name,list.store,item.id)}${availBadge(item.name,list.store,item.id)}</div>
+          <div class="route-item-name">${item.name}${offerItemBadge(item.name,list.store,item.id)}${availBadge(item.name,list.store,item.id)}${offerStoreBadge(item)}</div>
           ${(item.qty&&item.qty!=='1')||item.unit!=='Stk'?`<div class="route-item-qty">${item.qty} ${item.unit}</div>`:''}
         </div>`).join('')}
       </div>
