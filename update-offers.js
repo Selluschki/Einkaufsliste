@@ -88,12 +88,17 @@ const MONTHS_DE = [
 async function main() {
   console.log("🔄  update-offers.js gestartet …\n");
 
-  // ── 1. Calculate current week dates ─────────────────────────────────────────
+  // ── 1. Calculate NEXT week dates (script runs Saturday → update for following Mon–Sat) ──
   const now = new Date();
   console.log(`📅  Heutiges Datum : ${toDateString(now)}`);
 
-  const { week, year } = getISOWeekYear(now);
-  console.log(`📆  ISO-Kalenderwoche : KW ${week} (${year})`);
+  // Always target the week that starts NEXT Monday (today + 7 days puts us safely in next week)
+  const nextWeekRef = new Date(now);
+  nextWeekRef.setUTCDate(now.getUTCDate() + 7);
+  console.log(`📅  Zieldatum (nächste Woche) : ${toDateString(nextWeekRef)}`);
+
+  const { week, year } = getISOWeekYear(nextWeekRef);
+  console.log(`📆  ISO-Kalenderwoche (Ziel) : KW ${week} (${year})`);
 
   const monday = mondayOfISOWeek(week, year);
   const saturday = new Date(monday);

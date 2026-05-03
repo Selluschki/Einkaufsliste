@@ -314,14 +314,21 @@ html[data-theme="dark"] #avail-hint.info{background:rgba(59,130,246,.15);color:v
 html[data-theme="dark"] .offer-card{background:#0f1f4a;border-color:#1e3a6e}
 .offer-card:active{transform:scale(.96)}
 .offer-card:hover{border-color:rgba(245,158,11,.5);box-shadow:0 4px 18px rgba(245,158,11,.18)}
-.offer-card-top{padding:12px 12px 6px;position:relative}
+.offer-card-top{padding:8px 10px 6px;position:relative}
+/* Produktbild-Bereich */
+.offer-img-wrap{position:relative;width:100%;height:96px;overflow:hidden;background:linear-gradient(135deg,#f0f4ff,#e8f0fe);border-radius:0;flex-shrink:0}
+.offer-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s ease}
+.offer-card:hover .offer-img{transform:scale(1.05)}
+.offer-img-fb{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:2.8rem;line-height:1;background:linear-gradient(135deg,#f0f4ff,#e8f0fe)}
+html[data-theme="dark"] .offer-img-wrap{background:linear-gradient(135deg,#0f1f4a,#1a3a8f)}
+html[data-theme="dark"] .offer-img-fb{background:linear-gradient(135deg,#0f1f4a,#1a3a8f)}
 .offer-discount-badge{
-  position:absolute;top:8px;right:8px;
+  position:absolute;top:7px;right:7px;z-index:2;
   background:linear-gradient(135deg,#ef4444,#dc2626);
   color:#fff;font-size:.62rem;font-weight:900;border-radius:50px;
-  padding:2px 7px;letter-spacing:.02em;
+  padding:3px 8px;letter-spacing:.02em;box-shadow:0 2px 6px rgba(220,38,38,.4);
 }
-.offer-emoji{font-size:1.9rem;line-height:1;margin-bottom:6px;display:block}
+.offer-emoji{display:none}
 .offer-store-lbl{font-size:.62rem;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px}
 .offer-name{font-size:.78rem;font-weight:700;color:var(--navy);line-height:1.3;margin-bottom:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 html[data-theme="dark"] .offer-name{color:#e8eeff}
@@ -1203,7 +1210,7 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
     <div class="home-greeting" id="home-greeting">Guten Tag!</div>
     <div class="home-hero-name" id="home-hero-name">🛒 Einkaufsliste III</div>
     <div class="home-hero-sub" id="home-sub">Smart sortiert. Einfach einkaufen.</div>
-    <div class="home-slogan">🏪 <span>Die einzige App die weiß, wie dein Supermarkt von innen aussieht</span></div>
+    <div class="home-slogan">🏪 <span id="home-slogan-text">Die einzige App die weiß, wie dein Supermarkt von innen aussieht</span></div>
     <div class="home-stats">
       <div class="stat-pill" id="stat-lists">📋 0 Listen</div>
       <div class="stat-pill" id="stat-items">🛍 0 Artikel</div>
@@ -1214,7 +1221,7 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
       <span class="home-search-icon">🔍</span>
       <input class="home-search" id="home-search" placeholder="Liste suchen …" autocomplete="off" oninput="filterLists(this.value)"/>
     </div>
-    <button class="home-app-share-btn" onclick="openAppShareSheet()">📤 App teilen</button>
+    <button class="home-app-share-btn" id="home-share-btn" onclick="openAppShareSheet()">📤 App teilen</button>
     <!-- Store Logo Strip -->
     <div class="store-logo-strip" id="store-logo-strip"></div>
   </div>
@@ -1222,13 +1229,12 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
   <div class="offers-wrap" id="offers-wrap" style="display:none">
     <div class="offers-header">
       <div class="offers-header-left">
-        <span class="offers-fire">🔥</span>
-        <span class="offers-title">Angebote diese Woche</span>
+        <span class="offers-title" id="offers-title-lbl">🔥 Angebote diese Woche</span>
       </div>
       <span class="offers-week" id="offers-week-label">KW –</span>
     </div>
     <div class="offers-scroll" id="offers-scroll">
-      <div class="offers-empty">Lade Angebote …</div>
+      <div class="offers-empty" id="offers-loading-text">Lade Angebote …</div>
     </div>
   </div>
 
@@ -2111,6 +2117,10 @@ const i18n = {
     voiceRecognitionMicDenied:' (Mikrofon verweigert)',
     autoListPrefix:'Einkauf',
     appShareText:'🛒 Schau mal – diese Einkaufsliste App ist richtig praktisch! Kostenlos, direkt im Browser, keine Installation nötig:',
+    slogan:'Die einzige App die weiß, wie dein Supermarkt von innen aussieht',
+    homeShareBtn:'📤 App teilen',
+    offersTitle:'🔥 Angebote diese Woche',
+    offersLoading:'Lade Angebote …',
   },
   en:{
     appTitle:'Shopping List III',appSub:'Smart sorted. Easy shopping.',
@@ -2294,6 +2304,10 @@ const i18n = {
     voiceRecognitionMicDenied:' (microphone denied)',
     autoListPrefix:'Shopping',
     appShareText:'🛒 Check this out – this shopping list app is really handy! Free, right in the browser, no installation needed:',
+    slogan:'The only app that knows your supermarket from the inside',
+    homeShareBtn:'📤 Share App',
+    offersTitle:'🔥 Deals This Week',
+    offersLoading:'Loading deals …',
   },
   tr:{
     appTitle:'Alışveriş Listesi III',appSub:'Akıllı sıralama. Kolay alışveriş.',
@@ -2477,6 +2491,10 @@ const i18n = {
     voiceRecognitionMicDenied:' (mikrofon reddedildi)',
     autoListPrefix:'Alışveriş',
     appShareText:'🛒 Şuna bir bak – bu alışveriş listesi uygulaması gerçekten kullanışlı! Ücretsiz, doğrudan tarayıcıda, kurulum gerekmez:',
+    slogan:'Süpermarketinin içini bilen tek uygulama',
+    homeShareBtn:'📤 Uygulamayı Paylaş',
+    offersTitle:'🔥 Bu Haftanın Fırsatları',
+    offersLoading:'Fırsatlar yükleniyor …',
   },
   fr:{
     appTitle:'Liste de courses III',appSub:'Triée intelligemment. Facile.',
@@ -2660,6 +2678,10 @@ const i18n = {
     voiceRecognitionMicDenied:' (microphone refusé)',
     autoListPrefix:'Courses',
     appShareText:'🛒 Regardez ça – cette application de liste de courses est vraiment pratique ! Gratuite, directement dans le navigateur, sans installation :',
+    slogan:'La seule app qui connaît votre supermarché de l\'intérieur',
+    homeShareBtn:'📤 Partager l\'app',
+    offersTitle:'🔥 Offres de la semaine',
+    offersLoading:'Chargement des offres …',
   },
   es:{
     appTitle:'Lista de compras III',appSub:'Ordenada inteligentemente. Fácil.',
@@ -2843,6 +2865,10 @@ const i18n = {
     voiceRecognitionMicDenied:' (micrófono denegado)',
     autoListPrefix:'Compras',
     appShareText:'🛒 Mira esto – ¡esta app de lista de compras es muy práctica! Gratis, directamente en el navegador, sin instalación:',
+    slogan:'La única app que conoce tu supermercado por dentro',
+    homeShareBtn:'📤 Compartir App',
+    offersTitle:'🔥 Ofertas de la semana',
+    offersLoading:'Cargando ofertas …',
   },
 };
 const t = i18n[lang]||i18n.de;
@@ -2866,6 +2892,14 @@ function updateGreeting(){
   document.getElementById('home-hero-name').textContent = '🛒 '+t.appTitle;
   document.getElementById('home-sub').textContent = t.appSub;
   document.getElementById('home-search').placeholder = t.searchPlaceholder;
+  const sloganEl = document.getElementById('home-slogan-text');
+  if(sloganEl) sloganEl.textContent = t.slogan;
+  const shareBtn = document.getElementById('home-share-btn');
+  if(shareBtn) shareBtn.textContent = t.homeShareBtn;
+  const offersTitleEl = document.getElementById('offers-title-lbl');
+  if(offersTitleEl) offersTitleEl.textContent = t.offersTitle;
+  const offersLoadingEl = document.getElementById('offers-loading-text');
+  if(offersLoadingEl) offersLoadingEl.textContent = t.offersLoading;
   const ni=document.getElementById('settings-name');
   if(ni) ni.value=CFG.name||'';
 }
@@ -3676,13 +3710,50 @@ function offerItemBadge(name, store, itemId){
   return `<span class="offer-item-badge" onclick="event.stopPropagation();toast(_offerTipMap['${itemId}_offer'],5000)">💰 -${o.discount}%</span>`;
 }
 
+// Kategorie → echtes Produktfoto (Unsplash, permanent & kostenlos)
+const OFFER_CAT_IMG = {
+  meat:      'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=280&h=192&fit=crop&auto=format&q=75',
+  dairy:     'https://images.unsplash.com/photo-1628088062854-d1870b4553da?w=280&h=192&fit=crop&auto=format&q=75',
+  produce:   'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=280&h=192&fit=crop&auto=format&q=75',
+  bakery:    'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=280&h=192&fit=crop&auto=format&q=75',
+  beverages: 'https://images.unsplash.com/photo-1544145945-f90425340c7e?w=280&h=192&fit=crop&auto=format&q=75',
+  frozen:    'https://images.unsplash.com/photo-1585559604959-6f520028adb1?w=280&h=192&fit=crop&auto=format&q=75',
+  snacks:    'https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=280&h=192&fit=crop&auto=format&q=75',
+  household: 'https://images.unsplash.com/photo-1563453392212-326f5e854473?w=280&h=192&fit=crop&auto=format&q=75',
+  personal:  'https://images.unsplash.com/photo-1526045612212-70caf35c14df?w=280&h=192&fit=crop&auto=format&q=75',
+  dry:       'https://images.unsplash.com/photo-1589367920969-ab8e050bbb04?w=280&h=192&fit=crop&auto=format&q=75',
+  canned:    'https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?w=280&h=192&fit=crop&auto=format&q=75',
+  eggs:      'https://images.unsplash.com/photo-1506976785307-8732e854ad03?w=280&h=192&fit=crop&auto=format&q=75',
+  seafood:   'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=280&h=192&fit=crop&auto=format&q=75',
+  condiments:'https://images.unsplash.com/photo-1472476443507-c7a5948772fc?w=280&h=192&fit=crop&auto=format&q=75',
+  alcohol:   'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=280&h=192&fit=crop&auto=format&q=75',
+  baby:      'https://images.unsplash.com/photo-1555252333-9f8e92e65df9?w=280&h=192&fit=crop&auto=format&q=75',
+  pharmacy:  'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=280&h=192&fit=crop&auto=format&q=75',
+  pet:       'https://images.unsplash.com/photo-1548767797-d8c844163c4c?w=280&h=192&fit=crop&auto=format&q=75',
+  other:     'https://images.unsplash.com/photo-1578916171728-46686eac8d58?w=280&h=192&fit=crop&auto=format&q=75',
+};
+
+function _offerWeekLabel(){
+  if(!offersData?.meta) return t.offersThisWeek;
+  try{
+    const from = new Date(offersData.meta.validFrom+'T12:00:00Z');
+    const until = new Date(offersData.meta.validUntil+'T12:00:00Z');
+    const localeMap = {de:'de-DE',en:'en-GB',tr:'tr-TR',fr:'fr-FR',es:'es-ES'};
+    const loc = localeMap[lang]||'de-DE';
+    const fmt = new Intl.DateTimeFormat(loc,{day:'numeric',month:'short'});
+    return fmt.format(from)+' – '+fmt.format(until);
+  } catch(e){ return offersData.meta.week||t.offersThisWeek; }
+}
+
 function renderOffersSection(){
   const wrap = document.getElementById('offers-wrap');
   const scroll = document.getElementById('offers-scroll');
   const weekLbl = document.getElementById('offers-week-label');
+  const titleEl = document.getElementById('offers-title-lbl');
   if(!wrap || !scroll || !offersData) return;
   wrap.style.display='block';
-  weekLbl.textContent = offersData.meta?.week || t.offersThisWeek;
+  if(titleEl) titleEl.textContent = t.offersTitle;
+  if(weekLbl) weekLbl.textContent = _offerWeekLabel();
   // Alle Angebote flach, sortiert nach Discount
   const all=[];
   Object.entries(offersData.stores).forEach(([store,offers])=>{
@@ -3690,14 +3761,21 @@ function renderOffersSection(){
   });
   all.sort((a,b)=>b.discount-a.discount);
   if(!all.length){ scroll.innerHTML=`<div class="offers-empty">${t.offersNone}</div>`; return; }
-  scroll.innerHTML = all.map(o=>`
-    <div class="offer-card" onclick="addOfferToCurrentList(${JSON.stringify(o).replace(/"/g,'&quot;')})">
-      <div class="offer-card-top">
+  scroll.innerHTML = all.map(o=>{
+    const imgUrl = o.image || OFFER_CAT_IMG[o.cat] || OFFER_CAT_IMG.other;
+    const fb = o.emoji||'🛒';
+    const dataStr = JSON.stringify(o).replace(/"/g,'&quot;');
+    return `
+    <div class="offer-card" onclick="addOfferToCurrentList(${dataStr})">
+      <div class="offer-img-wrap">
+        <img class="offer-img" src="${imgUrl}" alt="${o.name}" loading="lazy"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+        <div class="offer-img-fb" style="display:none">${fb}</div>
         <span class="offer-discount-badge">-${o.discount}%</span>
-        <span class="offer-emoji">${o.emoji||'🛒'}</span>
+      </div>
+      <div class="offer-card-top">
         <div class="offer-store-lbl">${o.store}</div>
         <div class="offer-name">${o.name}</div>
-        <div class="offer-desc">${o.desc||''}</div>
         <div class="offer-prices">
           <span class="offer-sale">${o.salePrice.toFixed(2)}€</span>
           <span class="offer-normal">${o.normalPrice.toFixed(2)}€</span>
@@ -3705,7 +3783,7 @@ function renderOffersSection(){
         </div>
       </div>
       <button class="offer-add-btn">${t.offerAddBtn}</button>
-    </div>`).join('');
+    </div>`}).join('');
 }
 
 function addOfferToCurrentList(offer){
