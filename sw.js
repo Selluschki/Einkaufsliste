@@ -1,4 +1,4 @@
-const CACHE = 'einkaufsliste-v31';
+const CACHE = 'einkaufsliste-v32';
 
 // Automatisch den richtigen Basispfad erkennen
 // → lokal: '/'  |  GitHub Pages: '/Einkaufsliste/'

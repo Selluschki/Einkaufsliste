@@ -1890,27 +1890,27 @@ function applyLayout(name){
 function setTheme(name){
   CFG.theme = name; saveCFG(); applyTheme(name);
   document.querySelectorAll('.theme-swatch').forEach(s=>s.classList.toggle('active',s.dataset.theme===name));
-  const labels={blue:'Blau',green:'Grün',purple:'Lila',orange:'Orange',dark:'Dunkel'};
+  const labels={blue:t.themeBlue,green:t.themeGreen,purple:t.themePurple,orange:t.themeOrange,dark:t.themeDark};
   const el=document.getElementById('theme-label-name');
   if(el) el.textContent=labels[name]||name;
-  toast('🎨 '+(labels[name]||name)+' aktiviert');
+  toast('🎨 '+(labels[name]||name)+' '+t.themeActivated);
 }
 function setLayout(name){
   CFG.layout=name; saveCFG(); applyLayout(name);
   document.querySelectorAll('.layout-opt[data-layout]').forEach(o=>o.classList.toggle('active',o.dataset.layout===name));
   renderHome();
-  toast('📐 Layout: '+(name==='list'?'Liste':name==='grid'?'Raster':'Kompakt'));
+  toast('📐 Layout: '+(name==='list'?t.layoutList2:name==='grid'?t.layoutGrid:t.layoutCompact2));
 }
 function setLang(l){
   CFG.lang=l; saveCFG();
   document.querySelectorAll('.layout-opt[data-lang]').forEach(o=>o.classList.toggle('active',o.dataset.lang===l));
-  toast('🌍 Sprache geändert — App wird neu geladen …');
+  toast('🌍 '+t.langChanged);
   setTimeout(()=>location.reload(),1000);
 }
 function saveName(){
   const v=document.getElementById('settings-name').value.trim();
   CFG.name=v; saveCFG(); updateGreeting();
-  toast('👤 '+(v?'Hallo, '+v+'!':'Name gespeichert'));
+  toast('👤 '+(v?t.helloName+v+'!':t.nameSaved));
 }
 function exportData(){
   const d=JSON.stringify({lists,settings:CFG,exported:new Date().toISOString()},null,2);
@@ -1918,10 +1918,10 @@ function exportData(){
   const u=URL.createObjectURL(b);
   const a=document.createElement('a'); a.href=u; a.download='einkaufsliste-backup.json'; a.click();
   URL.revokeObjectURL(u);
-  toast('📤 Export erfolgreich');
+  toast('📤 '+t.exportSuccess);
 }
 function clearAllData(){
-  if(!confirm('Wirklich ALLE Daten löschen? Das kann nicht rückgängig gemacht werden.')) return;
+  if(!confirm(t.confirmDeleteAll)) return;
   localStorage.clear(); location.reload();
 }
 
@@ -1972,6 +1972,145 @@ const i18n = {
     shareSheetTitle:'App teilen', shareSheetSub:'Empfehle die App weiter',
     iosInstallTitle:'App auf dem Homescreen speichern', iosInstallSub:'Nutze die App wie eine echte App – ganz ohne App Store',
     maybeLater:'Vielleicht später', understood:'Verstanden ✓',
+    themeBlue:'Blau', themeGreen:'Grün', themePurple:'Lila', themeOrange:'Orange', themeDark:'Dunkel',
+    themeActivated:'aktiviert',
+    layoutList2:'Liste', layoutGrid:'Raster', layoutCompact2:'Kompakt',
+    langChanged:'Sprache geändert — App wird neu geladen …',
+    helloName:'Hallo, ',
+    nameSaved:'Name gespeichert',
+    exportSuccess:'Export erfolgreich',
+    confirmDeleteAll:'Wirklich ALLE Daten löschen? Das kann nicht rückgängig gemacht werden.',
+    storeSelected:'ausgewählt',
+    storeFilterRemoved:'Marktfilter entfernt',
+    listEmpty:'Liste ist leer',
+    listDeleted:'gelöscht',
+    confirmDeleteList:'wirklich löschen?',
+    itemRestored:'↩ Wiederhergestellt!',
+    undoBtn:'↩ Rückgängig',
+    shoppingFinished:'Einkauf beendet – gut gemacht!',
+    newListCreated:'Neue Liste erstellt',
+    articleAdded:'hinzugefügt',
+    articlesAdded:'Artikel hinzugefügt',
+    listCreatedWith:'mit',
+    listCreatedArticles:'Artikeln erstellt',
+    noListOpen:'Keine Liste geöffnet',
+    noResults:'Keine Treffer',
+    noResultsDesc:'Versuche einen anderen Suchbegriff',
+    startRoute:'Einkaufsroute starten →',
+    itemsMaybeUnavail:'Artikel',
+    itemsMaybeUnavailAt:'auf deiner Liste möglicherweise nicht bei',
+    itemsMaybeUnavailTap:'erhältlich — tippe auf ⚠️ am Artikel für Alternativen',
+    routeMaybeUnavailAt:'möglicherweise nicht bei',
+    routeMaybeUnavailTap:'— tippe auf ⚠️ am Artikel',
+    finishRoute:'Einkaufsroute beenden',
+    newShoppingList:'Neue Einkaufsliste',
+    availEverywhere:'Überall erhältlich',
+    availAt:'Erhältlich bei',
+    availAtStore:'Verfügbar bei',
+    availNotAt:'meist nicht verfügbar',
+    availTip:'Tipp',
+    availMaybeNot:'Möglicherweise nicht bei',
+    offersThisWeek:'Diese Woche',
+    offersNone:'Keine Angebote verfügbar',
+    offerAddBtn:'+ Zur Liste hinzufügen',
+    offerAdded:'hinzugefügt',
+    offerOpenList:'Öffne eine Liste und tippe nochmal auf das Angebot!',
+    statListsLabel:'Listen',
+    statItemsLabel:'Artikel',
+    statDoneLabel:'Erledigt',
+    statBudgetLabel:'Budget',
+    recentLabel:'Zuletzt:',
+    voiceStatusHint:'Tippe auf das Mikrofon und sprich',
+    voiceNothingFound:'Nichts erkannt – bitte nochmal versuchen',
+    voiceNewList:'Neue Liste',
+    voiceWillBeCreated:'wird erstellt',
+    voiceAddToList:'Artikel zur Liste',
+    voiceAddTo:'Zu',
+    voiceItemsDetected:'Artikel erkannt',
+    voiceMoreSpeaking:'Weiter sprechen …',
+    voiceListCreating:'Liste wird erstellt …',
+    voiceSortedBy:'Sortiert nach',
+    voiceSortedByOrder:'Reihenfolge',
+    voiceSelectStoreTip:'Tipp: Markt wählen für automatische Sortierung nach Supermarkt-Gang',
+    voiceAddInList:'In Liste eintragen:',
+    voiceCloseBtn:'Schließen',
+    voiceUseChromeEdge:'Bitte Chrome oder Edge verwenden',
+    voiceCountUnit:'Stk',
+    photoHint:'📝 Trage den Produktnamen ein – das Foto dient als Gedächtnisstütze.',
+    photoScanning:'🔍 Scanne …',
+    photoSearching:'🔍 Produkt wird gesucht …',
+    photoLoading:'⏳ Produktdaten werden geladen …',
+    photoSearchPlaceholder:'Suche …',
+    photoFound:'✅ Produkt gefunden!',
+    photoFoundReady:'– bereit zum Hinzufügen',
+    photoBarcodeFound:'📷 Barcode erkannt',
+    photoBarcodeNotInDb:'– Produkt nicht in Datenbank, Name eingeben',
+    photoOffline:'⚠️ Offline – Name manuell eingeben',
+    photoNamePlaceholder:'Produktname eingeben …',
+    photoNoBarcode:'📷 Kein Barcode',
+    photoNoBarcodeTip:'💡 Kein Barcode gefunden – gib den Namen manuell ein',
+    photoTaken:'📷 Foto aufgenommen',
+    photoItemAdded:'hinzugefügt',
+    apiConnecting:'🔄 Verbinde …',
+    apiConnected:'Verbunden · %s Produkte verfügbar',
+    apiReachable:'Open Food Facts erreichbar',
+    apiNotReachable:'API nicht erreichbar',
+    apiNoAccess:'❌ Kein Zugriff – prüfe Internet-Verbindung',
+    apiSugEnabled:'✅ Vorschläge aktiviert',
+    apiSugDisabled:'⭕ Vorschläge deaktiviert',
+    updateStatusSearching:'Suche nach Updates…',
+    updateStatusWaiting:'Bitte warten',
+    updateStatusUpToDate:'App ist aktuell',
+    updateStatusCheckedAt:'Zuletzt geprüft: ',
+    updateStatusOk:'✅ Alles aktuell – du hast die neueste Version!',
+    updateStatusFailed:'Prüfung fehlgeschlagen',
+    updateStatusFailedSub:'Bitte Internetverbindung prüfen',
+    updateStatusFailedToast:'⚠️ Update-Prüfung fehlgeschlagen',
+    updateAvailableTitle:'Update verfügbar!',
+    updateAvailableSub:'Neue Version wurde heruntergeladen',
+    updateCheckingBtn:'⏳ Prüfe…',
+    appInstalled:'App erfolgreich installiert!',
+    appAlreadyInstalled:'✓ App ist bereits installiert!',
+    appOpenInBrowser:'💡 Öffne diese Seite in Chrome oder Safari, um die App zu installieren',
+    appInstalledFun:'App installiert – viel Spaß!',
+    shareListCount:'Artikel',
+    shareTelegramText:'Einkaufsliste teilen',
+    shareEmailSubjectPrefix:'🛒 Einkaufsliste: ',
+    shareEmailBody:'Hallo!\n\nIch teile meine Einkaufsliste "%s" mit dir:\n\n',
+    shareEmailFooter:'\n\n📱 Liste in der App öffnen:\n%s\n\nViele Grüße',
+    shareNativeText:'Einkaufsliste teilen',
+    appShareCopyInstagram:'📋 Link kopiert! Füge ihn in Instagram ein.',
+    appShareLinkCopied:'✓ Link kopiert!',
+    linkCopied:'✓ Link kopiert!',
+    listImported:'importiert',
+    listImportedItems:'Artikel',
+    dealAddNoList:'⚠️ Bitte zuerst eine Liste öffnen',
+    dealAlreadyIn:'ist bereits in der Liste',
+    prospektOpening:'📰 Prospekt wird geöffnet …',
+    prospektNone:'📰 Kein direkter Prospekt-Link verfügbar',
+    storeActiveRemove:'Aktiver Markt – Filter entfernen',
+    storeSetActive:'Als aktiven Markt setzen',
+    storeDealsTitle:'🏷 Typische Angebote',
+    storeDealsNote:'zur Inspiration',
+    storeDealsNone:'Keine Angebote für diesen Markt verfügbar',
+    storeProspektBtn:'Aktueller Prospekt & Angebote',
+    storeProspektSub:'Öffnet die offizielle Angebotsseite',
+    storeActiveFilter:'Filter entfernen',
+    recipesNoResult:'Kein Rezept gefunden',
+    recipePortions:'Portionen',
+    recipeIngTitle:'Zutaten',
+    recipeAddToListLabel:'In Liste eintragen:',
+    recipeNewListBtn:'✚ Neue Liste aus Rezept erstellen',
+    recipeIngredientsAdded:'Zutaten zu',
+    recipeIngredientsAddedSuffix:'hinzugefügt',
+    recipeListCreated:'als Liste erstellt',
+    recipeListVoiceCreated:'Artikel erkannt',
+    listTemplateCreated:'mit',
+    listTemplateArticles:'Artikeln erstellt',
+    voiceRecognitionError:'Fehler: ',
+    voiceRecognitionMicDenied:' (Mikrofon verweigert)',
+    autoListPrefix:'Einkauf',
+    appShareText:'🛒 Schau mal – diese Einkaufsliste App ist richtig praktisch! Kostenlos, direkt im Browser, keine Installation nötig:',
   },
   en:{
     appTitle:'Shopping List III',appSub:'Smart sorted. Easy shopping.',
@@ -2016,6 +2155,145 @@ const i18n = {
     shareSheetTitle:'Share app', shareSheetSub:'Recommend the app to others',
     iosInstallTitle:'Save app to home screen', iosInstallSub:'Use the app like a native app – without App Store',
     maybeLater:'Maybe later', understood:'Got it ✓',
+    themeBlue:'Blue', themeGreen:'Green', themePurple:'Purple', themeOrange:'Orange', themeDark:'Dark',
+    themeActivated:'activated',
+    layoutList2:'List', layoutGrid:'Grid', layoutCompact2:'Compact',
+    langChanged:'Language changed — reloading app …',
+    helloName:'Hello, ',
+    nameSaved:'Name saved',
+    exportSuccess:'Export successful',
+    confirmDeleteAll:'Really delete ALL data? This cannot be undone.',
+    storeSelected:'selected',
+    storeFilterRemoved:'Store filter removed',
+    listEmpty:'List is empty',
+    listDeleted:'deleted',
+    confirmDeleteList:'really delete?',
+    itemRestored:'↩ Restored!',
+    undoBtn:'↩ Undo',
+    shoppingFinished:'Shopping done – well done!',
+    newListCreated:'New list created',
+    articleAdded:'added',
+    articlesAdded:'items added',
+    listCreatedWith:'with',
+    listCreatedArticles:'items created',
+    noListOpen:'No list open',
+    noResults:'No results',
+    noResultsDesc:'Try a different search term',
+    startRoute:'Start shopping route →',
+    itemsMaybeUnavail:'items',
+    itemsMaybeUnavailAt:'on your list possibly not at',
+    itemsMaybeUnavailTap:'available — tap ⚠️ on the item for alternatives',
+    routeMaybeUnavailAt:'possibly not at',
+    routeMaybeUnavailTap:'— tap ⚠️ on item',
+    finishRoute:'Finish shopping route',
+    newShoppingList:'New shopping list',
+    availEverywhere:'Available everywhere',
+    availAt:'Available at',
+    availAtStore:'Available at',
+    availNotAt:'usually not available',
+    availTip:'Tip',
+    availMaybeNot:'Possibly not at',
+    offersThisWeek:'This Week',
+    offersNone:'No offers available',
+    offerAddBtn:'+ Add to list',
+    offerAdded:'added',
+    offerOpenList:'Open a list and tap the offer again!',
+    statListsLabel:'Lists',
+    statItemsLabel:'Items',
+    statDoneLabel:'Done',
+    statBudgetLabel:'Budget',
+    recentLabel:'Recent:',
+    voiceStatusHint:'Tap the microphone and speak',
+    voiceNothingFound:'Nothing detected – please try again',
+    voiceNewList:'New list',
+    voiceWillBeCreated:'will be created',
+    voiceAddToList:'Add items to list',
+    voiceAddTo:'To',
+    voiceItemsDetected:'items detected',
+    voiceMoreSpeaking:'Keep speaking …',
+    voiceListCreating:'Creating list …',
+    voiceSortedBy:'Sorted by',
+    voiceSortedByOrder:'order',
+    voiceSelectStoreTip:'Tip: Select a store for automatic sorting by aisle',
+    voiceAddInList:'Add to list:',
+    voiceCloseBtn:'Close',
+    voiceUseChromeEdge:'Please use Chrome or Edge',
+    voiceCountUnit:'pcs',
+    photoHint:'📝 Enter the product name – the photo is a visual reminder.',
+    photoScanning:'🔍 Scanning …',
+    photoSearching:'🔍 Looking up product …',
+    photoLoading:'⏳ Loading product data …',
+    photoSearchPlaceholder:'Search …',
+    photoFound:'✅ Product found!',
+    photoFoundReady:'– ready to add',
+    photoBarcodeFound:'📷 Barcode detected',
+    photoBarcodeNotInDb:'– product not in database, enter name',
+    photoOffline:'⚠️ Offline – enter name manually',
+    photoNamePlaceholder:'Enter product name …',
+    photoNoBarcode:'📷 No barcode',
+    photoNoBarcodeTip:'💡 No barcode found – enter name manually',
+    photoTaken:'📷 Photo taken',
+    photoItemAdded:'added',
+    apiConnecting:'🔄 Connecting …',
+    apiConnected:'Connected · %s products available',
+    apiReachable:'Open Food Facts reachable',
+    apiNotReachable:'API not reachable',
+    apiNoAccess:'❌ No access – check internet connection',
+    apiSugEnabled:'✅ Suggestions enabled',
+    apiSugDisabled:'⭕ Suggestions disabled',
+    updateStatusSearching:'Searching for updates…',
+    updateStatusWaiting:'Please wait',
+    updateStatusUpToDate:'App is up to date',
+    updateStatusCheckedAt:'Last checked: ',
+    updateStatusOk:'✅ All up to date – you have the latest version!',
+    updateStatusFailed:'Check failed',
+    updateStatusFailedSub:'Please check internet connection',
+    updateStatusFailedToast:'⚠️ Update check failed',
+    updateAvailableTitle:'Update available!',
+    updateAvailableSub:'New version downloaded',
+    updateCheckingBtn:'⏳ Checking…',
+    appInstalled:'App successfully installed!',
+    appAlreadyInstalled:'✓ App is already installed!',
+    appOpenInBrowser:'💡 Open this page in Chrome or Safari to install the app',
+    appInstalledFun:'App installed – enjoy!',
+    shareListCount:'items',
+    shareTelegramText:'Share shopping list',
+    shareEmailSubjectPrefix:'🛒 Shopping list: ',
+    shareEmailBody:'Hello!\n\nI\'m sharing my shopping list "%s" with you:\n\n',
+    shareEmailFooter:'\n\n📱 Open list in app:\n%s\n\nBest regards',
+    shareNativeText:'Share shopping list',
+    appShareCopyInstagram:'📋 Link copied! Paste it in Instagram.',
+    appShareLinkCopied:'✓ Link copied!',
+    linkCopied:'✓ Link copied!',
+    listImported:'imported',
+    listImportedItems:'items',
+    dealAddNoList:'⚠️ Please open a list first',
+    dealAlreadyIn:'is already in the list',
+    prospektOpening:'📰 Opening flyer …',
+    prospektNone:'📰 No direct flyer link available',
+    storeActiveRemove:'Active store – remove filter',
+    storeSetActive:'Set as active store',
+    storeDealsTitle:'🏷 Typical offers',
+    storeDealsNote:'for inspiration',
+    storeDealsNone:'No offers available for this store',
+    storeProspektBtn:'Current flyer & offers',
+    storeProspektSub:'Opens the official offers page',
+    storeActiveFilter:'Remove filter',
+    recipesNoResult:'No recipe found',
+    recipePortions:'Portions',
+    recipeIngTitle:'Ingredients',
+    recipeAddToListLabel:'Add to list:',
+    recipeNewListBtn:'✚ Create new list from recipe',
+    recipeIngredientsAdded:'ingredients added to',
+    recipeIngredientsAddedSuffix:'',
+    recipeListCreated:'created as list',
+    recipeListVoiceCreated:'items detected',
+    listTemplateCreated:'with',
+    listTemplateArticles:'items created',
+    voiceRecognitionError:'Error: ',
+    voiceRecognitionMicDenied:' (microphone denied)',
+    autoListPrefix:'Shopping',
+    appShareText:'🛒 Check this out – this shopping list app is really handy! Free, right in the browser, no installation needed:',
   },
   tr:{
     appTitle:'Alışveriş Listesi III',appSub:'Akıllı sıralama. Kolay alışveriş.',
@@ -2060,6 +2338,145 @@ const i18n = {
     shareSheetTitle:'Uygulamayı paylaş', shareSheetSub:'Uygulamayı başkalarına öner',
     iosInstallTitle:'Uygulamayı ana ekrana kaydet', iosInstallSub:'Uygulamayı App Store olmadan gerçek bir uygulama gibi kullan',
     maybeLater:'Belki sonra', understood:'Anladım ✓',
+    themeBlue:'Mavi', themeGreen:'Yeşil', themePurple:'Mor', themeOrange:'Turuncu', themeDark:'Koyu',
+    themeActivated:'etkinleştirildi',
+    layoutList2:'Liste', layoutGrid:'Izgara', layoutCompact2:'Kompakt',
+    langChanged:'Dil değiştirildi — Uygulama yeniden yükleniyor …',
+    helloName:'Merhaba, ',
+    nameSaved:'İsim kaydedildi',
+    exportSuccess:'Dışa aktarma başarılı',
+    confirmDeleteAll:'Tüm verileri gerçekten silmek istiyor musunuz? Bu geri alınamaz.',
+    storeSelected:'seçildi',
+    storeFilterRemoved:'Market filtresi kaldırıldı',
+    listEmpty:'Liste boş',
+    listDeleted:'silindi',
+    confirmDeleteList:'gerçekten silinsin mi?',
+    itemRestored:'↩ Geri yüklendi!',
+    undoBtn:'↩ Geri al',
+    shoppingFinished:'Alışveriş bitti – aferin!',
+    newListCreated:'Yeni liste oluşturuldu',
+    articleAdded:'eklendi',
+    articlesAdded:'ürün eklendi',
+    listCreatedWith:'ile',
+    listCreatedArticles:'ürünle oluşturuldu',
+    noListOpen:'Açık liste yok',
+    noResults:'Sonuç yok',
+    noResultsDesc:'Farklı bir arama terimi deneyin',
+    startRoute:'Alışveriş rotasını başlat →',
+    itemsMaybeUnavail:'ürün',
+    itemsMaybeUnavailAt:'listenizde muhtemelen şurada yok:',
+    itemsMaybeUnavailTap:'mevcut — alternatifler için ürün üzerindeki ⚠️\'e dokunun',
+    routeMaybeUnavailAt:'muhtemelen şurada yok:',
+    routeMaybeUnavailTap:'— ürün üzerindeki ⚠️\'e dokunun',
+    finishRoute:'Alışveriş rotasını bitir',
+    newShoppingList:'Yeni alışveriş listesi',
+    availEverywhere:'Her yerde mevcut',
+    availAt:'Mevcut:',
+    availAtStore:'Mevcut:',
+    availNotAt:'genellikle mevcut değil',
+    availTip:'İpucu',
+    availMaybeNot:'Muhtemelen şurada yok:',
+    offersThisWeek:'Bu Hafta',
+    offersNone:'Teklif yok',
+    offerAddBtn:'+ Listeye ekle',
+    offerAdded:'eklendi',
+    offerOpenList:'Bir liste aç ve teklife tekrar dokun!',
+    statListsLabel:'Liste',
+    statItemsLabel:'Ürün',
+    statDoneLabel:'Tamamlandı',
+    statBudgetLabel:'Bütçe',
+    recentLabel:'Son:',
+    voiceStatusHint:'Mikrofona dokunun ve konuşun',
+    voiceNothingFound:'Hiçbir şey algılanmadı – lütfen tekrar deneyin',
+    voiceNewList:'Yeni liste',
+    voiceWillBeCreated:'oluşturulacak',
+    voiceAddToList:'Listeye ürün ekle',
+    voiceAddTo:'Şuraya:',
+    voiceItemsDetected:'ürün algılandı',
+    voiceMoreSpeaking:'Konuşmaya devam edin …',
+    voiceListCreating:'Liste oluşturuluyor …',
+    voiceSortedBy:'Sıralama:',
+    voiceSortedByOrder:'sırası',
+    voiceSelectStoreTip:'İpucu: Otomatik koridor sıralaması için market seçin',
+    voiceAddInList:'Listeye ekle:',
+    voiceCloseBtn:'Kapat',
+    voiceUseChromeEdge:'Lütfen Chrome veya Edge kullanın',
+    voiceCountUnit:'adet',
+    photoHint:'📝 Ürün adını girin – fotoğraf görsel bir hatırlatıcıdır.',
+    photoScanning:'🔍 Taranıyor …',
+    photoSearching:'🔍 Ürün aranıyor …',
+    photoLoading:'⏳ Ürün verileri yükleniyor …',
+    photoSearchPlaceholder:'Ara …',
+    photoFound:'✅ Ürün bulundu!',
+    photoFoundReady:'– eklenmeye hazır',
+    photoBarcodeFound:'📷 Barkod algılandı',
+    photoBarcodeNotInDb:'– ürün veri tabanında yok, isim girin',
+    photoOffline:'⚠️ Çevrimdışı – ismi manuel girin',
+    photoNamePlaceholder:'Ürün adı girin …',
+    photoNoBarcode:'📷 Barkod yok',
+    photoNoBarcodeTip:'💡 Barkod bulunamadı – ismi manuel girin',
+    photoTaken:'📷 Fotoğraf çekildi',
+    photoItemAdded:'eklendi',
+    apiConnecting:'🔄 Bağlanıyor …',
+    apiConnected:'Bağlandı · %s ürün mevcut',
+    apiReachable:'Open Food Facts erişilebilir',
+    apiNotReachable:'API erişilemiyor',
+    apiNoAccess:'❌ Erişim yok – internet bağlantısını kontrol edin',
+    apiSugEnabled:'✅ Öneriler etkin',
+    apiSugDisabled:'⭕ Öneriler devre dışı',
+    updateStatusSearching:'Güncellemeler aranıyor…',
+    updateStatusWaiting:'Lütfen bekleyin',
+    updateStatusUpToDate:'Uygulama güncel',
+    updateStatusCheckedAt:'Son kontrol: ',
+    updateStatusOk:'✅ Her şey güncel – en yeni sürüme sahipsiniz!',
+    updateStatusFailed:'Kontrol başarısız',
+    updateStatusFailedSub:'Lütfen internet bağlantısını kontrol edin',
+    updateStatusFailedToast:'⚠️ Güncelleme kontrolü başarısız',
+    updateAvailableTitle:'Güncelleme mevcut!',
+    updateAvailableSub:'Yeni sürüm indirildi',
+    updateCheckingBtn:'⏳ Kontrol ediliyor…',
+    appInstalled:'Uygulama başarıyla yüklendi!',
+    appAlreadyInstalled:'✓ Uygulama zaten yüklü!',
+    appOpenInBrowser:'💡 Uygulamayı yüklemek için bu sayfayı Chrome veya Safari\'de açın',
+    appInstalledFun:'Uygulama yüklendi – keyifli kullanımlar!',
+    shareListCount:'ürün',
+    shareTelegramText:'Alışveriş listesini paylaş',
+    shareEmailSubjectPrefix:'🛒 Alışveriş listesi: ',
+    shareEmailBody:'Merhaba!\n\n"%s" alışveriş listemi seninle paylaşıyorum:\n\n',
+    shareEmailFooter:'\n\n📱 Listeyi uygulamada aç:\n%s\n\nİyi günler',
+    shareNativeText:'Alışveriş listesini paylaş',
+    appShareCopyInstagram:'📋 Bağlantı kopyalandı! Instagram\'a yapıştır.',
+    appShareLinkCopied:'✓ Bağlantı kopyalandı!',
+    linkCopied:'✓ Bağlantı kopyalandı!',
+    listImported:'aktarıldı',
+    listImportedItems:'ürün',
+    dealAddNoList:'⚠️ Lütfen önce bir liste açın',
+    dealAlreadyIn:'zaten listede var',
+    prospektOpening:'📰 Kampanya açılıyor …',
+    prospektNone:'📰 Doğrudan kampanya bağlantısı yok',
+    storeActiveRemove:'Aktif market – filtreyi kaldır',
+    storeSetActive:'Aktif market olarak ayarla',
+    storeDealsTitle:'🏷 Tipik teklifler',
+    storeDealsNote:'ilham için',
+    storeDealsNone:'Bu market için teklif yok',
+    storeProspektBtn:'Güncel kampanya & teklifler',
+    storeProspektSub:'Resmi teklifler sayfasını açar',
+    storeActiveFilter:'Filtreyi kaldır',
+    recipesNoResult:'Tarif bulunamadı',
+    recipePortions:'Porsiyon',
+    recipeIngTitle:'Malzemeler',
+    recipeAddToListLabel:'Listeye ekle:',
+    recipeNewListBtn:'✚ Tariften yeni liste oluştur',
+    recipeIngredientsAdded:'malzeme eklendi:',
+    recipeIngredientsAddedSuffix:'',
+    recipeListCreated:'liste olarak oluşturuldu',
+    recipeListVoiceCreated:'ürün algılandı',
+    listTemplateCreated:'ile',
+    listTemplateArticles:'ürünle oluşturuldu',
+    voiceRecognitionError:'Hata: ',
+    voiceRecognitionMicDenied:' (mikrofon reddedildi)',
+    autoListPrefix:'Alışveriş',
+    appShareText:'🛒 Şuna bir bak – bu alışveriş listesi uygulaması gerçekten kullanışlı! Ücretsiz, doğrudan tarayıcıda, kurulum gerekmez:',
   },
   fr:{
     appTitle:'Liste de courses III',appSub:'Triée intelligemment. Facile.',
@@ -2104,6 +2521,145 @@ const i18n = {
     shareSheetTitle:'Partager l\'app', shareSheetSub:'Recommandez l\'application',
     iosInstallTitle:'Sauvegarder l\'app sur l\'écran d\'accueil', iosInstallSub:'Utilisez l\'app comme une vraie application – sans App Store',
     maybeLater:'Peut-être plus tard', understood:'Compris ✓',
+    themeBlue:'Bleu', themeGreen:'Vert', themePurple:'Violet', themeOrange:'Orange', themeDark:'Sombre',
+    themeActivated:'activé',
+    layoutList2:'Liste', layoutGrid:'Grille', layoutCompact2:'Compact',
+    langChanged:'Langue modifiée — rechargement de l\'application …',
+    helloName:'Bonjour, ',
+    nameSaved:'Nom enregistré',
+    exportSuccess:'Export réussi',
+    confirmDeleteAll:'Vraiment supprimer TOUTES les données ? Irréversible.',
+    storeSelected:'sélectionné',
+    storeFilterRemoved:'Filtre magasin supprimé',
+    listEmpty:'Liste vide',
+    listDeleted:'supprimé',
+    confirmDeleteList:'vraiment supprimer ?',
+    itemRestored:'↩ Restauré !',
+    undoBtn:'↩ Annuler',
+    shoppingFinished:'Courses terminées – bravo !',
+    newListCreated:'Nouvelle liste créée',
+    articleAdded:'ajouté',
+    articlesAdded:'articles ajoutés',
+    listCreatedWith:'avec',
+    listCreatedArticles:'articles créée',
+    noListOpen:'Aucune liste ouverte',
+    noResults:'Aucun résultat',
+    noResultsDesc:'Essayez un autre terme de recherche',
+    startRoute:'Démarrer le parcours →',
+    itemsMaybeUnavail:'articles',
+    itemsMaybeUnavailAt:'sur votre liste peut-être indisponibles à',
+    itemsMaybeUnavailTap:'— touchez ⚠️ sur l\'article pour les alternatives',
+    routeMaybeUnavailAt:'peut-être indisponible à',
+    routeMaybeUnavailTap:'— touchez ⚠️ sur l\'article',
+    finishRoute:'Terminer le parcours',
+    newShoppingList:'Nouvelle liste de courses',
+    availEverywhere:'Disponible partout',
+    availAt:'Disponible à',
+    availAtStore:'Disponible à',
+    availNotAt:'généralement indisponible',
+    availTip:'Conseil',
+    availMaybeNot:'Peut-être indisponible à',
+    offersThisWeek:'Cette semaine',
+    offersNone:'Aucune offre disponible',
+    offerAddBtn:'+ Ajouter à la liste',
+    offerAdded:'ajouté',
+    offerOpenList:'Ouvrez une liste et retouchez l\'offre !',
+    statListsLabel:'Listes',
+    statItemsLabel:'Articles',
+    statDoneLabel:'Fait',
+    statBudgetLabel:'Budget',
+    recentLabel:'Récent :',
+    voiceStatusHint:'Appuyez sur le micro et parlez',
+    voiceNothingFound:'Rien détecté – veuillez réessayer',
+    voiceNewList:'Nouvelle liste',
+    voiceWillBeCreated:'sera créée',
+    voiceAddToList:'Ajouter des articles à la liste',
+    voiceAddTo:'Vers',
+    voiceItemsDetected:'articles détectés',
+    voiceMoreSpeaking:'Continuez à parler …',
+    voiceListCreating:'Création de la liste …',
+    voiceSortedBy:'Trié par',
+    voiceSortedByOrder:'ordre',
+    voiceSelectStoreTip:'Conseil : sélectionnez un magasin pour un tri automatique par rayon',
+    voiceAddInList:'Ajouter à la liste :',
+    voiceCloseBtn:'Fermer',
+    voiceUseChromeEdge:'Veuillez utiliser Chrome ou Edge',
+    voiceCountUnit:'pcs',
+    photoHint:'📝 Entrez le nom du produit – la photo est un aide-mémoire.',
+    photoScanning:'🔍 Scan …',
+    photoSearching:'🔍 Recherche du produit …',
+    photoLoading:'⏳ Chargement des données produit …',
+    photoSearchPlaceholder:'Chercher …',
+    photoFound:'✅ Produit trouvé !',
+    photoFoundReady:'– prêt à ajouter',
+    photoBarcodeFound:'📷 Code-barres détecté',
+    photoBarcodeNotInDb:'– produit absent de la base, entrez le nom',
+    photoOffline:'⚠️ Hors ligne – entrez le nom manuellement',
+    photoNamePlaceholder:'Entrez le nom du produit …',
+    photoNoBarcode:'📷 Pas de code-barres',
+    photoNoBarcodeTip:'💡 Aucun code-barres trouvé – entrez le nom manuellement',
+    photoTaken:'📷 Photo prise',
+    photoItemAdded:'ajouté',
+    apiConnecting:'🔄 Connexion …',
+    apiConnected:'Connecté · %s produits disponibles',
+    apiReachable:'Open Food Facts accessible',
+    apiNotReachable:'API inaccessible',
+    apiNoAccess:'❌ Pas d\'accès – vérifiez la connexion',
+    apiSugEnabled:'✅ Suggestions activées',
+    apiSugDisabled:'⭕ Suggestions désactivées',
+    updateStatusSearching:'Recherche de mises à jour…',
+    updateStatusWaiting:'Veuillez patienter',
+    updateStatusUpToDate:'Application à jour',
+    updateStatusCheckedAt:'Dernière vérification : ',
+    updateStatusOk:'✅ Tout est à jour – vous avez la dernière version !',
+    updateStatusFailed:'Vérification échouée',
+    updateStatusFailedSub:'Veuillez vérifier la connexion internet',
+    updateStatusFailedToast:'⚠️ Vérification des mises à jour échouée',
+    updateAvailableTitle:'Mise à jour disponible !',
+    updateAvailableSub:'Nouvelle version téléchargée',
+    updateCheckingBtn:'⏳ Vérification…',
+    appInstalled:'Application installée avec succès !',
+    appAlreadyInstalled:'✓ L\'application est déjà installée !',
+    appOpenInBrowser:'💡 Ouvrez cette page dans Chrome ou Safari pour installer l\'application',
+    appInstalledFun:'Application installée – bonne utilisation !',
+    shareListCount:'articles',
+    shareTelegramText:'Partager la liste de courses',
+    shareEmailSubjectPrefix:'🛒 Liste de courses : ',
+    shareEmailBody:'Bonjour !\n\nJe partage ma liste de courses "%s" avec toi :\n\n',
+    shareEmailFooter:'\n\n📱 Ouvrir la liste dans l\'application :\n%s\n\nCordialement',
+    shareNativeText:'Partager la liste de courses',
+    appShareCopyInstagram:'📋 Lien copié ! Collez-le dans Instagram.',
+    appShareLinkCopied:'✓ Lien copié !',
+    linkCopied:'✓ Lien copié !',
+    listImported:'importée',
+    listImportedItems:'articles',
+    dealAddNoList:'⚠️ Veuillez d\'abord ouvrir une liste',
+    dealAlreadyIn:'est déjà dans la liste',
+    prospektOpening:'📰 Ouverture du prospectus …',
+    prospektNone:'📰 Pas de lien direct vers le prospectus',
+    storeActiveRemove:'Magasin actif – supprimer le filtre',
+    storeSetActive:'Définir comme magasin actif',
+    storeDealsTitle:'🏷 Offres typiques',
+    storeDealsNote:'pour l\'inspiration',
+    storeDealsNone:'Aucune offre disponible pour ce magasin',
+    storeProspektBtn:'Prospectus & offres actuels',
+    storeProspektSub:'Ouvre la page officielle des offres',
+    storeActiveFilter:'Supprimer le filtre',
+    recipesNoResult:'Aucune recette trouvée',
+    recipePortions:'Portions',
+    recipeIngTitle:'Ingrédients',
+    recipeAddToListLabel:'Ajouter à la liste :',
+    recipeNewListBtn:'✚ Créer une nouvelle liste à partir de la recette',
+    recipeIngredientsAdded:'ingrédients ajoutés à',
+    recipeIngredientsAddedSuffix:'',
+    recipeListCreated:'créée comme liste',
+    recipeListVoiceCreated:'articles détectés',
+    listTemplateCreated:'avec',
+    listTemplateArticles:'articles créée',
+    voiceRecognitionError:'Erreur : ',
+    voiceRecognitionMicDenied:' (microphone refusé)',
+    autoListPrefix:'Courses',
+    appShareText:'🛒 Regardez ça – cette application de liste de courses est vraiment pratique ! Gratuite, directement dans le navigateur, sans installation :',
   },
   es:{
     appTitle:'Lista de compras III',appSub:'Ordenada inteligentemente. Fácil.',
@@ -2148,6 +2704,145 @@ const i18n = {
     shareSheetTitle:'Compartir app', shareSheetSub:'Recomienda la aplicación',
     iosInstallTitle:'Guardar app en pantalla de inicio', iosInstallSub:'Usa la app como una app nativa – sin App Store',
     maybeLater:'Quizás más tarde', understood:'Entendido ✓',
+    themeBlue:'Azul', themeGreen:'Verde', themePurple:'Morado', themeOrange:'Naranja', themeDark:'Oscuro',
+    themeActivated:'activado',
+    layoutList2:'Lista', layoutGrid:'Cuadrícula', layoutCompact2:'Compacto',
+    langChanged:'Idioma cambiado — recargando la aplicación …',
+    helloName:'Hola, ',
+    nameSaved:'Nombre guardado',
+    exportSuccess:'Exportación exitosa',
+    confirmDeleteAll:'¿Realmente eliminar TODOS los datos? No se puede deshacer.',
+    storeSelected:'seleccionado',
+    storeFilterRemoved:'Filtro de tienda eliminado',
+    listEmpty:'Lista vacía',
+    listDeleted:'eliminado',
+    confirmDeleteList:'¿realmente eliminar?',
+    itemRestored:'↩ ¡Restaurado!',
+    undoBtn:'↩ Deshacer',
+    shoppingFinished:'¡Compras terminadas – bien hecho!',
+    newListCreated:'Nueva lista creada',
+    articleAdded:'añadido',
+    articlesAdded:'artículos añadidos',
+    listCreatedWith:'con',
+    listCreatedArticles:'artículos creada',
+    noListOpen:'No hay lista abierta',
+    noResults:'Sin resultados',
+    noResultsDesc:'Prueba con otro término de búsqueda',
+    startRoute:'Iniciar ruta de compras →',
+    itemsMaybeUnavail:'artículos',
+    itemsMaybeUnavailAt:'en tu lista posiblemente no disponibles en',
+    itemsMaybeUnavailTap:'— toca ⚠️ en el artículo para alternativas',
+    routeMaybeUnavailAt:'posiblemente no disponible en',
+    routeMaybeUnavailTap:'— toca ⚠️ en el artículo',
+    finishRoute:'Terminar ruta de compras',
+    newShoppingList:'Nueva lista de compras',
+    availEverywhere:'Disponible en todas partes',
+    availAt:'Disponible en',
+    availAtStore:'Disponible en',
+    availNotAt:'generalmente no disponible',
+    availTip:'Consejo',
+    availMaybeNot:'Posiblemente no en',
+    offersThisWeek:'Esta semana',
+    offersNone:'No hay ofertas disponibles',
+    offerAddBtn:'+ Añadir a la lista',
+    offerAdded:'añadido',
+    offerOpenList:'¡Abre una lista y toca la oferta de nuevo!',
+    statListsLabel:'Listas',
+    statItemsLabel:'Artículos',
+    statDoneLabel:'Hecho',
+    statBudgetLabel:'Presupuesto',
+    recentLabel:'Reciente:',
+    voiceStatusHint:'Toca el micrófono y habla',
+    voiceNothingFound:'Nada detectado – por favor inténtalo de nuevo',
+    voiceNewList:'Nueva lista',
+    voiceWillBeCreated:'será creada',
+    voiceAddToList:'Añadir artículos a la lista',
+    voiceAddTo:'A',
+    voiceItemsDetected:'artículos detectados',
+    voiceMoreSpeaking:'Sigue hablando …',
+    voiceListCreating:'Creando lista …',
+    voiceSortedBy:'Ordenado por',
+    voiceSortedByOrder:'orden',
+    voiceSelectStoreTip:'Consejo: selecciona una tienda para ordenar automáticamente por pasillo',
+    voiceAddInList:'Añadir a lista:',
+    voiceCloseBtn:'Cerrar',
+    voiceUseChromeEdge:'Por favor usa Chrome o Edge',
+    voiceCountUnit:'uds',
+    photoHint:'📝 Introduce el nombre del producto – la foto es un recordatorio visual.',
+    photoScanning:'🔍 Escaneando …',
+    photoSearching:'🔍 Buscando producto …',
+    photoLoading:'⏳ Cargando datos del producto …',
+    photoSearchPlaceholder:'Buscar …',
+    photoFound:'✅ ¡Producto encontrado!',
+    photoFoundReady:'– listo para añadir',
+    photoBarcodeFound:'📷 Código de barras detectado',
+    photoBarcodeNotInDb:'– producto no en base de datos, introduce el nombre',
+    photoOffline:'⚠️ Sin conexión – introduce el nombre manualmente',
+    photoNamePlaceholder:'Introduce el nombre del producto …',
+    photoNoBarcode:'📷 Sin código de barras',
+    photoNoBarcodeTip:'💡 No se encontró código de barras – introduce el nombre manualmente',
+    photoTaken:'📷 Foto tomada',
+    photoItemAdded:'añadido',
+    apiConnecting:'🔄 Conectando …',
+    apiConnected:'Conectado · %s productos disponibles',
+    apiReachable:'Open Food Facts accesible',
+    apiNotReachable:'API no accesible',
+    apiNoAccess:'❌ Sin acceso – comprueba la conexión a internet',
+    apiSugEnabled:'✅ Sugerencias activadas',
+    apiSugDisabled:'⭕ Sugerencias desactivadas',
+    updateStatusSearching:'Buscando actualizaciones…',
+    updateStatusWaiting:'Por favor espera',
+    updateStatusUpToDate:'App actualizada',
+    updateStatusCheckedAt:'Última comprobación: ',
+    updateStatusOk:'✅ Todo actualizado – ¡tienes la última versión!',
+    updateStatusFailed:'Comprobación fallida',
+    updateStatusFailedSub:'Por favor comprueba la conexión a internet',
+    updateStatusFailedToast:'⚠️ Comprobación de actualización fallida',
+    updateAvailableTitle:'¡Actualización disponible!',
+    updateAvailableSub:'Nueva versión descargada',
+    updateCheckingBtn:'⏳ Comprobando…',
+    appInstalled:'¡App instalada correctamente!',
+    appAlreadyInstalled:'✓ ¡La app ya está instalada!',
+    appOpenInBrowser:'💡 Abre esta página en Chrome o Safari para instalar la app',
+    appInstalledFun:'App instalada – ¡que la disfrutes!',
+    shareListCount:'artículos',
+    shareTelegramText:'Compartir lista de compras',
+    shareEmailSubjectPrefix:'🛒 Lista de compras: ',
+    shareEmailBody:'¡Hola!\n\nComparto mi lista de compras "%s" contigo:\n\n',
+    shareEmailFooter:'\n\n📱 Abrir lista en la app:\n%s\n\nSaludos',
+    shareNativeText:'Compartir lista de compras',
+    appShareCopyInstagram:'📋 ¡Enlace copiado! Pégalo en Instagram.',
+    appShareLinkCopied:'✓ ¡Enlace copiado!',
+    linkCopied:'✓ ¡Enlace copiado!',
+    listImported:'importada',
+    listImportedItems:'artículos',
+    dealAddNoList:'⚠️ Por favor abre una lista primero',
+    dealAlreadyIn:'ya está en la lista',
+    prospektOpening:'📰 Abriendo folleto …',
+    prospektNone:'📰 No hay enlace directo al folleto',
+    storeActiveRemove:'Tienda activa – eliminar filtro',
+    storeSetActive:'Establecer como tienda activa',
+    storeDealsTitle:'🏷 Ofertas típicas',
+    storeDealsNote:'para inspiración',
+    storeDealsNone:'No hay ofertas disponibles para esta tienda',
+    storeProspektBtn:'Folleto & ofertas actuales',
+    storeProspektSub:'Abre la página oficial de ofertas',
+    storeActiveFilter:'Eliminar filtro',
+    recipesNoResult:'No se encontró ninguna receta',
+    recipePortions:'Porciones',
+    recipeIngTitle:'Ingredientes',
+    recipeAddToListLabel:'Añadir a lista:',
+    recipeNewListBtn:'✚ Crear nueva lista desde la receta',
+    recipeIngredientsAdded:'ingredientes añadidos a',
+    recipeIngredientsAddedSuffix:'',
+    recipeListCreated:'creada como lista',
+    recipeListVoiceCreated:'artículos detectados',
+    listTemplateCreated:'con',
+    listTemplateArticles:'artículos creada',
+    voiceRecognitionError:'Error: ',
+    voiceRecognitionMicDenied:' (micrófono denegado)',
+    autoListPrefix:'Compras',
+    appShareText:'🛒 Mira esto – ¡esta app de lista de compras es muy práctica! Gratis, directamente en el navegador, sin instalación:',
   },
 };
 const t = i18n[lang]||i18n.de;
@@ -2811,7 +3506,7 @@ function checkAvail(name,selectedStore){
 
 function fmtStores(arr){
   const show=arr.slice(0,4); const rest=arr.length-show.length;
-  return show.join(', ')+(rest>0?' +'+rest+' weitere':'');
+  return show.join(', ')+(rest>0?' +'+rest:'');
 }
 
 // ── Per-item availability badge ─────────────────────
@@ -2820,7 +3515,7 @@ function availBadge(name,store,itemId){
   if(!store) return '';
   const r=checkAvail(name,store);
   if(!r||r.everywhere||r.available) return '';
-  const msg=r.tip||('Möglicherweise nicht bei '+store+' · Erhältlich bei: '+fmtStores(r.stores));
+  const msg=r.tip||(t.availMaybeNot+' '+store+' · '+t.availAt+': '+fmtStores(r.stores));
   _availTipMap[itemId]=msg;
   return `<span class="avail-warn-badge" onclick="event.stopPropagation();toast('🏪 '+_availTipMap['${itemId}'],5000)">⚠️</span>`;
 }
@@ -2839,16 +3534,16 @@ function updateAvailHint(val){
     el.style.display='flex';
     if(r.everywhere){
       el.className=''; el.setAttribute('id','avail-hint'); el.classList.add('ok');
-      el.innerHTML='✅ <span>Überall erhältlich</span>';
+      el.innerHTML=`✅ <span>${t.availEverywhere}</span>`;
     } else if(!store){
       el.className=''; el.setAttribute('id','avail-hint'); el.classList.add('info');
-      el.innerHTML=`🏪 <span>Erhältlich bei: <strong>${fmtStores(r.stores)}</strong>${r.tip?'<br><small>'+r.tip+'</small>':''}</span>`;
+      el.innerHTML=`🏪 <span>${t.availAt}: <strong>${fmtStores(r.stores)}</strong>${r.tip?'<br><small>'+r.tip+'</small>':''}</span>`;
     } else if(r.available){
       el.className=''; el.setAttribute('id','avail-hint'); el.classList.add('ok');
-      el.innerHTML=`✅ <span>Verfügbar bei <strong>${store}</strong>${r.tip?'<br><small>'+r.tip+'</small>':''}</span>`;
+      el.innerHTML=`✅ <span>${t.availAtStore} <strong>${store}</strong>${r.tip?'<br><small>'+r.tip+'</small>':''}</span>`;
     } else {
       el.className=''; el.setAttribute('id','avail-hint'); el.classList.add('warn');
-      el.innerHTML=`⚠️ <span>Bei <strong>${store}</strong> meist <u>nicht</u> verfügbar${r.tip?'<br><small>'+r.tip+'</small>':'<br><small>Tipp: '+fmtStores(r.stores)+'</small>'}</span>`;
+      el.innerHTML=`⚠️ <span>${t.availAtStore} <strong>${store}</strong> ${t.availNotAt}${r.tip?'<br><small>'+r.tip+'</small>':'<br><small>'+t.availTip+': '+fmtStores(r.stores)+'</small>'}</span>`;
     }
   },280);
 }
@@ -2929,7 +3624,7 @@ function initSettings(){
   document.querySelectorAll('.theme-swatch').forEach(s=>s.classList.toggle('active',s.dataset.theme===CFG.theme));
   document.querySelectorAll('.layout-opt[data-layout]').forEach(o=>o.classList.toggle('active',o.dataset.layout===CFG.layout));
   document.querySelectorAll('.layout-opt[data-lang]').forEach(o=>o.classList.toggle('active',o.dataset.lang===lang));
-  const labels={blue:'Blau',green:'Grün',purple:'Lila',orange:'Orange',dark:'Dunkel'};
+  const labels={blue:t.themeBlue,green:t.themeGreen,purple:t.themePurple,orange:t.themeOrange,dark:t.themeDark};
   const el=document.getElementById('theme-label-name');
   if(el) el.textContent=labels[CFG.theme]||CFG.theme;
   const ni=document.getElementById('settings-name');
@@ -2987,14 +3682,14 @@ function renderOffersSection(){
   const weekLbl = document.getElementById('offers-week-label');
   if(!wrap || !scroll || !offersData) return;
   wrap.style.display='block';
-  weekLbl.textContent = offersData.meta?.week || 'Diese Woche';
+  weekLbl.textContent = offersData.meta?.week || t.offersThisWeek;
   // Alle Angebote flach, sortiert nach Discount
   const all=[];
   Object.entries(offersData.stores).forEach(([store,offers])=>{
     (offers||[]).forEach(o=>all.push({...o,store}));
   });
   all.sort((a,b)=>b.discount-a.discount);
-  if(!all.length){ scroll.innerHTML='<div class="offers-empty">Keine Angebote verfügbar</div>'; return; }
+  if(!all.length){ scroll.innerHTML=`<div class="offers-empty">${t.offersNone}</div>`; return; }
   scroll.innerHTML = all.map(o=>`
     <div class="offer-card" onclick="addOfferToCurrentList(${JSON.stringify(o).replace(/"/g,'&quot;')})">
       <div class="offer-card-top">
@@ -3009,7 +3704,7 @@ function renderOffersSection(){
           <span class="offer-unit">/ ${o.unit}</span>
         </div>
       </div>
-      <button class="offer-add-btn">+ Zur Liste hinzufügen</button>
+      <button class="offer-add-btn">${t.offerAddBtn}</button>
     </div>`).join('');
 }
 
@@ -3020,10 +3715,10 @@ function addOfferToCurrentList(offer){
     list.items.push({id:uid(),name:offer.name,qty:'1',unit:offer.unit||'Stk',cat:offer.cat||'other',checked:false,price:String(offer.salePrice)});
     addToRecent(offer.name);
     save(); renderItems();
-    toast(`✅ ${offer.name} hinzugefügt · ${offer.salePrice.toFixed(2)}€ bei ${offer.store}`);
+    toast(`✅ ${offer.name} ${t.offerAdded} · ${offer.salePrice.toFixed(2)}€ bei ${offer.store}`);
   } else {
     // Zur Startseite navigieren und Modal öffnen
-    toast(`💡 Öffne eine Liste und tippe nochmal auf das Angebot!`, 3500);
+    toast(`💡 ${t.offerOpenList}`, 3500);
   }
 }
 
@@ -3049,10 +3744,10 @@ function renderHome(){
     const rate = totalItems>0?Math.round(totalDone/totalItems*100):0;
     const budget = lists.reduce((a,l)=>a+l.items.reduce((s,i)=>s+(i.price?parseFloat(i.price):0),0),0);
     row.innerHTML=`
-      <div class="home-stat-card"><div class="home-stat-card-val">${lists.length}</div><div class="home-stat-card-lbl">Listen</div></div>
-      <div class="home-stat-card"><div class="home-stat-card-val">${totalItems}</div><div class="home-stat-card-lbl">Artikel</div></div>
-      <div class="home-stat-card"><div class="home-stat-card-val">${rate}%</div><div class="home-stat-card-lbl">Erledigt</div></div>
-      ${budget>0?`<div class="home-stat-card"><div class="home-stat-card-val">€${budget.toFixed(0)}</div><div class="home-stat-card-lbl">Budget</div></div>`:''}
+      <div class="home-stat-card"><div class="home-stat-card-val">${lists.length}</div><div class="home-stat-card-lbl">${t.statListsLabel}</div></div>
+      <div class="home-stat-card"><div class="home-stat-card-val">${totalItems}</div><div class="home-stat-card-lbl">${t.statItemsLabel}</div></div>
+      <div class="home-stat-card"><div class="home-stat-card-val">${rate}%</div><div class="home-stat-card-lbl">${t.statDoneLabel}</div></div>
+      ${budget>0?`<div class="home-stat-card"><div class="home-stat-card-val">€${budget.toFixed(0)}</div><div class="home-stat-card-lbl">${t.statBudgetLabel}</div></div>`:''}
     `;
     row.style.display='flex';
   } else if(row){
@@ -3065,8 +3760,8 @@ function renderHome(){
   if(filtered.length===0){
     container.innerHTML=`<div class="empty-state anim-fade">
       <div class="empty-state-icon">${searchQuery?'🔍':'📝'}</div>
-      <div class="empty-state-title">${searchQuery?'Keine Treffer':t.noLists}</div>
-      <div class="empty-state-desc">${searchQuery?'Versuche einen anderen Suchbegriff':t.noListsDesc}</div>
+      <div class="empty-state-title">${searchQuery?t.noResults:t.noLists}</div>
+      <div class="empty-state-desc">${searchQuery?t.noResultsDesc:t.noListsDesc}</div>
     </div>`;
     return;
   }
@@ -3085,7 +3780,7 @@ function renderHome(){
       </div>
       ${l.items.length>0?`<div class="list-card-badge">${checked(l)}/${l.items.length}</div>`:''}
       <div class="list-card-arrow">›</div>
-      <button class="list-card-del" title="Liste löschen" onclick="event.stopPropagation();deleteListById('${l.id}')">🗑</button>
+      <button class="list-card-del" title="${t.deleteList}" onclick="event.stopPropagation();deleteListById('${l.id}')">🗑</button>
     </div>`;
   }).join('')+`</div>`;
 }
@@ -3099,11 +3794,11 @@ function openList(id){
 function deleteListById(id){
   const list=lists.find(l=>l.id===id);
   if(!list) return;
-  if(!confirm(`🗑 "${list.name}" wirklich löschen?`)) return;
+  if(!confirm(`🗑 "${list.name}" ${t.confirmDeleteList}`)) return;
   lists=lists.filter(l=>l.id!==id);
   save();
   renderHome();
-  toast(`🗑 "${list.name}" gelöscht`);
+  toast(`🗑 "${list.name}" ${t.listDeleted}`);
 }
 
 // ── List View ─────────────────────────────────────
@@ -3168,14 +3863,14 @@ function renderItems(){
     if(unavail.length>0){
       html+=`<div class="avail-summary-banner">
         <span>⚠️</span>
-        <div><strong>${unavail.length} Artikel</strong> auf deiner Liste möglicherweise nicht bei <strong>${list.store}</strong> erhältlich — tippe auf ⚠️ am Artikel für Alternativen</div>
+        <div><strong>${unavail.length} ${t.itemsMaybeUnavail}</strong> ${t.itemsMaybeUnavailAt} <strong>${list.store}</strong> ${t.itemsMaybeUnavailTap}</div>
       </div>`;
     }
     html+=`<div class="sort-banner" onclick="startRoute()">
       <div class="sort-banner-icon">🗺</div>
       <div class="sort-banner-text">
         <strong>${t.sortedBy} ${list.store}</strong>
-        <span>Einkaufsroute starten →</span>
+        <span>${t.startRoute}</span>
       </div>
       <div class="sort-banner-arrow">›</div>
     </div>`;
@@ -3203,8 +3898,8 @@ function renderItems(){
       <h3>${t.routeDone||'Einkauf erledigt!'}</h3>
       <p>${t.routeDoneDesc||'Du hast alle Artikel eingepackt.'}</p>
       <div class="done-actions">
-        <button class="done-btn-end" onclick="finishShopping()">🏁 Einkaufsroute beenden</button>
-        <button class="done-btn-new" onclick="addNewShoppingRoute()">➕ Neue Einkaufsliste</button>
+        <button class="done-btn-end" onclick="finishShopping()">🏁 ${t.finishRoute}</button>
+        <button class="done-btn-new" onclick="addNewShoppingRoute()">➕ ${t.newShoppingList}</button>
       </div>
     </div>`;
   }
@@ -3255,7 +3950,7 @@ function deleteItem(id){
   save(); renderItems();
   // Undo-Toast
   if(_lastDeletedTimer) clearTimeout(_lastDeletedTimer);
-  showUndoToast(`🗑 "${item.name}" gelöscht`);
+  showUndoToast(`🗑 "${item.name}" ${t.listDeleted}`);
   _lastDeletedTimer=setTimeout(()=>{_lastDeleted=null; hideUndoToast();},5000);
 }
 function undoDelete(){
@@ -3267,12 +3962,12 @@ function undoDelete(){
   }
   clearTimeout(_lastDeletedTimer);
   _lastDeleted=null; hideUndoToast();
-  toast('↩ Wiederhergestellt!');
+  toast(t.itemRestored);
 }
 function showUndoToast(msg){
   let el=document.getElementById('undo-toast');
   if(!el){el=document.createElement('div');el.id='undo-toast';el.className='undo-toast';document.body.appendChild(el);}
-  el.innerHTML=`<span>${msg}</span><button onclick="undoDelete()">↩ Rückgängig</button>`;
+  el.innerHTML=`<span>${msg}</span><button onclick="undoDelete()">${t.undoBtn}</button>`;
   el.classList.add('visible');
 }
 function hideUndoToast(){
@@ -3287,7 +3982,7 @@ function selectStore(name){
   document.getElementById('store-chip-label').textContent=name;
   document.querySelectorAll('.store-btn').forEach(b=>b.classList.toggle('active',b.dataset.store===name));
   closeModal('store'); renderItems();
-  toast('🏪 '+name+' ausgewählt');
+  toast('🏪 '+name+' '+t.storeSelected);
 }
 document.getElementById('btn-store-custom').addEventListener('click',()=>{
   const v=document.getElementById('store-custom-input').value.trim();
@@ -3299,7 +3994,7 @@ document.getElementById('btn-store-custom').addEventListener('click',()=>{
 // ── Route ─────────────────────────────────────────
 function startRoute(){
   const list=getList();
-  if(!list||list.items.length===0){toast('Liste ist leer');return;}
+  if(!list||list.items.length===0){toast(t.listEmpty);return;}
   if(!list.store){openStoreModal();return;}
   renderRoute(); showView('route');
 }
@@ -3332,8 +4027,8 @@ function renderRoute(){
       <h3>${t.routeDone}</h3>
       <p>${t.routeDoneDesc}</p>
       <div class="done-actions">
-        <button class="done-btn-end" onclick="finishShopping()">🏁 Einkaufsroute beenden</button>
-        <button class="done-btn-new" onclick="addNewShoppingRoute()">➕ Neue Einkaufsliste</button>
+        <button class="done-btn-end" onclick="finishShopping()">🏁 ${t.finishRoute}</button>
+        <button class="done-btn-new" onclick="addNewShoppingRoute()">➕ ${t.newShoppingList}</button>
       </div>
     </div>`;
   }
@@ -3344,7 +4039,7 @@ function renderRoute(){
   if(routeUnavail.length>0){
     html=`<div class="avail-summary-banner">
       <span>⚠️</span>
-      <div><strong>${routeUnavail.length} Artikel</strong> möglicherweise nicht bei <strong>${list.store}</strong> — tippe auf ⚠️ am Artikel</div>
+      <div><strong>${routeUnavail.length} ${t.itemsMaybeUnavail}</strong> ${t.routeMaybeUnavailAt} <strong>${list.store}</strong> ${t.routeMaybeUnavailTap}</div>
     </div>`+html;
   }
 
@@ -3390,7 +4085,7 @@ function toggleRouteItem(id){
 // ── Einkauf beenden / Neue Route ──────────────────
 function finishShopping(){
   showView('home'); renderHome();
-  toast('🏁 Einkauf beendet – gut gemacht!');
+  toast('🏁 '+t.shoppingFinished);
   const fc=(parseInt(localStorage.getItem('finished_count')||'0'))+1;
   localStorage.setItem('finished_count',fc);
   checkRatePrompt();
@@ -3399,7 +4094,7 @@ function finishShopping(){
 function addNewShoppingRoute(){
   const now=new Date();
   const pad=n=>String(n).padStart(2,'0');
-  const autoName=`Einkauf ${pad(now.getDate())}.${pad(now.getMonth()+1)}.${now.getFullYear()} ${pad(now.getHours())}:${pad(now.getMinutes())}`;
+  const autoName=`${t.autoListPrefix} ${pad(now.getDate())}.${pad(now.getMonth()+1)}.${now.getFullYear()} ${pad(now.getHours())}:${pad(now.getMinutes())}`;
   const COLORS=['#2563eb','#16a34a','#ea580c','#7c3aed','#db2777','#0891b2','#ca8a04'];
   const newId=uid();
   const newList={id:newId,name:autoName,emoji:'🛒',color:COLORS[Math.floor(Math.random()*COLORS.length)],items:[],store:null,created:Date.now()};
@@ -3407,7 +4102,7 @@ function addNewShoppingRoute(){
   currentListId=newId;
   save(); renderHome();
   renderListView(); showView('list');
-  toast('✓ Neue Liste erstellt');
+  toast('✓ '+t.newListCreated);
 }
 
 // ══════════════════════════════════════════════════
@@ -3461,10 +4156,10 @@ function renderVoiceContent(){
     content.innerHTML=`<div class="voice-no-support">
       <div style="font-size:2.8rem;margin-bottom:14px">🎤</div>
       <div style="font-weight:700;font-size:1rem;margin-bottom:8px;color:var(--text)">${t.voiceNoSupport}</div>
-      <div style="font-size:.85rem;color:var(--text2)">Bitte Chrome oder Edge verwenden</div>
+      <div style="font-size:.85rem;color:var(--text2)">${t.voiceUseChromeEdge}</div>
     </div>`;
     // Show only close button in footer for no-support case
-    if(staticFooter) staticFooter.innerHTML=`<button class="voice-retry-btn" style="width:100%" onclick="closeVoice()">Schließen</button>`;
+    if(staticFooter) staticFooter.innerHTML=`<button class="voice-retry-btn" style="width:100%" onclick="closeVoice()">${t.voiceCloseBtn}</button>`;
     return;
   }
   // Restore normal footer buttons
@@ -3477,9 +4172,9 @@ function renderVoiceContent(){
   content.innerHTML=`
     <div class="voice-mic-area" style="padding-top:24px">
       <button class="voice-mic-btn" id="voice-mic-btn" onclick="toggleListening()">🎤</button>
-      <div class="voice-status" id="voice-status">Tippe auf das Mikrofon und sprich</div>
+      <div class="voice-status" id="voice-status">${t.voiceStatusHint}</div>
       <button class="voice-stop-btn" id="voice-stop-btn" onclick="stopListening()" style="display:none">
-        🛑 Fertig – Aufnahme beenden
+        🛑 ${t.voiceListening}
       </button>
     </div>
     <div class="voice-hint-examples" id="voice-hint-examples">
@@ -3492,7 +4187,7 @@ function renderVoiceContent(){
     <div class="voice-cmd-preview" id="voice-cmd-preview" style="display:none">
       <div id="voice-cmd-banner" class="voice-cmd-banner"></div>
       <div class="voice-items-title" id="voice-items-label">
-        Erkannte Artikel <span id="voice-items-count"></span>
+        ${t.voiceDetected} <span id="voice-items-count"></span>
       </div>
       <div class="voice-item-list" id="voice-chips"></div>
       <div id="voice-target-wrap"></div>
@@ -3509,7 +4204,7 @@ function resetVoice(){
   if(tr){tr.style.display='none';tr.textContent='';tr.classList.remove('interim');}
   if(pr) pr.style.display='none';
   if(btn) btn.disabled=true;
-  if(st) st.textContent='Tippe auf das Mikrofon und sprich';
+  if(st) st.textContent=t.voiceStatusHint;
   if(hints) hints.style.display='flex';
 }
 
@@ -3556,7 +4251,7 @@ function startListening(){
   recognition.onerror=e=>{
     if(e.error==='no-speech') return; // Bei Stille einfach weitermachen
     stopListening();
-    if(status) status.textContent='Fehler: '+e.error+(e.error==='not-allowed'?' (Mikrofon verweigert)':'');
+    if(status) status.textContent=t.voiceRecognitionError+e.error+(e.error==='not-allowed'?t.voiceRecognitionMicDenied:'');
   };
   recognition.onend=()=>{
     // Nur wirklich stoppen wenn der Nutzer es explizit beendet hat
@@ -3805,7 +4500,7 @@ function parseAndShowItems(text){
   if(!preview||!chips) return;
 
   if(!voiceItems.length && !voiceNewListName){
-    if(status) status.textContent='Nichts erkannt – bitte nochmal versuchen';
+    if(status) status.textContent=t.voiceNothingFound;
     return;
   }
 
@@ -3816,18 +4511,18 @@ function parseAndShowItems(text){
   if(banner){
     if(cmd.type==='create'){
       banner.className='voice-cmd-banner create';
-      banner.innerHTML=`📋 Neue Liste <strong style="margin-left:4px">"${voiceNewListName}"</strong> wird erstellt`;
+      banner.innerHTML=`📋 ${t.voiceNewList} <strong style="margin-left:4px">"${voiceNewListName}"</strong> ${t.voiceWillBeCreated}`;
     } else if(cmd.type==='addto' && cmd.listName){
       const found=lists.find(l=>l.name.toLowerCase().includes(cmd.listName.toLowerCase()));
       if(found){ voiceTargetListId=found.id; }
       banner.className='voice-cmd-banner';
-      banner.innerHTML=`➕ Artikel zur Liste <strong style="margin-left:4px">"${cmd.listName}"</strong>`;
+      banner.innerHTML=`➕ ${t.voiceAddToList} <strong style="margin-left:4px">"${cmd.listName}"</strong>`;
     } else {
       banner.className='voice-cmd-banner';
       const activeList=voiceTargetListId?lists.find(l=>l.id===voiceTargetListId):null;
       banner.innerHTML=activeList
-        ? `➕ Zu <strong style="margin-left:4px">${activeList.emoji} ${activeList.name}</strong>`
-        : `➕ ${voiceItems.length} Artikel erkannt`;
+        ? `➕ ${t.voiceAddTo} <strong style="margin-left:4px">${activeList.emoji} ${activeList.name}</strong>`
+        : `➕ ${voiceItems.length} ${t.voiceItemsDetected}`;
     }
   }
 
@@ -3839,7 +4534,7 @@ function parseAndShowItems(text){
     if(cmd.type!=='create' && lists.length>0){
       targetWrap.innerHTML=`
         <div class="voice-target-wrap">
-          <div class="voice-target-label">In Liste eintragen:</div>
+          <div class="voice-target-label">${t.voiceAddInList}</div>
           <div class="voice-target-list">${lists.map(l=>`
             <button class="voice-target-btn${voiceTargetListId===l.id?' active':''}" onclick="selectVoiceTarget('${l.id}',this)">
               ${l.emoji} ${l.name}
@@ -3854,13 +4549,13 @@ function parseAndShowItems(text){
   if(addBtn) addBtn.disabled=false;
   if(status){
     const n=voiceItems.length;
-    const base=n===0?'Liste wird erstellt …':n===1?'1 Artikel erkannt':n+' Artikel erkannt';
+    const base=n===0?t.voiceListCreating:n===1?'1 '+t.voiceItemsDetected:n+' '+t.voiceItemsDetected;
     // Zeige an, dass das Mikrofon weiter zuhört
-    status.textContent=isListening ? base+' · Weiter sprechen …' : base;
+    status.textContent=isListening ? base+' · '+t.voiceMoreSpeaking : base;
   }
   // Zähler im Titel aktualisieren
   const counter=document.getElementById('voice-items-count');
-  if(counter&&voiceItems.length>0) counter.textContent='· '+voiceItems.length+' Stk';
+  if(counter&&voiceItems.length>0) counter.textContent='· '+voiceItems.length+' '+t.voiceCountUnit;
 }
 
 function selectVoiceTarget(id, btn){
@@ -3870,7 +4565,7 @@ function selectVoiceTarget(id, btn){
   // Update banner
   const found=lists.find(l=>l.id===id);
   const banner=document.getElementById('voice-cmd-banner');
-  if(banner&&found) banner.innerHTML=`➕ Zu <strong style="margin-left:4px">${found.emoji} ${found.name}</strong>`;
+  if(banner&&found) banner.innerHTML=`➕ ${t.voiceAddTo} <strong style="margin-left:4px">${found.emoji} ${found.name}</strong>`;
 }
 
 function renderVoiceChips(){
@@ -3914,12 +4609,12 @@ function renderVoiceChips(){
   if(store && voiceItems.length > 1){
     const hint = document.createElement('div');
     hint.className = 'voice-sort-hint';
-    hint.innerHTML = `🗺 Sortiert nach <strong style="color:var(--green);margin:0 3px">${store}</strong>-Reihenfolge`;
+    hint.innerHTML = `🗺 ${t.voiceSortedBy} <strong style="color:var(--green);margin:0 3px">${store}</strong>-${t.voiceSortedByOrder}`;
     chips.after(hint);
   } else if(voiceItems.length > 1){
     const hint = document.createElement('div');
     hint.className = 'voice-sort-hint';
-    hint.innerHTML = `💡 Tipp: Markt wählen für automatische Sortierung nach Supermarkt-Gang`;
+    hint.innerHTML = `💡 ${t.voiceSelectStoreTip}`;
     chips.after(hint);
   }
 }
@@ -3957,7 +4652,7 @@ function addVoiceItems(){
     save(); closeVoice(); renderHome();
     // Open the new list
     renderListView(); showView('list');
-    toast('✓ Liste "'+voiceNewListName+'" mit '+(voiceItems.length||0)+' Artikeln erstellt');
+    toast('✓ "'+voiceNewListName+'" '+t.listCreatedWith+' '+(voiceItems.length||0)+' '+t.listCreatedArticles);
     return;
   }
   // Case 2: Add to existing list (or auto-create one)
@@ -3967,7 +4662,7 @@ function addVoiceItems(){
     // ── Auto-create list with current date+time ──
     const now=new Date();
     const pad=n=>String(n).padStart(2,'0');
-    const autoName=`Einkauf ${pad(now.getDate())}.${pad(now.getMonth()+1)}.${now.getFullYear()} ${pad(now.getHours())}:${pad(now.getMinutes())}`;
+    const autoName=`${t.autoListPrefix} ${pad(now.getDate())}.${pad(now.getMonth()+1)}.${now.getFullYear()} ${pad(now.getHours())}:${pad(now.getMinutes())}`;
     const COLORS=['#2563eb','#16a34a','#ea580c','#7c3aed','#db2777','#0891b2','#ca8a04'];
     const newId=uid();
     list={id:newId,name:autoName,emoji:'🛒',color:COLORS[0],items:[],store:null,created:Date.now()};
@@ -3984,7 +4679,7 @@ function addVoiceItems(){
   currentListId=list.id;
   save(); closeVoice();
   renderListView(); showView('list');
-  toast('✓ '+count+' Artikel hinzugefügt');
+  toast('✓ '+count+' '+t.articlesAdded);
 }
 
 // ══════════════════════════════════════════════════
@@ -4013,14 +4708,14 @@ document.getElementById('cam-input').addEventListener('change', function(){
   badge.style.display = 'none';
   scanInfo.style.display = 'none';
   input.value = '';
-  hint.textContent = '📝 Trage den Produktnamen ein – das Foto dient als Gedächtnisstütze.';
+  hint.textContent = t.photoHint;
 
   document.getElementById('modal-photo').classList.add('open');
 
   // Try BarcodeDetector (Chrome/Android)
   if('BarcodeDetector' in window){
     badge.style.display = 'block';
-    badge.textContent = '🔍 Scanne …';
+    badge.textContent = t.photoScanning;
     badge.className = 'photo-scan-badge';
     const imgEl = new Image();
     imgEl.onload = async () => {
@@ -4029,12 +4724,12 @@ document.getElementById('cam-input').addEventListener('change', function(){
         const barcodes = await bd.detect(imgEl);
         if(barcodes.length){
           const raw = barcodes[0].rawValue;
-          badge.textContent = '🔍 Produkt wird gesucht …';
+          badge.textContent = t.photoSearching;
           badge.className = 'photo-scan-badge';
           scanInfo.style.display = 'flex';
           scanInfo.className = 'photo-scan-info';
-          scanInfo.innerHTML = '⏳ Produktdaten werden geladen …';
-          input.placeholder = 'Suche …';
+          scanInfo.innerHTML = t.photoLoading;
+          input.placeholder = t.photoSearchPlaceholder;
           // Open Food Facts API lookup
           try {
             const res = await fetch(`https://world.openfoodfacts.net/api/v2/product/${raw}?fields=product_name,product_name_de,brands`, {signal: AbortSignal.timeout(5000)});
@@ -4044,31 +4739,31 @@ document.getElementById('cam-input').addEventListener('change', function(){
             if(pName){
               const fullName = brand ? `${pName}` : pName;
               input.value = fullName;
-              badge.textContent = '✅ Produkt gefunden!';
+              badge.textContent = t.photoFound;
               badge.className = 'photo-scan-badge found';
-              scanInfo.innerHTML = `🛒 <strong>${fullName}</strong>${brand?' ('+brand+')':''} – bereit zum Hinzufügen`;
+              scanInfo.innerHTML = `🛒 <strong>${fullName}</strong>${brand?' ('+brand+')':''} ${t.photoFoundReady}`;
               scanInfo.className = 'photo-scan-info';
             } else {
-              badge.textContent = '📷 Barcode erkannt';
+              badge.textContent = t.photoBarcodeFound;
               badge.className = 'photo-scan-badge found';
-              scanInfo.innerHTML = `🔖 Barcode <strong>${raw}</strong> – Produkt nicht in Datenbank, Name eingeben`;
+              scanInfo.innerHTML = `🔖 Barcode <strong>${raw}</strong> ${t.photoBarcodeNotInDb}`;
               scanInfo.className = 'photo-scan-info warn';
-              input.placeholder = 'Produktname eingeben …';
+              input.placeholder = t.photoNamePlaceholder;
             }
           } catch(err) {
             badge.textContent = '📷 Barcode: ' + raw;
             badge.className = 'photo-scan-badge found';
-            scanInfo.innerHTML = '⚠️ Offline – Name manuell eingeben';
+            scanInfo.innerHTML = t.photoOffline;
             scanInfo.className = 'photo-scan-info warn';
-            input.placeholder = 'Produktname für Barcode ' + raw + ' …';
+            input.placeholder = t.photoNamePlaceholder;
           }
           input.focus();
         } else {
-          badge.textContent = '📷 Kein Barcode';
+          badge.textContent = t.photoNoBarcode;
           badge.className = 'photo-scan-badge';
           scanInfo.style.display = 'flex';
           scanInfo.className = 'photo-scan-info warn';
-          scanInfo.innerHTML = '💡 Kein Barcode gefunden – gib den Namen manuell ein';
+          scanInfo.innerHTML = t.photoNoBarcodeTip;
           input.focus();
         }
       } catch(e){
@@ -4079,7 +4774,7 @@ document.getElementById('cam-input').addEventListener('change', function(){
     imgEl.src = _photoObjectUrl;
   } else {
     badge.style.display = 'block';
-    badge.textContent = '📷 Foto aufgenommen';
+    badge.textContent = t.photoTaken;
     input.focus();
   }
 });
@@ -4092,11 +4787,11 @@ function addPhotoItem(){
     return;
   }
   const list = getList();
-  if(!list){ toast('⚠️ Keine Liste geöffnet'); closePhoto(); return; }
+  if(!list){ toast('⚠️ '+t.noListOpen); closePhoto(); return; }
   list.items.push({id:uid(),name,qty:'1',unit:'Stk',cat:autoCategory(name),checked:false});
   save(); renderItems();
   closePhoto();
-  toast('📷 '+name+' hinzugefügt');
+  toast('📷 '+name+' '+t.photoItemAdded);
 }
 
 function addPhotoAndContinue(){
@@ -4105,7 +4800,7 @@ function addPhotoAndContinue(){
   if(name && list){
     list.items.push({id:uid(),name,qty:'1',unit:'Stk',cat:autoCategory(name),checked:false});
     save(); renderItems();
-    toast('✓ '+name+' hinzugefügt');
+    toast('✓ '+name+' '+t.articleAdded);
   }
   document.getElementById('photo-item-input').value='';
   // Re-open camera for next photo
@@ -4134,7 +4829,7 @@ document.getElementById('btn-create-list').addEventListener('click',()=>{
   lists.push({id:uid(),name,emoji:selEmoji,color:selColor,items:[],store:null,created:Date.now()});
   save(); closeModal('new');
   document.getElementById('new-list-name').value='';
-  renderHome(); toast('✓ '+name+' erstellt');
+  renderHome(); toast('✓ '+name+' '+t.articleAdded);
 });
 
 // ── Delete List ───────────────────────────────────
@@ -4206,7 +4901,7 @@ function showRecentChips(){
   if(!bar) return;
   const r=getRecentItems();
   if(!r.length){bar.style.display='none';return;}
-  bar.innerHTML='<span class="recent-chips-label">Zuletzt:</span>'+
+  bar.innerHTML='<span class="recent-chips-label">'+t.recentLabel+'</span>'+
     r.slice(0,8).map(name=>`<button class="recent-chip" onclick="pickRecent('${name.replace(/'/g,"\\'")}')">⊕ ${name}</button>`).join('');
   bar.style.display='flex';
 }
@@ -4243,7 +4938,7 @@ function useTemplate(key){
   currentListId=newId;
   save(); renderHome();
   renderListView(); showView('list');
-  toast('✓ Liste "'+tpl.name+'" mit '+tpl.items.length+' Artikeln erstellt');
+  toast('✓ "'+tpl.name+'" '+t.listTemplateCreated+' '+tpl.items.length+' '+t.listTemplateArticles);
 }
 
 // ── Btn handlers ──────────────────────────────────
@@ -4328,7 +5023,7 @@ function applyI18n(){
   if(storeSearch) storeSearch.placeholder = t.searchStore;
   // api-status-text initial value (only if not yet checked)
   const apiStatusText = document.getElementById('api-status-text');
-  if(apiStatusText && apiStatusText.textContent === 'Noch nicht geprüft') apiStatusText.textContent = t.apiNotChecked;
+  if(apiStatusText) apiStatusText.textContent = t.apiNotChecked;
 }
 
 // ══════════════════════════════════════════════════
@@ -4578,16 +5273,16 @@ function showLogoAction(key, domain, bg, fg){
   const pWrap = document.getElementById('la-prospekt-wrap');
   if(prospektUrl){
     pWrap.innerHTML = `
-      <a class="logo-action-prospekt-btn" href="${prospektUrl}" target="_blank" rel="noopener noreferrer" onclick="closeLogoAction();toast('📰 Prospekt wird geöffnet …')">
+      <a class="logo-action-prospekt-btn" href="${prospektUrl}" target="_blank" rel="noopener noreferrer" onclick="closeLogoAction();toast('${t.prospektOpening}')">
         <span class="btn-icon">📰</span>
         <span class="btn-text">
-          Aktueller Prospekt & Angebote
-          <small>Öffnet die offizielle Angebotsseite</small>
+          ${t.storeProspektBtn}
+          <small>${t.storeProspektSub}</small>
         </span>
         <span style="margin-left:auto;opacity:.7">›</span>
       </a>`;
   } else {
-    pWrap.innerHTML = `<div class="logo-action-no-prospekt">📰 Kein direkter Prospekt-Link verfügbar</div>`;
+    pWrap.innerHTML = `<div class="logo-action-no-prospekt">${t.prospektNone}</div>`;
   }
 
   // Angebote-Sektion
@@ -4598,8 +5293,8 @@ function showLogoAction(key, domain, bg, fg){
     if(deals){
       dWrap.innerHTML = `
         <div class="la-deals-title">
-          🏷 Typische Angebote
-          <span class="la-deals-note">zur Inspiration</span>
+          ${t.storeDealsTitle}
+          <span class="la-deals-note">${t.storeDealsNote}</span>
         </div>
         <div class="la-deals-grid">
           ${deals.map((d,i)=>`
@@ -4608,21 +5303,21 @@ function showLogoAction(key, domain, bg, fg){
               <div class="la-deal-name">${d.n}</div>
               <div class="la-deal-qty">${d.q}</div>
               <div class="la-deal-price">€${d.p} <span class="la-deal-orig">€${d.o}</span></div>
-              <button class="la-deal-add" onclick="addDealToList('${d.n.replace(/'/g,"\\'")}','${d.q}')">+ Zur Liste</button>
+              <button class="la-deal-add" onclick="addDealToList('${d.n.replace(/'/g,"\\'")}','${d.q}')">+ ${t.voiceAddToList}</button>
             </div>
           `).join('')}
         </div>`;
     } else {
-      dWrap.innerHTML = `<div class="la-no-deals">Keine Angebote für diesen Markt verfügbar</div>`;
+      dWrap.innerHTML = `<div class="la-no-deals">${t.storeDealsNone}</div>`;
     }
   }
 
   // Set-button label
   const setBtn = document.getElementById('la-set-btn');
   if(selectedStoreLogo === key){
-    setBtn.innerHTML = `<span class="btn-icon">✓</span><span>Aktiver Markt – Filter entfernen</span>`;
+    setBtn.innerHTML = `<span class="btn-icon">✓</span><span>${t.storeActiveRemove}</span>`;
   } else {
-    setBtn.innerHTML = `<span class="btn-icon">🏪</span><span>Als aktiven Markt setzen</span>`;
+    setBtn.innerHTML = `<span class="btn-icon">🏪</span><span>${t.storeSetActive}</span>`;
   }
 
   document.getElementById('logo-action-overlay').classList.add('open');
@@ -4636,25 +5331,25 @@ function closeLogoAction(){
 function addDealToList(name, qty){
   const targetId = currentListId || (lists.length>0 ? lists[lists.length-1].id : null);
   if(!targetId){
-    toast('⚠️ Bitte zuerst eine Liste öffnen');
+    toast(t.dealAddNoList);
     return;
   }
   const list = lists.find(l=>l.id===targetId);
   if(!list) return;
   // Duplikat prüfen
   if(list.items.some(i=>i.name.toLowerCase()===name.toLowerCase())){
-    toast('ℹ️ '+name+' ist bereits in der Liste');
+    toast('ℹ️ '+name+' '+t.dealAlreadyIn);
     return;
   }
   list.items.push({id:uid(),name,qty:qty||'1',unit:'',cat:autoCategory(name),checked:false});
   save();
   if(document.getElementById('view-list').classList.contains('active')) renderListView();
-  toast('✓ '+name+' hinzugefügt');
+  toast('✓ '+name+' '+t.articleAdded);
 }
 
 function openProspekt(url){
   closeLogoAction();
-  toast('📰 Prospekt wird geöffnet …');
+  toast(t.prospektOpening);
   // PWA-sicheres Öffnen: <a>-Element ist zuverlässiger als window.open()
   try {
     const a = document.createElement('a');
@@ -4699,7 +5394,7 @@ function renderStoreLogos(){
     ? `<div class="store-active-bar">
         <div class="store-active-chip">
           🏪 ${selectedStoreLogo}
-          <button onclick="selectStoreLogo(null)" title="Filter entfernen">✕</button>
+          <button onclick="selectStoreLogo(null)" title="${t.storeActiveFilter}">✕</button>
         </div>
       </div>` : '';
 
@@ -4717,7 +5412,7 @@ function selectStoreLogo(key){
   CFG.selectedStore = selectedStoreLogo;
   saveCFG();
   renderStoreLogos();
-  toast(key ? '🏪 '+key+' ausgewählt' : '✕ Marktfilter entfernt');
+  toast(key ? '🏪 '+key+' '+t.storeSelected : '✕ '+t.storeFilterRemoved);
 }
 
 // ══════════════════════════════════════════════════
@@ -4751,7 +5446,7 @@ function toggleApiSuggestions(toggleEl){
   const dot = document.getElementById('api-toggle-dot');
   toggleEl.style.background = _apiEnabled ? 'var(--green)' : 'var(--text3)';
   if(dot) dot.style.right = _apiEnabled ? '3px' : '21px';
-  toast(_apiEnabled ? '✅ Vorschläge aktiviert' : '⭕ Vorschläge deaktiviert');
+  toast(_apiEnabled ? t.apiSugEnabled : t.apiSugDisabled);
 }
 
 // ── Fetch Helper ──────────────────────────────────
@@ -4785,18 +5480,18 @@ async function checkApiStatus(){
   const dot  = document.getElementById('api-dot');
   const text = document.getElementById('api-status-text');
   if(dot)  dot.className = 'api-dot loading';
-  if(text) text.textContent = '🔄 Verbinde …';
+  if(text) text.textContent = t.apiConnecting;
 
   const d = await tryFetchOFF('milch');
   if(d){
     const count = (d.count||0).toLocaleString('de-DE') || '3.000.000+';
     if(dot)  dot.className   = 'api-dot ok';
-    if(text) text.textContent = `✅ Verbunden · ${count} Produkte verfügbar`;
-    toast('✅ Open Food Facts erreichbar');
+    if(text) text.textContent = `✅ ${t.apiConnected.replace('%s', count)}`;
+    toast('✅ '+t.apiReachable);
   } else {
     if(dot)  dot.className   = 'api-dot err';
-    if(text) text.textContent = '❌ Kein Zugriff – prüfe Internet-Verbindung';
-    toast('❌ API nicht erreichbar');
+    if(text) text.textContent = t.apiNoAccess;
+    toast('❌ '+t.apiNotReachable);
   }
 }
 
@@ -4931,7 +5626,7 @@ function openShare(){
 
   document.getElementById('share-emoji').textContent = list.emoji;
   document.getElementById('share-list-title').textContent = list.name;
-  document.getElementById('share-item-count').textContent = list.items.length + ' Artikel';
+  document.getElementById('share-item-count').textContent = list.items.length + ' ' + t.shareListCount;
   document.getElementById('share-link-text').textContent = _shareUrl;
 
   // QR Code (online only)
@@ -4956,7 +5651,7 @@ function closeShare(){
 
 function copyShareLink(){
   navigator.clipboard?.writeText(_shareUrl).then(()=>{
-    toast('✓ Link kopiert!');
+    toast(t.linkCopied);
     closeShare();
   }).catch(()=>{
     // Fallback
@@ -4966,7 +5661,7 @@ function copyShareLink(){
     el.select();
     document.execCommand('copy');
     document.body.removeChild(el);
-    toast('✓ Link kopiert!');
+    toast(t.linkCopied);
     closeShare();
   });
 }
@@ -4983,17 +5678,17 @@ function shareViaWhatsApp(){
 function shareViaTelegram(){
   const list = getList();
   const text = `🛒 ${list?.name||'Einkaufsliste'}: ${_shareUrl}`;
-  openProspekt('https://t.me/share/url?url=' + encodeURIComponent(_shareUrl) + '&text=' + encodeURIComponent('Einkaufsliste teilen'));
+  openProspekt('https://t.me/share/url?url=' + encodeURIComponent(_shareUrl) + '&text=' + encodeURIComponent(t.shareTelegramText));
   closeShare();
 }
 
 function shareViaEmail(){
   const list = getList();
-  const subject = encodeURIComponent(`🛒 Einkaufsliste: ${list?.name||'Meine Liste'}`);
+  const subject = encodeURIComponent(t.shareEmailSubjectPrefix+(list?.name||t.appTitle));
   const body = encodeURIComponent(
-    `Hallo!\n\nIch teile meine Einkaufsliste "${list?.name}" mit dir:\n\n` +
+    t.shareEmailBody.replace('%s', list?.name||t.appTitle) +
     (list?.items.map(i=>`• ${i.qty && i.qty!='1' ? i.qty+'× ' : ''}${i.name}`).join('\n') || '') +
-    `\n\n📱 Liste in der App öffnen:\n${_shareUrl}\n\nViele Grüße`
+    t.shareEmailFooter.replace('%s', _shareUrl)
   );
   openProspekt(`mailto:?subject=${subject}&body=${body}`);
   closeShare();
@@ -5004,7 +5699,7 @@ function shareNative(){
     const list = getList();
     navigator.share({
       title: `🛒 ${list?.name||'Einkaufsliste'}`,
-      text: 'Einkaufsliste teilen',
+      text: t.shareNativeText,
       url: _shareUrl
     }).then(()=>closeShare()).catch(()=>{});
   } else {
@@ -5044,7 +5739,7 @@ function confirmImport(){
   lists.push(newList);
   save(); renderHome();
   dismissImport();
-  toast(`✓ "${d.name}" importiert – ${d.items.length} Artikel`);
+  toast(`✓ "${d.name}" ${t.listImported} – ${d.items.length} ${t.listImportedItems}`);
   openList(newList.id);
 }
 
@@ -5310,7 +6005,7 @@ function renderRecipeGrid(){
   if(!filtered.length){
     grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px 0;color:var(--text3)">
       <div style="font-size:2.5rem;margin-bottom:10px">🔍</div>
-      <div style="font-weight:700">Kein Rezept gefunden</div>
+      <div style="font-weight:700">${t.recipesNoResult}</div>
     </div>`;
     return;
   }
@@ -5318,7 +6013,7 @@ function renderRecipeGrid(){
     <div class="recipe-card anim-slide" onclick="openRecipeDetail('${r.id}')">
       <div class="recipe-card-emoji">${r.emoji}</div>
       <div class="recipe-card-name">${r.name}</div>
-      <div class="recipe-card-meta">⏱ ${r.time} · ${r.portions} Port.</div>
+      <div class="recipe-card-meta">⏱ ${r.time} · ${r.portions} ${t.recipePortions.slice(0,4)}.</div>
       <span class="recipe-card-tag${r.cat==='Thermomix'?' tm':''}">${r.cat==='Thermomix'?'🌀 Thermomix':r.cat}</span>
     </div>
   `).join('');
@@ -5336,12 +6031,12 @@ function openRecipeDetail(id){
       <div class="recipe-detail-name">${r.name}</div>
       <div class="recipe-detail-meta">
         <span>⏱ ${r.time}</span>
-        <span>👥 ${r.portions} Portionen</span>
+        <span>👥 ${r.portions} ${t.recipePortions}</span>
         <span>🏷 ${r.cat}</span>
       </div>
     </div>
     <div class="recipe-ingredients">
-      <div class="recipe-ing-title">Zutaten (${r.ing.length})</div>
+      <div class="recipe-ing-title">${t.recipeIngTitle} (${r.ing.length})</div>
       ${r.ing.map(i=>`
         <div class="recipe-ing-item">
           <div class="recipe-ing-qty">${i.qty}</div>
@@ -5351,7 +6046,7 @@ function openRecipeDetail(id){
     </div>
     ${lists_with_current ? `
       <div style="padding:0 22px 6px">
-        <div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);margin-bottom:10px">In Liste eintragen:</div>
+        <div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);margin-bottom:10px">${t.recipeAddToListLabel}</div>
         <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px">
           ${lists.map(l=>`
             <button class="voice-target-btn" onclick="addRecipeToList('${r.id}','${l.id}',this)">
@@ -5362,7 +6057,7 @@ function openRecipeDetail(id){
       </div>
     ` : ''}
     <button class="recipe-add-all-btn" onclick="addRecipeToNewList('${r.id}')">
-      ✚ Neue Liste aus Rezept erstellen
+      ${t.recipeNewListBtn}
     </button>
   `;
   document.getElementById('recipe-detail-overlay').classList.add('open');
@@ -5386,7 +6081,7 @@ function addRecipeToList(recipeId, listId, btn){
   });
   save();
   if(btn){ document.querySelectorAll('.voice-target-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); }
-  toast(`✓ ${added} Zutaten zu "${list.name}" hinzugefügt`);
+  toast(`✓ ${added} ${t.recipeIngredientsAdded} "${list.name}" ${t.recipeIngredientsAddedSuffix}`.trim());
   setTimeout(()=>{ closeRecipeDetail(); openList(listId); }, 800);
 }
 
@@ -5403,7 +6098,7 @@ function addRecipeToNewList(recipeId){
   lists.push(newList);
   save(); renderHome();
   closeRecipeDetail();
-  toast(`✓ "${r.name}" als Liste erstellt`);
+  toast(`✓ "${r.name}" ${t.recipeListCreated}`);
   openList(newList.id);
 }
 
@@ -5436,7 +6131,7 @@ document.getElementById('install-banner-btn').addEventListener('click', async ()
   if(!_deferredInstall) return;
   _deferredInstall.prompt();
   const result = await _deferredInstall.userChoice;
-  if(result.outcome === 'accepted') toast('🎉 App erfolgreich installiert!');
+  if(result.outcome === 'accepted') toast('🎉 '+t.appInstalled);
   dismissInstall();
 });
 
@@ -5461,7 +6156,7 @@ function dismissInstall(){
 
 // ── App teilen ─────────────────────────────────────
 const APP_URL = 'https://selluschki.github.io/Einkaufsliste/einkaufsliste.html';
-const APP_TEXT = '🛒 Schau mal – diese Einkaufsliste App ist richtig praktisch! Kostenlos, direkt im Browser, keine Installation nötig:';
+const APP_TEXT = t.appShareText;
 
 function openAppShareSheet(){
   document.getElementById('app-share-overlay').classList.add('open');
@@ -5487,24 +6182,24 @@ function shareAppVia(platform){
     case 'instagram':
       // Instagram hat kein URL-Share-Schema → Link kopieren + Hinweis
       navigator.clipboard.writeText(APP_URL).then(()=>{
-        toast('📋 Link kopiert! Füge ihn in Instagram ein.');
+        toast(t.appShareCopyInstagram);
       }).catch(()=>{
-        toast('📋 Kopiere diesen Link: ' + APP_URL);
+        toast('📋 '+t.appShareLinkCopied+' '+APP_URL);
       });
       break;
     case 'copy':
       navigator.clipboard.writeText(APP_URL).then(()=>{
-        toast('✓ Link kopiert!');
+        toast(t.appShareLinkCopied);
       }).catch(()=>{
-        toast('Link: ' + APP_URL);
+        toast(APP_URL);
       });
       break;
     case 'native':
       if(navigator.share){
-        navigator.share({title:'🛒 Einkaufsliste III', text: APP_TEXT, url: APP_URL})
+        navigator.share({title:'🛒 '+t.appTitle, text: APP_TEXT, url: APP_URL})
           .catch(()=>{});
       } else {
-        navigator.clipboard.writeText(APP_URL).then(()=>toast('✓ Link kopiert!'));
+        navigator.clipboard.writeText(APP_URL).then(()=>toast(t.appShareLinkCopied));
       }
       break;
   }
@@ -5521,7 +6216,7 @@ function triggerInstall(){
   if(_deferredInstall){
     _deferredInstall.prompt();
     _deferredInstall.userChoice.then(r=>{
-      if(r.outcome==='accepted'){ toast('🎉 App installiert!'); hideInstallCard(); }
+      if(r.outcome==='accepted'){ toast('🎉 '+t.appInstalled); hideInstallCard(); }
       dismissInstall();
     });
     return;
@@ -5537,9 +6232,9 @@ function triggerInstall(){
   // Bereits installiert oder anderer Browser
   const isStandalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
   if(isStandalone){
-    toast('✓ App ist bereits installiert!');
+    toast(t.appAlreadyInstalled);
   } else {
-    toast('💡 Öffne diese Seite in Chrome oder Safari, um die App zu installieren');
+    toast(t.appOpenInBrowser);
   }
 }
 
@@ -5557,7 +6252,7 @@ window.addEventListener('load',()=>{
 window.addEventListener('appinstalled', ()=>{
   document.getElementById('install-banner').classList.remove('open');
   hideInstallCard();
-  toast('🎉 App installiert – viel Spaß!');
+  toast('🎉 '+t.appInstalledFun);
 });
 
 // ── Boot ──────────────────────────────────────────
@@ -5661,7 +6356,7 @@ function _setUpdateStatusText(title, sub){
 function _showUpdateAvailable(){
   _updateWaiting = true;
   _setUpdateDot('pending');
-  _setUpdateStatusText('Update verfügbar!', 'Neue Version wurde heruntergeladen');
+  _setUpdateStatusText(t.updateAvailableTitle, t.updateAvailableSub);
   // Apply-Button einblenden
   const applyBtn = document.getElementById('update-apply-btn');
   if(applyBtn) applyBtn.style.display = '';
@@ -5688,9 +6383,9 @@ function applyUpdate(){
 async function checkForUpdate(){
   const btn = document.getElementById('update-check-btn');
   const now = new Date().toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
-  if(btn){ btn.disabled = true; btn.textContent = '⏳ Prüfe…'; }
+  if(btn){ btn.disabled = true; btn.textContent = t.updateCheckingBtn; }
   _setUpdateDot('checking');
-  _setUpdateStatusText('Suche nach Updates…', 'Bitte warten');
+  _setUpdateStatusText(t.updateStatusSearching, t.updateStatusWaiting);
   try{
     if(!_swReg){ throw new Error('SW nicht registriert'); }
     await _swReg.update();
@@ -5700,15 +6395,15 @@ async function checkForUpdate(){
       _showUpdateAvailable();
     } else {
       _setUpdateDot('up-to-date');
-      _setUpdateStatusText('App ist aktuell', 'Zuletzt geprüft: ' + now + ' Uhr');
-      toast('✅ Alles aktuell – du hast die neueste Version!', 3000);
+      _setUpdateStatusText(t.updateStatusUpToDate, t.updateStatusCheckedAt + now + ' Uhr');
+      toast(t.updateStatusOk, 3000);
     }
   } catch(e){
     _setUpdateDot('up-to-date');
-    _setUpdateStatusText('Prüfung fehlgeschlagen', 'Bitte Internetverbindung prüfen');
-    toast('⚠️ Update-Prüfung fehlgeschlagen', 3000);
+    _setUpdateStatusText(t.updateStatusFailed, t.updateStatusFailedSub);
+    toast(t.updateStatusFailedToast, 3000);
   }
-  if(btn){ btn.disabled = false; btn.textContent = '🔍 Nach Updates suchen'; }
+  if(btn){ btn.disabled = false; btn.textContent = t.updateCheckBtn; }
 }
 
 // Service Worker – Pfad automatisch ermitteln (lokal + GitHub Pages)
