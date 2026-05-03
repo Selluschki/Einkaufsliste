@@ -1138,10 +1138,10 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
 <div class="update-banner" id="update-banner" role="alert" aria-live="polite">
   <span style="font-size:1.4rem;flex-shrink:0">🆕</span>
   <div class="update-banner-text">
-    <div class="update-banner-title">Update verfügbar!</div>
-    <div class="update-banner-sub">Neue Version bereit – jetzt installieren</div>
+    <div class="update-banner-title" data-i18n="updateBannerTitle">Update verfügbar!</div>
+    <div class="update-banner-sub" data-i18n="updateBannerSub">Neue Version bereit – jetzt installieren</div>
   </div>
-  <button class="update-banner-btn" onclick="applyUpdate()">Installieren</button>
+  <button class="update-banner-btn" data-i18n="updateBannerBtn" onclick="applyUpdate()">Installieren</button>
   <button class="update-banner-dismiss" onclick="dismissUpdateBanner()" aria-label="Schließen">✕</button>
 </div>
 
@@ -1328,8 +1328,8 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
   <div class="header">
     <div class="header-inner">
       <div style="flex:1">
-        <div class="header-title">⚙️ Einstellungen</div>
-        <div class="header-subtitle">Personalisiere deine App</div>
+        <div class="header-title" data-i18n="settingsTitle">⚙️ Einstellungen</div>
+        <div class="header-subtitle" data-i18n="settingsSub">Personalisiere deine App</div>
       </div>
     </div>
   </div>
@@ -1337,8 +1337,8 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
 
     <!-- App teilen -->
     <div class="app-share-card">
-      <div class="app-share-title">📤 App weiterempfehlen</div>
-      <div class="app-share-sub">Teile Einkaufsliste III mit Freunden & Familie</div>
+      <div class="app-share-title" data-i18n="shareCardTitle">📤 App weiterempfehlen</div>
+      <div class="app-share-sub" data-i18n="shareCardSub">Teile Einkaufsliste III mit Freunden & Familie</div>
       <div class="app-share-btns">
         <button class="app-share-btn whatsapp" onclick="shareAppVia('whatsapp')">
           <span class="app-share-btn-icon">💬</span>
@@ -1358,11 +1358,11 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
         </button>
         <button class="app-share-btn copy" onclick="shareAppVia('copy')">
           <span class="app-share-btn-icon">📋</span>
-          <span>Link kopieren</span>
+          <span data-i18n="copyLink">Link kopieren</span>
         </button>
         <button class="app-share-btn native" onclick="shareAppVia('native')">
           <span class="app-share-btn-icon">↗️</span>
-          <span>Mehr …</span>
+          <span data-i18n="moreOptions">Mehr …</span>
         </button>
       </div>
     </div>
@@ -1372,25 +1372,25 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
       <div class="install-card-left">
         <div class="install-card-icon">📲</div>
         <div>
-          <div class="install-card-title">App auf dem Handy / Desktop installieren</div>
-          <div class="install-card-sub">Kein App Store nötig – direkt auf den Homescreen</div>
+          <div class="install-card-title" data-i18n="installTitle">App auf dem Handy / Desktop installieren</div>
+          <div class="install-card-sub" data-i18n="installSub">Kein App Store nötig – direkt auf den Homescreen</div>
         </div>
       </div>
-      <button class="install-card-btn" id="install-card-btn" onclick="triggerInstall()">Installieren</button>
+      <button class="install-card-btn" id="install-card-btn" data-i18n="installBtn" onclick="triggerInstall()">Installieren</button>
     </div>
 
     <!-- Name -->
     <div class="settings-section">
-      <div class="settings-sec-title">👤 Mein Name</div>
+      <div class="settings-sec-title" data-i18n="secName">👤 Mein Name</div>
       <div class="settings-name-wrap">
-        <input class="settings-name-input" id="settings-name" placeholder="Dein Name (für die Begrüßung)" maxlength="20"/>
+        <input class="settings-name-input" id="settings-name" data-i18n-ph="namePlaceholder" placeholder="Dein Name (für die Begrüßung)" maxlength="20"/>
         <button class="settings-save-btn" onclick="saveName()">OK</button>
       </div>
     </div>
 
     <!-- Theme -->
     <div class="settings-section">
-      <div class="settings-sec-title">🎨 Design &amp; Farbe</div>
+      <div class="settings-sec-title" data-i18n="secTheme">🎨 Design &amp; Farbe</div>
       <div class="theme-swatches" id="theme-swatches">
         <div class="theme-swatch" data-theme="blue"   style="background:linear-gradient(135deg,#1d4ed8,#3b82f6)" title="Blau"></div>
         <div class="theme-swatch" data-theme="green"  style="background:linear-gradient(135deg,#16a34a,#22c55e)" title="Grün"></div>
@@ -1401,58 +1401,58 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
       <div class="theme-label-row">
         <div>
           <div class="theme-label-name" id="theme-label-name">Blau</div>
-          <div class="theme-label-sub">Aktives Farbschema</div>
+          <div class="theme-label-sub" data-i18n="themeActive">Aktives Farbschema</div>
         </div>
       </div>
     </div>
 
     <!-- Layout – Windows 11 Style -->
     <div class="settings-section">
-      <div class="settings-sec-title">📐 Darstellung der Listen</div>
+      <div class="settings-sec-title" data-i18n="secLayout">📐 Darstellung der Listen</div>
       <div class="layout-opts" id="layout-opts" style="flex-wrap:wrap;gap:6px;padding:12px">
         <div class="layout-opt" data-layout="list" style="flex:1;min-width:70px">
           <div class="layout-opt-icon">☰</div>
-          <div class="layout-opt-label">Liste</div>
+          <div class="layout-opt-label" data-i18n="layoutList">Liste</div>
         </div>
         <div class="layout-opt" data-layout="tiles-lg" style="flex:1;min-width:70px">
           <div class="layout-opt-icon">⊞</div>
-          <div class="layout-opt-label">Kacheln Groß</div>
+          <div class="layout-opt-label" data-i18n="layoutTilesLg">Kacheln Groß</div>
         </div>
         <div class="layout-opt" data-layout="tiles-sm" style="flex:1;min-width:70px">
           <div class="layout-opt-icon">▦</div>
-          <div class="layout-opt-label">Kacheln Klein</div>
+          <div class="layout-opt-label" data-i18n="layoutTilesSm">Kacheln Klein</div>
         </div>
         <div class="layout-opt" data-layout="compact" style="flex:1;min-width:70px">
           <div class="layout-opt-icon">≡</div>
-          <div class="layout-opt-label">Kompakt</div>
+          <div class="layout-opt-label" data-i18n="layoutCompact">Kompakt</div>
         </div>
         <div class="layout-opt" data-layout="details" style="flex:1;min-width:70px">
           <div class="layout-opt-icon">📋</div>
-          <div class="layout-opt-label">Details</div>
+          <div class="layout-opt-label" data-i18n="layoutDetails">Details</div>
         </div>
       </div>
     </div>
 
     <!-- Produktdatenbank / API -->
     <div class="settings-section">
-      <div class="settings-sec-title">🌐 Produktdatenbank (Open Food Facts)</div>
+      <div class="settings-sec-title" data-i18n="secApi">🌐 Produktdatenbank (Open Food Facts)</div>
       <div class="api-status" id="api-status-row">
         <div class="api-dot" id="api-dot"></div>
-        <span id="api-status-text">Noch nicht geprüft</span>
+        <span id="api-status-text" data-i18n="apiNotChecked">Noch nicht geprüft</span>
       </div>
       <div class="settings-row clickable" onclick="checkApiStatus()">
         <span class="srow-icon">🔄</span>
         <div>
-          <div class="srow-label">Produktdaten prüfen</div>
-          <div class="srow-sub">Verbindung zu Open Food Facts testen</div>
+          <div class="srow-label" data-i18n="apiCheckLabel">Produktdaten prüfen</div>
+          <div class="srow-sub" data-i18n="apiCheckSub">Verbindung zu Open Food Facts testen</div>
         </div>
         <span class="srow-val">›</span>
       </div>
       <div class="settings-row">
         <span class="srow-icon">💡</span>
         <div>
-          <div class="srow-label">Echtzeit-Vorschläge</div>
-          <div class="srow-sub">Beim Tippen erscheinen Produkte aus der Weltdatenbank</div>
+          <div class="srow-label" data-i18n="apiSugLabel">Echtzeit-Vorschläge</div>
+          <div class="srow-sub" data-i18n="apiSugSub">Beim Tippen erscheinen Produkte aus der Weltdatenbank</div>
         </div>
         <div id="api-toggle-wrap">
           <div style="width:42px;height:24px;border-radius:12px;background:var(--green);cursor:pointer;position:relative;transition:background .2s" onclick="toggleApiSuggestions(this)">
@@ -1463,15 +1463,15 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
       <div class="settings-row">
         <span class="srow-icon">📦</span>
         <div>
-          <div class="srow-label">Datenbank</div>
-          <div class="srow-sub">Open Food Facts · 3 Mio+ Produkte · kostenlos & offen</div>
+          <div class="srow-label" data-i18n="apiDbLabel">Datenbank</div>
+          <div class="srow-sub" data-i18n="apiDbSub">Open Food Facts · 3 Mio+ Produkte · kostenlos & offen</div>
         </div>
       </div>
     </div>
 
     <!-- Language -->
     <div class="settings-section">
-      <div class="settings-sec-title">🌍 Sprache</div>
+      <div class="settings-sec-title" data-i18n="secLang">🌍 Sprache</div>
       <div class="layout-opts" id="lang-opts">
         <div class="layout-opt" data-lang="de">
           <div class="layout-opt-icon">🇩🇪</div>
@@ -1492,34 +1492,34 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
 
     <!-- Data -->
     <div class="settings-section">
-      <div class="settings-sec-title">💾 Daten</div>
+      <div class="settings-sec-title" data-i18n="secData">💾 Daten</div>
       <div class="settings-row clickable" onclick="exportData()">
         <span class="srow-icon">📤</span>
-        <div><div class="srow-label">Listen exportieren</div><div class="srow-sub">Als JSON-Datei speichern</div></div>
+        <div><div class="srow-label" data-i18n="exportLabel">Listen exportieren</div><div class="srow-sub" data-i18n="exportSub">Als JSON-Datei speichern</div></div>
         <span class="srow-val">›</span>
       </div>
       <div class="settings-row clickable danger" onclick="clearAllData()">
         <span class="srow-icon">🗑</span>
-        <div><div class="srow-label" style="color:var(--red)">Alle Daten löschen</div><div class="srow-sub">Alle Listen &amp; Einstellungen entfernen</div></div>
+        <div><div class="srow-label" style="color:var(--red)" data-i18n="deleteLabel">Alle Daten löschen</div><div class="srow-sub" data-i18n="deleteSub">Alle Listen &amp; Einstellungen entfernen</div></div>
       </div>
     </div>
 
     <!-- App-Updates -->
     <div class="settings-section">
-      <div class="settings-sec-title">🔄 App-Updates</div>
+      <div class="settings-sec-title" data-i18n="secUpdate">🔄 App-Updates</div>
       <div class="settings-row" style="flex-direction:column;align-items:flex-start;gap:12px;padding:14px 16px 16px">
         <div style="display:flex;align-items:center;gap:10px;width:100%">
           <div class="update-status-dot up-to-date" id="update-dot"></div>
           <div style="flex:1">
-            <div style="font-size:.88rem;font-weight:700;color:var(--text)" id="update-status-text">App ist aktuell</div>
-            <div style="font-size:.75rem;color:var(--text3);margin-top:2px" id="update-status-sub">Zuletzt geprüft: noch nie</div>
+            <div style="font-size:.88rem;font-weight:700;color:var(--text)" id="update-status-text" data-i18n="updateCurrentText">App ist aktuell</div>
+            <div style="font-size:.75rem;color:var(--text3);margin-top:2px" id="update-status-sub" data-i18n="updateNeverChecked">Zuletzt geprüft: noch nie</div>
           </div>
         </div>
         <div style="display:flex;gap:8px;width:100%;flex-wrap:wrap">
-          <button class="update-btn" id="update-check-btn" onclick="checkForUpdate()">
+          <button class="update-btn" id="update-check-btn" data-i18n="updateCheckBtn" onclick="checkForUpdate()">
             🔍 Nach Updates suchen
           </button>
-          <button class="update-btn available" id="update-apply-btn" onclick="applyUpdate()" style="display:none">
+          <button class="update-btn available" id="update-apply-btn" data-i18n="updateApplyBtn" onclick="applyUpdate()" style="display:none">
             ⚡ Jetzt installieren
           </button>
         </div>
@@ -1528,12 +1528,12 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
 
     <!-- About -->
     <div class="settings-section">
-      <div class="settings-sec-title">ℹ️ Über die App</div>
+      <div class="settings-sec-title" data-i18n="secAbout">ℹ️ Über die App</div>
       <div class="about-wrap">
         <div class="about-logo">🛒</div>
         <div class="about-title">Einkaufsliste III</div>
-        <div class="about-sub">Smart sortiert. Einfach einkaufen.</div>
-        <div class="about-sub" style="margin-top:5px">Navy & Gold Edition · Barcode · Sprache · 5 Länder · Offline</div>
+        <div class="about-sub" data-i18n="aboutSub1">Smart sortiert. Einfach einkaufen.</div>
+        <div class="about-sub" style="margin-top:5px" data-i18n="aboutSub2">Navy & Gold Edition · Barcode · Sprache · 5 Länder · Offline</div>
         <div class="about-version">Version 4.0</div>
       </div>
     </div>
@@ -1764,8 +1764,8 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
     <div class="app-share-sheet-handle"></div>
     <div class="app-share-sheet-head">
       <div style="font-size:2rem;margin-bottom:6px">📤</div>
-      <div class="app-share-sheet-title">App teilen</div>
-      <div class="app-share-sheet-sub">Empfehle Einkaufsliste III weiter</div>
+      <div class="app-share-sheet-title" data-i18n="shareSheetTitle">App teilen</div>
+      <div class="app-share-sheet-sub" data-i18n="shareSheetSub">Empfehle Einkaufsliste III weiter</div>
     </div>
     <div class="app-share-sheet-btns">
       <button class="app-share-btn whatsapp" onclick="shareAppVia('whatsapp')">
@@ -1781,14 +1781,14 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
         <span class="app-share-btn-icon">📸</span><span>Instagram</span>
       </button>
       <button class="app-share-btn copy" onclick="shareAppVia('copy')">
-        <span class="app-share-btn-icon">📋</span><span>Link kopieren</span>
+        <span class="app-share-btn-icon">📋</span><span data-i18n="copyLink">Link kopieren</span>
       </button>
       <button class="app-share-btn native" onclick="shareAppVia('native')">
-        <span class="app-share-btn-icon">↗️</span><span>Mehr …</span>
+        <span class="app-share-btn-icon">↗️</span><span data-i18n="moreOptions">Mehr …</span>
       </button>
     </div>
     <div style="padding:0 18px 22px">
-      <button class="share-cancel" onclick="closeAppShareSheet()">Abbrechen</button>
+      <button class="share-cancel" data-i18n="cancelBtn" onclick="closeAppShareSheet()">Abbrechen</button>
     </div>
   </div>
 </div>
@@ -1799,8 +1799,8 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
     <div class="ios-install-handle"></div>
     <div style="text-align:center;padding:10px 24px 4px">
       <div style="font-size:2.8rem;margin-bottom:10px">📲</div>
-      <div style="font-weight:800;font-size:1.1rem;color:var(--text);margin-bottom:6px">App auf dem Homescreen speichern</div>
-      <div style="font-size:.85rem;color:var(--text2);margin-bottom:22px">So kannst du Einkaufsliste III wie eine echte App nutzen – ganz ohne App Store</div>
+      <div style="font-weight:800;font-size:1.1rem;color:var(--text);margin-bottom:6px" data-i18n="iosInstallTitle">App auf dem Homescreen speichern</div>
+      <div style="font-size:.85rem;color:var(--text2);margin-bottom:22px" data-i18n="iosInstallSub">So kannst du Einkaufsliste III wie eine echte App nutzen – ganz ohne App Store</div>
     </div>
     <div class="ios-install-steps">
       <div class="ios-step"><div class="ios-step-num">1</div><div class="ios-step-text">Tippe unten in Safari auf das <strong>Teilen-Symbol</strong> <span style="font-size:1.1rem">⬆️</span></div></div>
@@ -1808,8 +1808,8 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
       <div class="ios-step"><div class="ios-step-num">3</div><div class="ios-step-text">Tippe oben rechts auf <strong>„Hinzufügen"</strong> – fertig! 🎉</div></div>
     </div>
     <div style="padding:16px 24px 28px;display:flex;gap:10px">
-      <button class="voice-retry-btn" style="flex:1" onclick="dismissIosInstall()">Vielleicht später</button>
-      <button class="voice-add-btn" style="flex:1.5" onclick="dismissIosInstall()">Verstanden ✓</button>
+      <button class="voice-retry-btn" style="flex:1" data-i18n="maybeLater" onclick="dismissIosInstall()">Vielleicht später</button>
+      <button class="voice-add-btn" style="flex:1.5" data-i18n="understood" onclick="dismissIosInstall()">Verstanden ✓</button>
     </div>
   </div>
 </div>
@@ -1828,9 +1828,9 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
 ══════════════════════════════════════ -->
 <div class="view" id="view-recipes">
   <div class="recipe-hero">
-    <div class="recipe-hero-title">🍽 Rezepte</div>
-    <div class="recipe-hero-sub">Zutaten direkt zur Einkaufsliste hinzufügen</div>
-    <input class="recipe-search" id="recipe-search" placeholder="🔍 Rezept suchen …" oninput="filterRecipes(this.value)" autocomplete="off"/>
+    <div class="recipe-hero-title" data-i18n="recipesTitle">🍽 Rezepte</div>
+    <div class="recipe-hero-sub" data-i18n="recipesSub">Zutaten direkt zur Einkaufsliste hinzufügen</div>
+    <input class="recipe-search" id="recipe-search" data-i18n-ph="recipesSearch" placeholder="🔍 Rezept suchen …" oninput="filterRecipes(this.value)" autocomplete="off"/>
   </div>
   <div class="recipe-filters" id="recipe-filters"></div>
   <div class="recipe-grid" id="recipe-grid"></div>
@@ -1842,22 +1842,22 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
 <nav class="bottom-nav">
   <button class="nav-item active" data-tab="home" onclick="navTo('home')">
     <span class="nav-icon">🏠</span>
-    <span class="nav-label">Listen</span>
+    <span class="nav-label" data-i18n="navLists">Listen</span>
   </button>
   <button class="nav-item" data-tab="recipes" onclick="navTo('recipes')">
     <span class="nav-icon">🍽</span>
-    <span class="nav-label">Rezepte</span>
+    <span class="nav-label" data-i18n="navRecipes">Rezepte</span>
   </button>
   <button class="nav-item nav-voice" data-tab="voice" onclick="openVoice()">
     <span class="nav-icon">🎤</span>
   </button>
   <button class="nav-item nav-add-list" onclick="openModal('new')">
     <span class="nav-icon nav-add-icon">＋</span>
-    <span class="nav-label">Neue Liste</span>
+    <span class="nav-label" data-i18n="navNewList">Neue Liste</span>
   </button>
   <button class="nav-item" data-tab="settings" onclick="navTo('settings')">
     <span class="nav-icon">⚙️</span>
-    <span class="nav-label">Einstellungen</span>
+    <span class="nav-label" data-i18n="navSettings">Einstellungen</span>
   </button>
 </nav>
 
@@ -1947,6 +1947,31 @@ const i18n = {
     voiceAdd:'Zur Liste hinzufügen',voiceRetry:'Nochmal',voiceDetected:'Erkannte Artikel',
     voiceSelectList:'Bitte zuerst eine Liste auswählen:',
     myLists:'Meine Listen',searchPlaceholder:'Liste suchen …',
+    navLists:'Listen', navRecipes:'Rezepte', navNewList:'Neue Liste', navSettings:'Einstellungen',
+    settingsTitle:'⚙️ Einstellungen', settingsSub:'Personalisiere deine App',
+    shareCardTitle:'📤 App weiterempfehlen', shareCardSub:'Teile die App mit Freunden & Familie',
+    copyLink:'Link kopieren', moreOptions:'Mehr …', cancelBtn:'Abbrechen',
+    installTitle:'App auf dem Handy / Desktop installieren', installSub:'Kein App Store nötig – direkt auf den Homescreen', installBtn:'Installieren',
+    secName:'👤 Mein Name', namePlaceholder:'Dein Name (für die Begrüßung)',
+    secTheme:'🎨 Design & Farbe', themeActive:'Aktives Farbschema',
+    secLayout:'📐 Darstellung der Listen',
+    layoutList:'Liste', layoutTilesLg:'Kacheln Groß', layoutTilesSm:'Kacheln Klein', layoutCompact:'Kompakt', layoutDetails:'Details',
+    secApi:'🌐 Produktdatenbank (Open Food Facts)', apiNotChecked:'Noch nicht geprüft',
+    apiCheckLabel:'Produktdaten prüfen', apiCheckSub:'Verbindung zu Open Food Facts testen',
+    apiSugLabel:'Echtzeit-Vorschläge', apiSugSub:'Beim Tippen erscheinen Produkte aus der Weltdatenbank',
+    apiDbLabel:'Datenbank', apiDbSub:'Open Food Facts · 3 Mio+ Produkte · kostenlos & offen',
+    secLang:'🌍 Sprache', secData:'💾 Daten',
+    exportLabel:'Daten exportieren', exportSub:'Backup als JSON-Datei speichern',
+    importLabel:'Backup importieren', importSub:'Gespeichertes Backup wiederherstellen',
+    deleteLabel:'Alle Daten löschen', deleteSub:'Nicht rückgängig zu machen!',
+    secUpdate:'🔄 App-Updates', updateCurrentText:'App ist aktuell', updateNeverChecked:'Zuletzt geprüft: noch nie',
+    updateCheckBtn:'🔍 Nach Updates suchen', updateApplyBtn:'⚡ Jetzt installieren',
+    secAbout:'ℹ️ Über die App', aboutSub1:'Smart sortiert. Einfach einkaufen.', aboutSub2:'Navy & Gold Edition · Barcode · Sprache · 5 Länder · Offline',
+    recipesTitle:'🍽 Rezepte', recipesSub:'Zutaten direkt zur Einkaufsliste hinzufügen', recipesSearch:'🔍 Rezept suchen …',
+    updateBannerTitle:'Update verfügbar!', updateBannerSub:'Neue Version bereit – jetzt installieren', updateBannerBtn:'Installieren',
+    shareSheetTitle:'App teilen', shareSheetSub:'Empfehle die App weiter',
+    iosInstallTitle:'App auf dem Homescreen speichern', iosInstallSub:'Nutze die App wie eine echte App – ganz ohne App Store',
+    maybeLater:'Vielleicht später', understood:'Verstanden ✓',
   },
   en:{
     appTitle:'Shopping List III',appSub:'Smart sorted. Easy shopping.',
@@ -1966,6 +1991,31 @@ const i18n = {
     voiceAdd:'Add to list',voiceRetry:'Try again',voiceDetected:'Detected items',
     voiceSelectList:'Please select a list first:',
     myLists:'My Lists',searchPlaceholder:'Search list …',
+    navLists:'Lists', navRecipes:'Recipes', navNewList:'New List', navSettings:'Settings',
+    settingsTitle:'⚙️ Settings', settingsSub:'Personalize your app',
+    shareCardTitle:'📤 Share App', shareCardSub:'Share the app with friends & family',
+    copyLink:'Copy link', moreOptions:'More …', cancelBtn:'Cancel',
+    installTitle:'Install on phone / desktop', installSub:'No App Store needed – straight to home screen', installBtn:'Install',
+    secName:'👤 My Name', namePlaceholder:'Your name (for greeting)',
+    secTheme:'🎨 Design & Color', themeActive:'Active color scheme',
+    secLayout:'📐 List display',
+    layoutList:'List', layoutTilesLg:'Large Tiles', layoutTilesSm:'Small Tiles', layoutCompact:'Compact', layoutDetails:'Details',
+    secApi:'🌐 Product Database (Open Food Facts)', apiNotChecked:'Not checked yet',
+    apiCheckLabel:'Check product data', apiCheckSub:'Test connection to Open Food Facts',
+    apiSugLabel:'Real-time suggestions', apiSugSub:'Products appear as you type from the global database',
+    apiDbLabel:'Database', apiDbSub:'Open Food Facts · 3M+ products · free & open',
+    secLang:'🌍 Language', secData:'💾 Data',
+    exportLabel:'Export data', exportSub:'Save backup as JSON file',
+    importLabel:'Import backup', importSub:'Restore saved backup',
+    deleteLabel:'Delete all data', deleteSub:'Cannot be undone!',
+    secUpdate:'🔄 App Updates', updateCurrentText:'App is up to date', updateNeverChecked:'Last checked: never',
+    updateCheckBtn:'🔍 Check for updates', updateApplyBtn:'⚡ Install now',
+    secAbout:'ℹ️ About', aboutSub1:'Smart sorted. Easy shopping.', aboutSub2:'Navy & Gold Edition · Barcode · Voice · 5 Countries · Offline',
+    recipesTitle:'🍽 Recipes', recipesSub:'Add ingredients directly to shopping list', recipesSearch:'🔍 Search recipe …',
+    updateBannerTitle:'Update available!', updateBannerSub:'New version ready – install now', updateBannerBtn:'Install',
+    shareSheetTitle:'Share app', shareSheetSub:'Recommend the app to others',
+    iosInstallTitle:'Save app to home screen', iosInstallSub:'Use the app like a native app – without App Store',
+    maybeLater:'Maybe later', understood:'Got it ✓',
   },
   tr:{
     appTitle:'Alışveriş Listesi III',appSub:'Akıllı sıralama. Kolay alışveriş.',
@@ -1985,6 +2035,31 @@ const i18n = {
     voiceAdd:'Listeye ekle',voiceRetry:'Tekrar dene',voiceDetected:'Tanınan ürünler',
     voiceSelectList:'Önce bir liste seçin:',
     myLists:'Listelerim',searchPlaceholder:'Liste ara …',
+    navLists:'Listelerim', navRecipes:'Tarifler', navNewList:'Yeni Liste', navSettings:'Ayarlar',
+    settingsTitle:'⚙️ Ayarlar', settingsSub:'Uygulamanı kişiselleştir',
+    shareCardTitle:'📤 Uygulamayı Paylaş', shareCardSub:'Uygulamayı arkadaşlarınla paylaş',
+    copyLink:'Bağlantıyı kopyala', moreOptions:'Daha fazla …', cancelBtn:'İptal',
+    installTitle:'Telefona / Masaüstüne yükle', installSub:'App Store gerekmez – doğrudan ana ekrana', installBtn:'Yükle',
+    secName:'👤 Adım', namePlaceholder:'Adınız (karşılama için)',
+    secTheme:'🎨 Tasarım & Renk', themeActive:'Aktif renk şeması',
+    secLayout:'📐 Liste görünümü',
+    layoutList:'Liste', layoutTilesLg:'Büyük Kutucuklar', layoutTilesSm:'Küçük Kutucuklar', layoutCompact:'Kompakt', layoutDetails:'Detaylar',
+    secApi:'🌐 Ürün Veritabanı (Open Food Facts)', apiNotChecked:'Henüz kontrol edilmedi',
+    apiCheckLabel:'Ürün verilerini kontrol et', apiCheckSub:'Open Food Facts bağlantısını test et',
+    apiSugLabel:'Gerçek zamanlı öneriler', apiSugSub:'Yazarken dünya veritabanından ürünler çıkar',
+    apiDbLabel:'Veritabanı', apiDbSub:'Open Food Facts · 3M+ ürün · ücretsiz & açık',
+    secLang:'🌍 Dil', secData:'💾 Veriler',
+    exportLabel:'Verileri dışa aktar', exportSub:'Yedeği JSON dosyası olarak kaydet',
+    importLabel:'Yedek aktar', importSub:'Kaydedilen yedeği geri yükle',
+    deleteLabel:'Tüm verileri sil', deleteSub:'Geri alınamaz!',
+    secUpdate:'🔄 Uygulama Güncellemeleri', updateCurrentText:'Uygulama güncel', updateNeverChecked:'Son kontrol: hiç',
+    updateCheckBtn:'🔍 Güncelleme ara', updateApplyBtn:'⚡ Şimdi yükle',
+    secAbout:'ℹ️ Uygulama Hakkında', aboutSub1:'Akıllı sıralama. Kolay alışveriş.', aboutSub2:'Navy & Gold · Barkod · Ses · 5 Ülke · Çevrimdışı',
+    recipesTitle:'🍽 Tarifler', recipesSub:'Malzemeleri doğrudan alışveriş listesine ekle', recipesSearch:'🔍 Tarif ara …',
+    updateBannerTitle:'Güncelleme mevcut!', updateBannerSub:'Yeni sürüm hazır – şimdi yükle', updateBannerBtn:'Yükle',
+    shareSheetTitle:'Uygulamayı paylaş', shareSheetSub:'Uygulamayı başkalarına öner',
+    iosInstallTitle:'Uygulamayı ana ekrana kaydet', iosInstallSub:'Uygulamayı App Store olmadan gerçek bir uygulama gibi kullan',
+    maybeLater:'Belki sonra', understood:'Anladım ✓',
   },
   fr:{
     appTitle:'Liste de courses III',appSub:'Triée intelligemment. Facile.',
@@ -2004,6 +2079,31 @@ const i18n = {
     voiceAdd:'Ajouter à la liste',voiceRetry:'Réessayer',voiceDetected:'Articles détectés',
     voiceSelectList:'Sélectionnez d\'abord une liste :',
     myLists:'Mes listes',searchPlaceholder:'Rechercher une liste …',
+    navLists:'Listes', navRecipes:'Recettes', navNewList:'Nouvelle liste', navSettings:'Paramètres',
+    settingsTitle:'⚙️ Paramètres', settingsSub:'Personnalisez votre application',
+    shareCardTitle:'📤 Recommander l\'app', shareCardSub:'Partagez l\'app avec vos amis & famille',
+    copyLink:'Copier le lien', moreOptions:'Plus …', cancelBtn:'Annuler',
+    installTitle:'Installer sur téléphone / bureau', installSub:'Pas d\'App Store – directement sur l\'écran d\'accueil', installBtn:'Installer',
+    secName:'👤 Mon Nom', namePlaceholder:'Votre nom (pour le salut)',
+    secTheme:'🎨 Design & Couleur', themeActive:'Schéma de couleur actif',
+    secLayout:'📐 Affichage des listes',
+    layoutList:'Liste', layoutTilesLg:'Grandes tuiles', layoutTilesSm:'Petites tuiles', layoutCompact:'Compact', layoutDetails:'Détails',
+    secApi:'🌐 Base de données (Open Food Facts)', apiNotChecked:'Pas encore vérifié',
+    apiCheckLabel:'Vérifier les données produits', apiCheckSub:'Tester la connexion à Open Food Facts',
+    apiSugLabel:'Suggestions en temps réel', apiSugSub:'Les produits apparaissent en tapant depuis la base mondiale',
+    apiDbLabel:'Base de données', apiDbSub:'Open Food Facts · 3M+ produits · gratuit & ouvert',
+    secLang:'🌍 Langue', secData:'💾 Données',
+    exportLabel:'Exporter les données', exportSub:'Enregistrer la sauvegarde en JSON',
+    importLabel:'Importer une sauvegarde', importSub:'Restaurer une sauvegarde enregistrée',
+    deleteLabel:'Supprimer toutes les données', deleteSub:'Irréversible !',
+    secUpdate:'🔄 Mises à jour', updateCurrentText:'Application à jour', updateNeverChecked:'Dernière vérification : jamais',
+    updateCheckBtn:'🔍 Chercher des mises à jour', updateApplyBtn:'⚡ Installer maintenant',
+    secAbout:'ℹ️ À propos', aboutSub1:'Triée intelligemment. Facile.', aboutSub2:'Navy & Gold · Code-barres · Voix · 5 Pays · Hors ligne',
+    recipesTitle:'🍽 Recettes', recipesSub:'Ajouter des ingrédients directement à la liste', recipesSearch:'🔍 Chercher une recette …',
+    updateBannerTitle:'Mise à jour disponible !', updateBannerSub:'Nouvelle version prête – installer maintenant', updateBannerBtn:'Installer',
+    shareSheetTitle:'Partager l\'app', shareSheetSub:'Recommandez l\'application',
+    iosInstallTitle:'Sauvegarder l\'app sur l\'écran d\'accueil', iosInstallSub:'Utilisez l\'app comme une vraie application – sans App Store',
+    maybeLater:'Peut-être plus tard', understood:'Compris ✓',
   },
   es:{
     appTitle:'Lista de compras III',appSub:'Ordenada inteligentemente. Fácil.',
@@ -2023,6 +2123,31 @@ const i18n = {
     voiceAdd:'Añadir a la lista',voiceRetry:'Reintentar',voiceDetected:'Artículos detectados',
     voiceSelectList:'Primero selecciona una lista:',
     myLists:'Mis listas',searchPlaceholder:'Buscar lista …',
+    navLists:'Listas', navRecipes:'Recetas', navNewList:'Nueva lista', navSettings:'Ajustes',
+    settingsTitle:'⚙️ Ajustes', settingsSub:'Personaliza tu aplicación',
+    shareCardTitle:'📤 Recomendar App', shareCardSub:'Comparte la app con amigos y familia',
+    copyLink:'Copiar enlace', moreOptions:'Más …', cancelBtn:'Cancelar',
+    installTitle:'Instalar en móvil / escritorio', installSub:'Sin App Store – directamente en la pantalla de inicio', installBtn:'Instalar',
+    secName:'👤 Mi Nombre', namePlaceholder:'Tu nombre (para el saludo)',
+    secTheme:'🎨 Diseño & Color', themeActive:'Esquema de color activo',
+    secLayout:'📐 Vista de listas',
+    layoutList:'Lista', layoutTilesLg:'Mosaicos grandes', layoutTilesSm:'Mosaicos pequeños', layoutCompact:'Compacto', layoutDetails:'Detalles',
+    secApi:'🌐 Base de datos (Open Food Facts)', apiNotChecked:'Aún no comprobado',
+    apiCheckLabel:'Comprobar datos de productos', apiCheckSub:'Probar conexión con Open Food Facts',
+    apiSugLabel:'Sugerencias en tiempo real', apiSugSub:'Los productos aparecen al escribir desde la base mundial',
+    apiDbLabel:'Base de datos', apiDbSub:'Open Food Facts · 3M+ productos · gratuito & abierto',
+    secLang:'🌍 Idioma', secData:'💾 Datos',
+    exportLabel:'Exportar datos', exportSub:'Guardar copia de seguridad en JSON',
+    importLabel:'Importar copia de seguridad', importSub:'Restaurar copia de seguridad guardada',
+    deleteLabel:'Eliminar todos los datos', deleteSub:'¡No se puede deshacer!',
+    secUpdate:'🔄 Actualizaciones', updateCurrentText:'App actualizada', updateNeverChecked:'Última comprobación: nunca',
+    updateCheckBtn:'🔍 Buscar actualizaciones', updateApplyBtn:'⚡ Instalar ahora',
+    secAbout:'ℹ️ Acerca de', aboutSub1:'Ordenada inteligentemente. Fácil.', aboutSub2:'Navy & Gold · Código de barras · Voz · 5 Países · Offline',
+    recipesTitle:'🍽 Recetas', recipesSub:'Añadir ingredientes directamente a la lista', recipesSearch:'🔍 Buscar receta …',
+    updateBannerTitle:'¡Actualización disponible!', updateBannerSub:'Nueva versión lista – instalar ahora', updateBannerBtn:'Instalar',
+    shareSheetTitle:'Compartir app', shareSheetSub:'Recomienda la aplicación',
+    iosInstallTitle:'Guardar app en pantalla de inicio', iosInstallSub:'Usa la app como una app nativa – sin App Store',
+    maybeLater:'Quizás más tarde', understood:'Entendido ✓',
   },
 };
 const t = i18n[lang]||i18n.de;
@@ -4169,17 +4294,41 @@ function toast(msg,dur=2200){
 
 // ── Apply i18n to static elements ─────────────────
 function applyI18n(){
-  document.title=t.appTitle;
-  document.getElementById('add-input').placeholder=t.addItem;
-  document.getElementById('store-chip-label').textContent=t.chooseStore;
-  document.getElementById('modal-new-title').textContent=t.newList;
-  document.getElementById('lbl-name').textContent=t.listName;
-  document.getElementById('lbl-emoji').textContent=t.listEmoji;
-  document.getElementById('lbl-color').textContent=t.listColor;
-  document.getElementById('btn-create-list').textContent=t.createList;
-  document.getElementById('modal-store-title').textContent=t.storeLabel;
-  document.getElementById('lbl-other').textContent=t.otherStore;
-  document.getElementById('store-search').placeholder=t.searchStore;
+  // Auto-apply textContent via data-i18n attribute
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if(t[key] !== undefined) el.textContent = t[key];
+  });
+  // Auto-apply placeholder via data-i18n-ph attribute
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+    const key = el.getAttribute('data-i18n-ph');
+    if(t[key] !== undefined) el.placeholder = t[key];
+  });
+  // Element-specific overrides that can't use data-i18n (dynamic content)
+  document.title = t.appTitle;
+  const addInput = document.getElementById('add-input');
+  if(addInput) addInput.placeholder = t.addItem;
+  const storeChip = document.getElementById('store-chip-label');
+  if(storeChip) storeChip.textContent = t.chooseStore;
+  const modalNewTitle = document.getElementById('modal-new-title');
+  if(modalNewTitle) modalNewTitle.textContent = t.newList;
+  const lblName = document.getElementById('lbl-name');
+  if(lblName) lblName.textContent = t.listName;
+  const lblEmoji = document.getElementById('lbl-emoji');
+  if(lblEmoji) lblEmoji.textContent = t.listEmoji;
+  const lblColor = document.getElementById('lbl-color');
+  if(lblColor) lblColor.textContent = t.listColor;
+  const btnCreate = document.getElementById('btn-create-list');
+  if(btnCreate) btnCreate.textContent = t.createList;
+  const modalStoreTitle = document.getElementById('modal-store-title');
+  if(modalStoreTitle) modalStoreTitle.textContent = t.storeLabel;
+  const lblOther = document.getElementById('lbl-other');
+  if(lblOther) lblOther.textContent = t.otherStore;
+  const storeSearch = document.getElementById('store-search');
+  if(storeSearch) storeSearch.placeholder = t.searchStore;
+  // api-status-text initial value (only if not yet checked)
+  const apiStatusText = document.getElementById('api-status-text');
+  if(apiStatusText && apiStatusText.textContent === 'Noch nicht geprüft') apiStatusText.textContent = t.apiNotChecked;
 }
 
 // ══════════════════════════════════════════════════
