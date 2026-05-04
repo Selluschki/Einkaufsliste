@@ -1,0 +1,158 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Background gradient: deep navy -->
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0%"   stop-color="#060d2e"/>
+      <stop offset="45%"  stop-color="#0f1f5c"/>
+      <stop offset="100%" stop-color="#1a3a8f"/>
+    </linearGradient>
+    <!-- Background radial highlight -->
+    <radialGradient id="bgShine" cx="35%" cy="28%" r="65%">
+      <stop offset="0%"   stop-color="rgba(59,130,246,0.22)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+    </radialGradient>
+
+    <!-- Gold gradients for 3D faces -->
+    <!-- Top / upper face: brightest -->
+    <linearGradient id="gTop" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0%"   stop-color="#fffbeb"/>
+      <stop offset="50%"  stop-color="#fde68a"/>
+      <stop offset="100%" stop-color="#fbbf24"/>
+    </linearGradient>
+    <!-- Front face: medium gold -->
+    <linearGradient id="gFront" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#fbbf24"/>
+      <stop offset="60%"  stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+    <!-- Right / shadow face: darkest amber -->
+    <linearGradient id="gRight" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"   stop-color="#d97706"/>
+      <stop offset="100%" stop-color="#92400e"/>
+    </linearGradient>
+    <!-- Wheel outer ring -->
+    <radialGradient id="gWheel" cx="38%" cy="32%" r="62%">
+      <stop offset="0%"   stop-color="#1e3a8a"/>
+      <stop offset="100%" stop-color="#060d2e"/>
+    </radialGradient>
+    <!-- Wheel hub -->
+    <radialGradient id="gHub" cx="35%" cy="30%" r="65%">
+      <stop offset="0%"   stop-color="#fef3c7"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </radialGradient>
+
+    <!-- Ambient cart glow -->
+    <radialGradient id="gCartGlow" cx="50%" cy="60%" r="55%">
+      <stop offset="0%"   stop-color="rgba(245,158,11,0.28)"/>
+      <stop offset="100%" stop-color="rgba(245,158,11,0)"/>
+    </radialGradient>
+
+    <!-- Drop shadow -->
+    <filter id="fShadow" x="-25%" y="-15%" width="150%" height="160%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="rgba(0,0,0,0.6)"/>
+    </filter>
+    <!-- Soft glow around cart -->
+    <filter id="fGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="10" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- ══ BACKGROUND ══ -->
+  <rect width="512" height="512" rx="108" fill="url(#bg)"/>
+  <rect width="512" height="512" rx="108" fill="url(#bgShine)"/>
+
+  <!-- Ambient glow behind cart -->
+  <ellipse cx="264" cy="330" rx="210" ry="90" fill="url(#gCartGlow)"/>
+
+  <!-- ══ SHOPPING CART (3D isometric style) ══ -->
+  <g filter="url(#fShadow)">
+
+    <!-- ▌HANDLE ASSEMBLY ▌-->
+    <!-- Left upright support – front face -->
+    <rect x="158" y="145" width="22" height="108" rx="11" fill="url(#gFront)"/>
+    <!-- Left upright – right shadow face -->
+    <rect x="180" y="153" width="10" height="100" rx="4"  fill="url(#gRight)"/>
+
+    <!-- Right upright support – front face -->
+    <rect x="332" y="145" width="22" height="108" rx="11" fill="url(#gFront)"/>
+    <!-- Right upright – right shadow face -->
+    <rect x="354" y="153" width="10" height="100" rx="4"  fill="url(#gRight)"/>
+
+    <!-- Handle bar top face -->
+    <rect x="154" y="140" width="216" height="16" rx="8"  fill="url(#gTop)"/>
+    <!-- Handle bar front face -->
+    <rect x="158" y="154" width="210" height="14" rx="7"  fill="url(#gFront)"/>
+    <!-- Handle bar right side face -->
+    <polygon points="368,140 382,152 382,168 368,168" fill="url(#gRight)"/>
+
+    <!-- ▌BASKET RIM ▌-->
+    <!-- Rim – top face -->
+    <polygon points="148,248 366,248 380,262 162,262" fill="url(#gTop)"/>
+    <!-- Rim – front face -->
+    <polygon points="148,248 366,248 358,274 156,274" fill="url(#gFront)"/>
+    <!-- Rim – right face -->
+    <polygon points="366,248 380,262 374,278 358,274" fill="url(#gRight)"/>
+
+    <!-- ▌BASKET BODY ▌-->
+    <!-- Front face (trapezoid – wider top, narrower bottom) -->
+    <polygon points="156,274 358,274 338,378 174,378" fill="url(#gFront)"/>
+    <!-- Right face -->
+    <polygon points="358,274 374,278 354,378 338,378" fill="url(#gRight)"/>
+
+    <!-- Wire basket grid – front face (subtle) -->
+    <!-- Vertical wires -->
+    <line x1="196" y1="274" x2="190" y2="378" stroke="rgba(0,0,0,0.13)" stroke-width="2.5"/>
+    <line x1="236" y1="274" x2="232" y2="378" stroke="rgba(0,0,0,0.13)" stroke-width="2.5"/>
+    <line x1="278" y1="274" x2="276" y2="378" stroke="rgba(0,0,0,0.13)" stroke-width="2.5"/>
+    <line x1="318" y1="274" x2="318" y2="378" stroke="rgba(0,0,0,0.13)" stroke-width="2.5"/>
+    <!-- Horizontal wires -->
+    <line x1="158" y1="308" x2="356" y2="308" stroke="rgba(0,0,0,0.11)" stroke-width="2.5"/>
+    <line x1="161" y1="344" x2="347" y2="344" stroke="rgba(0,0,0,0.11)" stroke-width="2.5"/>
+
+    <!-- Highlight shimmer on front face (top-left corner catches light) -->
+    <polygon points="156,274 256,274 250,308 152,308" fill="rgba(255,255,255,0.10)"/>
+
+    <!-- ▌BASKET BOTTOM ▌-->
+    <polygon points="174,378 338,378 330,396 182,396" fill="url(#gFront)"/>
+    <polygon points="338,378 354,378 346,396 330,396" fill="url(#gRight)"/>
+
+    <!-- ▌WHEELS ▌-->
+    <!-- Left wheel -->
+    <circle cx="204" cy="415" r="28" fill="url(#gWheel)"/>
+    <circle cx="204" cy="415" r="28" fill="none" stroke="url(#gTop)" stroke-width="8"/>
+    <!-- Spokes -->
+    <line x1="204" y1="393" x2="204" y2="437" stroke="url(#gFront)" stroke-width="3" opacity="0.7"/>
+    <line x1="182" y1="415" x2="226" y2="415" stroke="url(#gFront)" stroke-width="3" opacity="0.7"/>
+    <circle cx="204" cy="415" r="11" fill="url(#gHub)"/>
+    <circle cx="204" cy="415" r="4"  fill="#0f1f5c"/>
+
+    <!-- Right wheel -->
+    <circle cx="324" cy="415" r="28" fill="url(#gWheel)"/>
+    <circle cx="324" cy="415" r="28" fill="none" stroke="url(#gTop)" stroke-width="8"/>
+    <!-- Spokes -->
+    <line x1="324" y1="393" x2="324" y2="437" stroke="url(#gFront)" stroke-width="3" opacity="0.7"/>
+    <line x1="302" y1="415" x2="346" y2="415" stroke="url(#gFront)" stroke-width="3" opacity="0.7"/>
+    <circle cx="324" cy="415" r="11" fill="url(#gHub)"/>
+    <circle cx="324" cy="415" r="4"  fill="#0f1f5c"/>
+
+    <!-- Wheel axle supports -->
+    <rect x="180" y="392" width="24" height="9" rx="4.5" fill="url(#gRight)"/>
+    <rect x="324" y="392" width="24" height="9" rx="4.5" fill="url(#gRight)"/>
+  </g>
+
+  <!-- ══ STAR SPARKLE (top-right) ══ -->
+  <g filter="url(#fGlow)" opacity="0.85">
+    <path d="M400,88 L406,104 L422,104 L410,114 L415,130 L400,120 L385,130 L390,114 L378,104 L394,104 Z"
+          fill="#fef3c7"/>
+  </g>
+  <g filter="url(#fGlow)" opacity="0.55">
+    <path d="M430,60 L433,69 L442,69 L435,75 L438,84 L430,78 L422,84 L425,75 L418,69 L427,69 Z"
+          fill="#fbbf24"/>
+  </g>
+  <!-- Small dot sparkle -->
+  <circle cx="448" cy="96" r="4" fill="#fde68a" opacity="0.7"/>
+
+  <!-- ══ SUBTLE BOTTOM REFLECTION ══ -->
+  <ellipse cx="264" cy="448" rx="140" ry="14" fill="rgba(251,191,36,0.12)"/>
+</svg>

@@ -345,6 +345,21 @@ html[data-theme="dark"] .offer-name{color:#e8eeff}
 }
 .offer-add-btn:hover{background:linear-gradient(135deg,var(--gold),#d97706);color:#fff}
 .offers-empty{padding:12px 16px;font-size:.82rem;color:var(--text3);text-align:center}
+/* ── Offers Country Filter ── */
+.offers-filter-bar{display:flex;gap:8px;padding:0 16px 12px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.offers-filter-bar::-webkit-scrollbar{display:none}
+.offer-filter-chip{
+  flex-shrink:0;background:var(--surface);border:1.5px solid var(--border);
+  border-radius:50px;padding:5px 14px;font-size:.75rem;font-weight:700;
+  color:var(--text2);cursor:pointer;transition:all .2s;white-space:nowrap;
+  display:flex;align-items:center;gap:5px;
+}
+.offer-filter-chip:hover{border-color:var(--navy3);color:var(--navy)}
+.offer-filter-chip.active{
+  background:linear-gradient(135deg,#0f1f5c,#1a3a8f);
+  border-color:#1a3a8f;color:#fff;
+  box-shadow:0 2px 8px rgba(15,31,92,.3);
+}
 /* Badge on list/route items */
 .offer-item-badge{
   display:inline-flex;align-items:center;gap:3px;
@@ -1352,6 +1367,7 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
       </div>
       <span class="offers-week" id="offers-week-label">KW –</span>
     </div>
+    <div class="offers-filter-bar" id="offers-filter-bar" style="display:none"></div>
     <div class="offers-scroll" id="offers-scroll">
       <div class="offers-empty" id="offers-loading-text">Lade Angebote …</div>
     </div>
@@ -1699,7 +1715,7 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
       <div class="settings-sec-title" data-i18n="secAbout">ℹ️ Über die App</div>
       <div class="about-wrap">
         <div class="about-logo">🛒</div>
-        <div class="about-title">Einkaufsliste III</div>
+        <div class="about-title" id="about-app-title">ShopSmart</div>
         <div class="about-sub" data-i18n="aboutSub1">Smart sortiert. Einfach einkaufen.</div>
         <div class="about-sub" style="margin-top:5px" data-i18n="aboutSub2">Navy & Gold Edition · Barcode · Sprache · 5 Länder · Offline</div>
         <div class="about-version">Version 4.0</div>
@@ -1947,7 +1963,7 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
 ══════════════════════════════════════ -->
 <div class="import-banner" id="import-banner">
   <div class="import-banner-title">📥 Liste empfangen!</div>
-  <div class="import-banner-sub" id="import-banner-sub">Jemand hat eine Einkaufsliste mit dir geteilt</div>
+  <div class="import-banner-sub" id="import-banner-sub" data-i18n="importBannerSub">Jemand hat eine Einkaufsliste mit dir geteilt</div>
   <div class="import-banner-btns">
     <button class="import-banner-yes" onclick="confirmImport()">✓ Importieren</button>
     <button class="import-banner-no" onclick="dismissImport()">Ablehnen</button>
@@ -2009,7 +2025,7 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
     <div style="text-align:center;padding:10px 24px 4px">
       <div style="font-size:2.8rem;margin-bottom:10px">📲</div>
       <div style="font-weight:800;font-size:1.1rem;color:var(--text);margin-bottom:6px" data-i18n="iosInstallTitle">App auf dem Homescreen speichern</div>
-      <div style="font-size:.85rem;color:var(--text2);margin-bottom:22px" data-i18n="iosInstallSub">So kannst du Einkaufsliste III wie eine echte App nutzen – ganz ohne App Store</div>
+      <div style="font-size:.85rem;color:var(--text2);margin-bottom:22px" data-i18n="iosInstallSub">So nutzt du ShopSmart wie eine echte App</div>
     </div>
     <div class="ios-install-steps">
       <div class="ios-step"><div class="ios-step-num">1</div><div class="ios-step-text">Tippe unten in Safari auf das <strong>Teilen-Symbol</strong> <span style="font-size:1.1rem">⬆️</span></div></div>
@@ -2299,7 +2315,7 @@ const i18n = {
     recipesTitle:'🍽 Rezepte', recipesSub:'Zutaten direkt zur Einkaufsliste hinzufügen', recipesSearch:'🔍 Rezept suchen …',
     updateBannerTitle:'Update verfügbar!', updateBannerSub:'Neue Version bereit – jetzt installieren', updateBannerBtn:'Installieren',
     shareSheetTitle:'App teilen', shareSheetSub:'Empfehle die App weiter',
-    iosInstallTitle:'App auf dem Homescreen speichern', iosInstallSub:'Nutze die App wie eine echte App – ganz ohne App Store',
+    iosInstallTitle:'App auf dem Homescreen speichern', iosInstallSub:'So nutzt du ShopSmart wie eine echte App',
     maybeLater:'Vielleicht später', understood:'Verstanden ✓',
     themeBlue:'Blau', themeGreen:'Grün', themePurple:'Lila', themeOrange:'Orange', themeDark:'Dunkel',
     themeActivated:'aktiviert',
@@ -2447,7 +2463,7 @@ const i18n = {
     voiceRecognitionError:'Fehler: ',
     voiceRecognitionMicDenied:' (Mikrofon verweigert)',
     autoListPrefix:'Einkauf',
-    appShareText:'🛒 Schau mal – diese Einkaufsliste App ist richtig praktisch! Kostenlos, direkt im Browser, keine Installation nötig:',
+    appShareText:'🛒 Schau mal – ShopSmart ist die smarteste Einkaufs-App! Kostenlos, offline, kein Login:',
     slogan:'Die einzige App die weiß, wie dein Supermarkt von innen aussieht',
     homeShareBtn:'📤 App teilen',
     offersTitle:'🔥 Angebote diese Woche',
@@ -2458,6 +2474,8 @@ const i18n = {
     shareProfileLabel:'Profil & Listen teilen',
     shareProfileSub:'Mit Familie oder Freunden teilen',
     offerPickerTitle:'Zu welcher Liste?',
+    importBannerSub:'Jemand hat eine Einkaufsliste mit dir geteilt',
+    filterAll:'Alle Länder',
   },
   en:{
     appTitle:'ShopSmart',appSub:'Smart sorted. Easy shopping.',
@@ -2656,6 +2674,8 @@ const i18n = {
     shareProfileLabel:'Share Profile & Lists',
     shareProfileSub:'Share with family or friends',
     offerPickerTitle:'Add to which list?',
+    importBannerSub:'Someone shared a shopping list with you',
+    filterAll:'All countries',
   },
   tr:{
     appTitle:'ShopSmart',appSub:'Akıllı sıralama. Kolay alışveriş.',
@@ -2854,6 +2874,8 @@ const i18n = {
     shareProfileLabel:'Profil & Listeler Paylaş',
     shareProfileSub:'Aile veya arkadaşlarla paylaş',
     offerPickerTitle:'Hangi listeye?',
+    importBannerSub:'Biri seninle bir alışveriş listesi paylaştı',
+    filterAll:'Tüm ülkeler',
   },
   fr:{
     appTitle:'ShopSmart',appSub:'Triée intelligemment. Facile.',
@@ -3052,6 +3074,8 @@ const i18n = {
     shareProfileLabel:'Partager profil & listes',
     shareProfileSub:'Partager avec famille ou amis',
     offerPickerTitle:'Ajouter à quelle liste ?',
+    importBannerSub:'Quelqu\'un a partagé une liste de courses avec vous',
+    filterAll:'Tous les pays',
   },
   es:{
     appTitle:'ShopSmart',appSub:'Ordenada inteligentemente. Fácil.',
@@ -3250,6 +3274,8 @@ const i18n = {
     shareProfileLabel:'Compartir perfil y listas',
     shareProfileSub:'Compartir con familia o amigos',
     offerPickerTitle:'¿Añadir a qué lista?',
+    importBannerSub:'Alguien ha compartido una lista de compras contigo',
+    filterAll:'Todos los países',
   },
 };
 const t = i18n[lang]||i18n.de;
@@ -4133,26 +4159,68 @@ function _offerWeekLabel(){
   } catch(e){ return offersData.meta.week||t.offersThisWeek; }
 }
 
+// Store → country code mapping
+const STORE_COUNTRY = {
+  'ALDI':'DE','ALDI SÜDEN':'DE','NETTO':'DE','PENNY':'DE','KAUFLAND':'DE',
+  'EDEKA':'DE','REWE':'DE','LIDL':'DE','NORMA':'DE','REAL':'DE',
+  'DM':'DE','ROSSMANN':'DE','MÜLLER':'DE','REWE City':'DE',
+  'BILLA':'AT','HOFER':'AT','SPAR AT':'AT','MERKUR':'AT','UNIMARKT':'AT',
+  'MIGROS':'CH','COOP':'CH','DENNER':'CH','LIDL CH':'CH','ALDI CH':'CH',
+  'WALMART':'US','TARGET':'US','KROGER':'US','COSTCO':'US','WHOLE FOODS':'US',
+  'TESCO':'UK',"SAINSBURY'S":'UK','ASDA':'UK','MORRISONS':'UK','WAITROSE':'UK',
+  'CARREFOUR':'FR','LECLERC':'FR','AUCHAN':'FR','INTERMARCHÉ':'FR','LIDL FR':'FR',
+  'ALBERT HEIJN':'NL','JUMBO':'NL','LIDL NL':'NL','ALDI NL':'NL',
+  'MERCADONA':'ES','CARREFOUR ES':'ES','DIA':'ES','LIDL ES':'ES','EROSKI':'ES',
+  'ESSELUNGA':'IT','CONAD':'IT','CARREFOUR IT':'IT','ALDI IT':'IT',
+  'MiGROS TR':'TR','BiM':'TR','A101':'TR','ŞOK':'TR','CARREFOURSA':'TR',
+};
+const COUNTRY_FLAGS = {
+  'DE':'🇩🇪','AT':'🇦🇹','CH':'🇨🇭','US':'🇺🇸','UK':'🇬🇧',
+  'FR':'🇫🇷','NL':'🇳🇱','ES':'🇪🇸','IT':'🇮🇹','TR':'🇹🇷'
+};
+let _offerCountryFilter = 'ALL';
+
 function renderOffersSection(){
   const wrap = document.getElementById('offers-wrap');
   const scroll = document.getElementById('offers-scroll');
+  const filterBar = document.getElementById('offers-filter-bar');
   const weekLbl = document.getElementById('offers-week-label');
   const titleEl = document.getElementById('offers-title-lbl');
   if(!wrap || !scroll || !offersData) return;
   wrap.style.display='block';
   if(titleEl) titleEl.textContent = t.offersTitle;
   if(weekLbl) weekLbl.textContent = _offerWeekLabel();
-  // Alle Angebote flach, sortiert nach Discount
+  // Flatten all offers
   const all=[];
   Object.entries(offersData.stores).forEach(([store,offers])=>{
-    (offers||[]).forEach(o=>all.push({...o,store}));
+    (offers||[]).forEach(o=>all.push({...o,store,country:STORE_COUNTRY[store]||'DE'}));
   });
   all.sort((a,b)=>b.discount-a.discount);
   if(!all.length){ scroll.innerHTML=`<div class="offers-empty">${t.offersNone}</div>`; return; }
-  scroll.innerHTML = all.map(o=>{
+
+  // Build country filter chips
+  if(filterBar){
+    const countries = [...new Set(all.map(o=>o.country))].filter(Boolean);
+    if(countries.length > 1){
+      filterBar.style.display='flex';
+      filterBar.innerHTML = `<div class="offer-filter-chip${_offerCountryFilter==='ALL'?' active':''}" onclick="setOfferFilter('ALL')">🌍 ${t.filterAll||'Alle'}</div>`
+        + countries.map(c=>`<div class="offer-filter-chip${_offerCountryFilter===c?' active':''}" onclick="setOfferFilter('${c}')">${COUNTRY_FLAGS[c]||'🏪'} ${c}</div>`).join('');
+    } else {
+      filterBar.style.display='none';
+    }
+  }
+
+  // Apply filter
+  const filtered = _offerCountryFilter==='ALL' ? all : all.filter(o=>o.country===_offerCountryFilter);
+  if(!filtered.length){
+    scroll.innerHTML=`<div class="offers-empty">${t.offersNone}</div>`;
+    return;
+  }
+  scroll.innerHTML = filtered.map(o=>{
     const imgUrl = o.image || OFFER_CAT_IMG[o.cat] || OFFER_CAT_IMG.other;
     const fb = o.emoji||'🛒';
     const dataStr = JSON.stringify(o).replace(/"/g,'&quot;');
+    const flag = COUNTRY_FLAGS[o.country]||'';
     return `
     <div class="offer-card" onclick="addOfferToCurrentList(${dataStr})">
       <div class="offer-img-wrap">
@@ -4162,7 +4230,7 @@ function renderOffersSection(){
         <span class="offer-discount-badge">-${o.discount}%</span>
       </div>
       <div class="offer-card-top">
-        <div class="offer-store-lbl">${o.store}</div>
+        <div class="offer-store-lbl">${flag} ${o.store}</div>
         <div class="offer-name">${o.name}</div>
         <div class="offer-prices">
           <span class="offer-sale">${o.salePrice.toFixed(2)}€</span>
@@ -4171,7 +4239,13 @@ function renderOffersSection(){
         </div>
       </div>
       <button class="offer-add-btn">${t.offerAddBtn}</button>
-    </div>`}).join('');
+    </div>`;
+  }).join('');
+}
+
+function setOfferFilter(country){
+  _offerCountryFilter = country;
+  renderOffersSection();
 }
 
 function _addOfferItem(list, offer){
@@ -4472,6 +4546,114 @@ function openProInfo(){
     es:'💛 ¡ShopSmart es gratuito!\n\nTodas las funciones están desbloqueadas para ti.\n¡Si te gusta la app, compártela con amigos – eso es el mejor apoyo! 😊',
   };
   alert(msg[lang]||msg.de);
+}
+
+function applyOnboardingI18n(){
+  const lang2 = lang || 'de';
+  const OB = {
+    de:{
+      title:'Willkommen bei', brand:'ShopSmart',
+      desc0:'Die intelligenteste Einkaufsliste – mit Spracherkennung, Routenplanung, Barcode-Scanner und Angebots-Tracker.',
+      f0a:'🌍 5 Sprachen & 80+ Supermärkte', f0b:'📴 100% offline – kein Login, kein Abo', f0c:'💰 Budget-Tracking & Ersparnis-Anzeige',
+      title1:'Einfach sprechen', desc1:'Sage einfach „Milch, 2 Eier, Brot" – die App erkennt Produkte, Mengen und Einheiten automatisch.',
+      f1a:'✅ Spracherkennung in 5 Sprachen', f1b:'✅ Mengen & Einheiten werden erkannt', f1c:'✅ Mehrere Artikel gleichzeitig',
+      title2:'Optimale Route', desc2:'Wähle deinen Supermarkt – die App sortiert deine Liste nach dem optimalen Laufweg.',
+      f2a:'🏪 80+ Supermärkte in 20+ Ländern', f2b:'📷 Barcode-Scanner mit Produktsuche', f2c:'🍽 Rezepte direkt als Einkaufsliste',
+      title3:'Sparen mit Angeboten', desc3:'Sieh aktuelle Angebote mit echten Fotos und füge Schnäppchen mit einem Tap zur Liste hinzu.',
+      f3a:'🔥 Wochenangebote mit echten Fotos', f3b:'💰 Preis-Tracking & Ersparnis-Anzeige', f3c:'🏷 Angebots-Badge bleibt am Artikel',
+      next:'Weiter →', start:'🚀 Los geht\'s!', skip:'Überspringen'
+    },
+    en:{
+      title:'Welcome to', brand:'ShopSmart',
+      desc0:'The smartest shopping list – with voice recognition, store routing, barcode scanner and deals tracker.',
+      f0a:'🌍 5 languages & 80+ supermarkets', f0b:'📴 100% offline – no login, no subscription', f0c:'💰 Budget tracking & savings display',
+      title1:'Just speak', desc1:'Say "milk, 2 eggs, bread" – the app recognises products, quantities and units automatically.',
+      f1a:'✅ Voice recognition in 5 languages', f1b:'✅ Quantities & units detected', f1c:'✅ Multiple items at once',
+      title2:'Optimal route', desc2:'Choose your supermarket – the app sorts your list by the optimal in-store path.',
+      f2a:'🏪 80+ supermarkets in 20+ countries', f2b:'📷 Barcode scanner with product search', f2c:'🍽 Recipes directly as shopping list',
+      title3:'Save with deals', desc3:'See current weekly deals with real photos and add bargains to your list in one tap.',
+      f3a:'🔥 Weekly deals with real photos', f3b:'💰 Price tracking & savings display', f3c:'🏷 Deal badge stays on item',
+      next:'Next →', start:'🚀 Let\'s go!', skip:'Skip'
+    },
+    tr:{
+      title:'Hoş geldiniz!', brand:'ShopSmart',
+      desc0:'En akıllı alışveriş listesi – sesli tanıma, market rotası, barkod tarayıcı ve fırsat takibi ile.',
+      f0a:'🌍 5 dil & 80+ süpermarket', f0b:'📴 100% çevrimdışı – kayıt yok, abonelik yok', f0c:'💰 Bütçe takibi & tasarruf görüntüleme',
+      title1:'Sadece konuş', desc1:'"Süt, 2 yumurta, ekmek" de – uygulama ürünleri, miktarları ve birimleri otomatik tanır.',
+      f1a:'✅ 5 dilde sesli tanıma', f1b:'✅ Miktar & birimler algılanır', f1c:'✅ Aynı anda birden fazla ürün',
+      title2:'Optimal rota', desc2:'Marketini seç – uygulama listeni en verimli yola göre sıralar.',
+      f2a:'🏪 20+ ülkede 80+ süpermarket', f2b:'📷 Ürün aramalı barkod tarayıcı', f2c:'🍽 Tarifler doğrudan alışveriş listesi olarak',
+      title3:'Fırsatlarla tasarruf', desc3:'Gerçek fotoğraflarla güncel haftalık fırsatları gör ve tek dokunuşla listeye ekle.',
+      f3a:'🔥 Gerçek fotoğraflı haftalık fırsatlar', f3b:'💰 Fiyat takibi & tasarruf görüntüleme', f3c:'🏷 Fırsat rozeti üründe kalır',
+      next:'İleri →', start:'🚀 Hadi başlayalım!', skip:'Atla'
+    },
+    fr:{
+      title:'Bienvenue sur', brand:'ShopSmart',
+      desc0:'La liste de courses la plus intelligente – avec reconnaissance vocale, itinéraire en magasin, scanner de codes-barres et suivi des promotions.',
+      f0a:'🌍 5 langues & 80+ supermarchés', f0b:'📴 100% hors ligne – sans connexion, sans abonnement', f0c:'💰 Suivi du budget & affichage des économies',
+      title1:'Parlez simplement', desc1:'Dites "lait, 2 œufs, pain" – l\'app reconnaît les produits, quantités et unités automatiquement.',
+      f1a:'✅ Reconnaissance vocale en 5 langues', f1b:'✅ Quantités & unités détectées', f1c:'✅ Plusieurs articles à la fois',
+      title2:'Itinéraire optimal', desc2:'Choisissez votre supermarché – l\'app trie votre liste selon le meilleur parcours en magasin.',
+      f2a:'🏪 80+ supermarchés dans 20+ pays', f2b:'📷 Scanner codes-barres avec recherche produit', f2c:'🍽 Recettes directement en liste de courses',
+      title3:'Économisez avec les promos', desc3:'Découvrez les offres hebdomadaires avec de vraies photos et ajoutez les bonnes affaires en un tap.',
+      f3a:'🔥 Promos hebdomadaires avec vraies photos', f3b:'💰 Suivi des prix & affichage des économies', f3c:'🏷 Badge promo reste sur l\'article',
+      next:'Suivant →', start:'🚀 C\'est parti !', skip:'Passer'
+    },
+    es:{
+      title:'Bienvenido a', brand:'ShopSmart',
+      desc0:'La lista de compras más inteligente – con reconocimiento de voz, ruta en tienda, escáner de código de barras y seguimiento de ofertas.',
+      f0a:'🌍 5 idiomas y 80+ supermercados', f0b:'📴 100% sin conexión – sin registro, sin suscripción', f0c:'💰 Seguimiento de presupuesto y ahorro',
+      title1:'Solo habla', desc1:'Di "leche, 2 huevos, pan" – la app reconoce productos, cantidades y unidades automáticamente.',
+      f1a:'✅ Reconocimiento de voz en 5 idiomas', f1b:'✅ Cantidades y unidades detectadas', f1c:'✅ Varios artículos a la vez',
+      title2:'Ruta óptima', desc2:'Elige tu supermercado – la app ordena tu lista según el camino óptimo por la tienda.',
+      f2a:'🏪 80+ supermercados en 20+ países', f2b:'📷 Escáner de código de barras con búsqueda', f2c:'🍽 Recetas directamente como lista de compras',
+      title3:'Ahorra con ofertas', desc3:'Ve las ofertas semanales con fotos reales y añade gangas a tu lista con un toque.',
+      f3a:'🔥 Ofertas semanales con fotos reales', f3b:'💰 Seguimiento de precios y ahorro', f3c:'🏷 Insignia de oferta permanece en artículo',
+      next:'Siguiente →', start:'🚀 ¡Vamos!', skip:'Omitir'
+    }
+  };
+  const o = OB[lang2] || OB.de;
+  // Slide 1
+  const t1 = document.querySelector('.onboarding-slides .onboarding-slide:nth-child(1) .ob-title');
+  if(t1) t1.innerHTML = o.title + '<br><span class="ob-brand">' + o.brand + '</span>';
+  const d1 = document.querySelector('.onboarding-slides .onboarding-slide:nth-child(1) .ob-desc');
+  if(d1) d1.textContent = o.desc0;
+  const f1s = document.querySelectorAll('.onboarding-slides .onboarding-slide:nth-child(1) .ob-feature');
+  if(f1s[0]) f1s[0].textContent = o.f0a;
+  if(f1s[1]) f1s[1].textContent = o.f0b;
+  if(f1s[2]) f1s[2].textContent = o.f0c;
+  // Slide 2
+  const t2 = document.querySelector('.onboarding-slides .onboarding-slide:nth-child(2) .ob-title');
+  if(t2) t2.textContent = o.title1;
+  const d2 = document.querySelector('.onboarding-slides .onboarding-slide:nth-child(2) .ob-desc');
+  if(d2) d2.textContent = o.desc1;
+  const f2s = document.querySelectorAll('.onboarding-slides .onboarding-slide:nth-child(2) .ob-feature');
+  if(f2s[0]) f2s[0].textContent = o.f1a;
+  if(f2s[1]) f2s[1].textContent = o.f1b;
+  if(f2s[2]) f2s[2].textContent = o.f1c;
+  // Slide 3
+  const t3 = document.querySelector('.onboarding-slides .onboarding-slide:nth-child(3) .ob-title');
+  if(t3) t3.textContent = o.title2;
+  const d3 = document.querySelector('.onboarding-slides .onboarding-slide:nth-child(3) .ob-desc');
+  if(d3) d3.textContent = o.desc2;
+  const f3s = document.querySelectorAll('.onboarding-slides .onboarding-slide:nth-child(3) .ob-feature');
+  if(f3s[0]) f3s[0].textContent = o.f2a;
+  if(f3s[1]) f3s[1].textContent = o.f2b;
+  if(f3s[2]) f3s[2].textContent = o.f2c;
+  // Slide 4
+  const t4 = document.querySelector('.onboarding-slides .onboarding-slide:nth-child(4) .ob-title');
+  if(t4) t4.textContent = o.title3;
+  const d4 = document.querySelector('.onboarding-slides .onboarding-slide:nth-child(4) .ob-desc');
+  if(d4) d4.textContent = o.desc3;
+  const f4s = document.querySelectorAll('.onboarding-slides .onboarding-slide:nth-child(4) .ob-feature');
+  if(f4s[0]) f4s[0].textContent = o.f3a;
+  if(f4s[1]) f4s[1].textContent = o.f3b;
+  if(f4s[2]) f4s[2].textContent = o.f3c;
+  // Buttons
+  const btnPrimary = document.getElementById('ob-btn-primary');
+  if(btnPrimary) btnPrimary.textContent = _obSlide === OB_SLIDES-1 ? o.start : o.next;
+  const btnSkip = document.querySelector('.ob-btn-skip');
+  if(btnSkip) btnSkip.textContent = o.skip;
 }
 
 function applyProI18n(){
@@ -5680,6 +5862,11 @@ function applyI18n(){
   if(apiStatusText) apiStatusText.textContent = t.apiNotChecked;
   // Pro card
   applyProI18n();
+  // About title
+  const aboutTitle = document.getElementById('about-app-title');
+  if(aboutTitle) aboutTitle.textContent = t.appTitle || 'ShopSmart';
+  // Onboarding
+  applyOnboardingI18n();
 }
 
 // ══════════════════════════════════════════════════
