@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <title>ShopSmart – Die smarteste Einkaufs-App</title>
-<meta name="description" content="ShopSmart: Kostenlose Einkaufsliste mit Spracherkennung, Barcode-Scanner, 80+ Supermärkten, Wochenangeboten, Budget-Tracking und 100% Offline. Kein Login, kein Abo."/>
+<meta name="description" content="ShopSmart: Smart Shopping List with voice recognition, barcode scanner, 80+ supermarkets, weekly deals, budget tracking and 100% offline. Free · No login · 5 languages."/>
 <meta name="keywords" content="Einkaufsliste, ShopSmart, App, Spracherkennung, Barcode Scanner, Supermarkt, Angebote, Budget, kostenlos, offline, PWA"/>
 <meta property="og:title" content="ShopSmart – Smarter einkaufen, mehr sparen"/>
 <meta property="og:description" content="Sprich deinen Einkauf einfach ein – ShopSmart erkennt alle Produkte, sortiert nach Supermarkt-Gängen, zeigt Wochenangebote und trackt dein Budget. 100% kostenlos & offline."/>
@@ -25,6 +25,8 @@
 <meta name="twitter:description" content="Spracherkennung · Barcode-Scanner · 80+ Supermärkte · Wochenangebote · Budget-Tracker · Offline · Kostenlos"/>
 <meta name="twitter:image" content="https://selluschki.github.io/Einkaufsliste/icon-512.png"/>
 <link rel="canonical" href="https://selluschki.github.io/Einkaufsliste/einkaufsliste.html"/>
+<!-- Privacy-friendly analytics (no cookies, GDPR-compliant) -->
+<script defer data-domain="selluschki.github.io" src="https://plausible.io/js/script.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 :root{
@@ -140,7 +142,7 @@ html[data-theme="orange"] body{background:#fff7ed}
 /* ════ HOME VIEW ════ */
 .home-hero{
   background:linear-gradient(160deg,#0a1540 0%,#0f1f5c 45%,#1a3a8f 100%);
-  padding:28px 20px 36px;position:relative;overflow:hidden;color:#fff;
+  padding:28px 110px 36px 20px;position:relative;overflow:hidden;color:#fff;
 }
 .home-hero::before{
   content:'';position:absolute;top:-60px;right:-60px;
@@ -156,8 +158,14 @@ html[data-theme="orange"] body{background:#fff7ed}
 }
 .home-hero>*{position:relative;z-index:1}
 .home-greeting{font-size:.78rem;opacity:.75;font-weight:600;margin-bottom:4px;letter-spacing:.04em;text-transform:uppercase}
-.home-hero-name{font-size:1.75rem;font-weight:900;line-height:1.18;margin-bottom:6px;letter-spacing:-.02em}
-.home-hero-sub{font-size:.8rem;opacity:.68;font-weight:500}
+.home-hero-name{font-size:1.45rem;font-weight:900;line-height:1.18;margin-bottom:5px;letter-spacing:-.02em}
+.home-hero-sub{font-size:.78rem;opacity:.68;font-weight:500}
+.home-hero-en{
+  font-size:.7rem;font-weight:700;color:rgba(253,230,138,.82);
+  margin-top:5px;letter-spacing:.02em;
+  display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+}
+.home-hero-en-dot{opacity:.45}
 /* Slogan Badge */
 .home-slogan{
   display:inline-flex;align-items:center;gap:7px;margin-top:10px;
@@ -866,9 +874,9 @@ html[data-theme="dark"] .logo-action-sheet{background:#1a2332}
 .logo-action-no-prospekt{margin:0 16px 10px;padding:13px 18px;background:var(--surface);border:1.5px dashed var(--border);border-radius:14px;font-size:.82rem;color:var(--text3);text-align:center}
 
 /* ── Clock ── */
-.home-clock-wrap{display:flex;flex-direction:column;align-items:flex-end;position:absolute;top:28px;right:20px;z-index:1}
-.home-clock{font-size:2rem;font-weight:800;letter-spacing:-.03em;line-height:1;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.25)}
-.home-date-label{font-size:.72rem;font-weight:500;color:rgba(255,255,255,.7);text-align:right;margin-top:2px;letter-spacing:.01em}
+.home-clock-wrap{display:flex;flex-direction:column;align-items:flex-end;position:absolute;top:22px;right:16px;z-index:1;max-width:100px}
+.home-clock{font-size:1.55rem;font-weight:800;letter-spacing:-.03em;line-height:1;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.25)}
+.home-date-label{font-size:.62rem;font-weight:500;color:rgba(255,255,255,.65);text-align:right;margin-top:2px;letter-spacing:.01em;line-height:1.3;word-break:break-word}
 
 /* ── Windows 11 Layouts ── */
 /* tiles-lg: 2 Spalten große Kacheln */
@@ -1340,6 +1348,7 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
     <div class="home-greeting" id="home-greeting">Guten Tag!</div>
     <div class="home-hero-name" id="home-hero-name">🛒 ShopSmart</div>
     <div class="home-hero-sub" id="home-sub">Smart sortiert. Einfach einkaufen.</div>
+    <div class="home-hero-en">🌍 Smart Shopping List <span class="home-hero-en-dot">·</span> 5 Languages <span class="home-hero-en-dot">·</span> 80+ Stores <span class="home-hero-en-dot">·</span> Free</div>
     <div class="home-slogan">🏪 <span id="home-slogan-text">Die einzige App die weiß, wie dein Supermarkt von innen aussieht</span></div>
     <div class="home-stats">
       <div class="stat-pill" id="stat-lists">📋 0 Listen</div>

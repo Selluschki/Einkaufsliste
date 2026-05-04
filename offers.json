@@ -406,6 +406,158 @@
         "keywords": ["magnesium","tabletten","supplement","mivolis","mineral","gesundheit"],
         "validFrom": "2026-05-05", "validUntil": "2026-05-11"
       }
+    ],
+    "BIM": [
+      {
+        "name": "Tavuk But",
+        "desc": "BİM Taze Tavuk But, 1 kg",
+        "normalPrice": 89.90, "salePrice": 64.90, "unit": "1 kg", "discount": 28, "cat": "meat", "emoji": "🍗",
+        "image": "https://images.unsplash.com/photo-1604503468506-a8da13d11d36?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["tavuk","but","chicken","piliç","et"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-10"
+      },
+      {
+        "name": "Süt",
+        "desc": "BİM Günlük Süt, 1 L",
+        "normalPrice": 28.90, "salePrice": 19.90, "unit": "1 L", "discount": 31, "cat": "dairy", "emoji": "🥛",
+        "image": "https://images.unsplash.com/photo-1563636619-e9143da7973b?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["süt","milk","içecek","günlük"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-10"
+      },
+      {
+        "name": "Çilek",
+        "desc": "Taze Çilek, 500 g",
+        "normalPrice": 34.90, "salePrice": 22.90, "unit": "500 g", "discount": 34, "cat": "produce", "emoji": "🍓",
+        "image": "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["çilek","strawberry","meyve","taze"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-10"
+      },
+      {
+        "name": "Ekmek",
+        "desc": "BİM Taze Ekmek, 500 g",
+        "normalPrice": 12.00, "salePrice": 8.50, "unit": "500 g", "discount": 29, "cat": "bakery", "emoji": "🍞",
+        "image": "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["ekmek","bread","fırın","taze"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-10"
+      },
+      {
+        "name": "Yoğurt",
+        "desc": "BİM Sütaş Yoğurt, 1 kg",
+        "normalPrice": 38.90, "salePrice": 27.90, "unit": "1 kg", "discount": 28, "cat": "dairy", "emoji": "🫙",
+        "image": "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["yoğurt","yogurt","süt ürünü","sütaş"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-10"
+      }
+    ],
+    "A101": [
+      {
+        "name": "Zeytinyağı",
+        "desc": "A101 Tariş Zeytinyağı Naturel Sızma, 1 L",
+        "normalPrice": 189.90, "salePrice": 139.90, "unit": "1 L", "discount": 26, "cat": "dry", "emoji": "🫒",
+        "image": "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["zeytinyağı","olive oil","yağ","tariş","zeytin"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-10"
+      },
+      {
+        "name": "Domates",
+        "desc": "Taze Domates, 1 kg",
+        "normalPrice": 22.90, "salePrice": 14.90, "unit": "1 kg", "discount": 35, "cat": "produce", "emoji": "🍅",
+        "image": "https://images.unsplash.com/photo-1546094096-0df4bcaaa337?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["domates","tomato","sebze","taze"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-10"
+      },
+      {
+        "name": "Makarna",
+        "desc": "Barilla Spagetti No.5, 500 g",
+        "normalPrice": 28.90, "salePrice": 19.90, "unit": "500 g", "discount": 31, "cat": "dry", "emoji": "🍝",
+        "image": "https://images.unsplash.com/photo-1551462147-37885acc36f1?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["makarna","pasta","barilla","spagetti"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-10"
+      }
+    ],
+    "MERCADONA": [
+      {
+        "name": "Pollo entero",
+        "desc": "Pollo entero fresco, 1 kg aprox.",
+        "normalPrice": 3.99, "salePrice": 2.79, "unit": "1 kg", "discount": 30, "cat": "meat", "emoji": "🍗",
+        "image": "https://images.unsplash.com/photo-1604503468506-a8da13d11d36?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["pollo","chicken","carne","fresco"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-10"
+      },
+      {
+        "name": "Leche entera",
+        "desc": "Hacendado Leche entera, 1 L",
+        "normalPrice": 1.15, "salePrice": 0.79, "unit": "1 L", "discount": 31, "cat": "dairy", "emoji": "🥛",
+        "image": "https://images.unsplash.com/photo-1563636619-e9143da7973b?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["leche","milk","entera","hacendado"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-10"
+      },
+      {
+        "name": "Fresas",
+        "desc": "Fresas frescas de temporada, 500 g",
+        "normalPrice": 2.99, "salePrice": 1.79, "unit": "500 g", "discount": 40, "cat": "produce", "emoji": "🍓",
+        "image": "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["fresas","strawberry","fruta","temporada"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-10"
+      },
+      {
+        "name": "Aceite de oliva",
+        "desc": "Hacendado Aceite de Oliva Virgen Extra, 1 L",
+        "normalPrice": 7.95, "salePrice": 5.45, "unit": "1 L", "discount": 31, "cat": "dry", "emoji": "🫒",
+        "image": "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["aceite","olive oil","oliva","virgen","extra"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-10"
+      },
+      {
+        "name": "Pan de molde",
+        "desc": "Bimbo Pan de molde integral, 680 g",
+        "normalPrice": 2.25, "salePrice": 1.55, "unit": "680 g", "discount": 31, "cat": "bakery", "emoji": "🍞",
+        "image": "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["pan","bread","molde","integral","bimbo"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-10"
+      }
+    ],
+    "CARREFOUR": [
+      {
+        "name": "Poulet entier",
+        "desc": "Poulet entier label rouge frais, 1,5 kg env.",
+        "normalPrice": 8.90, "salePrice": 5.90, "unit": "1,5 kg", "discount": 34, "cat": "meat", "emoji": "🍗",
+        "image": "https://images.unsplash.com/photo-1604503468506-a8da13d11d36?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["poulet","chicken","viande","label rouge","frais"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-10"
+      },
+      {
+        "name": "Lait demi-écrémé",
+        "desc": "Carrefour Lait demi-écrémé UHT, 6 × 1 L",
+        "normalPrice": 5.40, "salePrice": 3.60, "unit": "6 × 1 L", "discount": 33, "cat": "dairy", "emoji": "🥛",
+        "image": "https://images.unsplash.com/photo-1563636619-e9143da7973b?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["lait","milk","demi-écrémé","uht","carrefour"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-10"
+      },
+      {
+        "name": "Fraises",
+        "desc": "Fraises Gariguette françaises, barquette 500 g",
+        "normalPrice": 3.49, "salePrice": 1.99, "unit": "500 g", "discount": 43, "cat": "produce", "emoji": "🍓",
+        "image": "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["fraises","strawberry","fruit","gariguette","française"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-10"
+      },
+      {
+        "name": "Camembert",
+        "desc": "Président Camembert de Normandie AOP, 250 g",
+        "normalPrice": 4.95, "salePrice": 2.95, "unit": "250 g", "discount": 40, "cat": "dairy", "emoji": "🧀",
+        "image": "https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["camembert","fromage","cheese","normandie","président"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-10"
+      },
+      {
+        "name": "Baguette tradition",
+        "desc": "Baguette Tradition française, 250 g",
+        "normalPrice": 1.35, "salePrice": 0.85, "unit": "Stück", "discount": 37, "cat": "bakery", "emoji": "🥖",
+        "image": "https://images.unsplash.com/photo-1549931319-a545dcf3bc73?w=280&h=192&fit=crop&auto=format&q=75",
+        "keywords": ["baguette","bread","tradition","française","pain"],
+        "validFrom": "2026-05-05", "validUntil": "2026-05-10"
+      }
     ]
   }
 }
