@@ -538,6 +538,58 @@ html[data-theme="dark"] .settings-section{background:#0f1f4a;box-shadow:0 2px 12
 .support-btn:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(245,158,11,.55)}
 .support-note{font-size:.72rem;color:rgba(255,255,255,.45);text-align:center;margin-top:10px}
 
+/* ── Country Picker Sheet ── */
+.country-sheet-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9100;
+  display:flex;align-items:flex-end;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .25s;
+}
+.country-sheet-overlay.open{opacity:1;pointer-events:all}
+.country-sheet{
+  background:var(--white);border-radius:24px 24px 0 0;
+  width:100%;max-width:480px;max-height:82vh;
+  display:flex;flex-direction:column;
+  transform:translateY(100%);transition:transform .3s cubic-bezier(.32,0,.67,0);
+}
+.country-sheet-overlay.open .country-sheet{transform:translateY(0)}
+.country-sheet-handle{width:40px;height:4px;background:var(--border);border-radius:2px;margin:12px auto 0}
+.country-sheet-head{padding:16px 20px 8px;font-size:1rem;font-weight:800;color:var(--text)}
+.country-sheet-sub{padding:0 20px 12px;font-size:.8rem;color:var(--text2)}
+.country-sheet-search{
+  margin:0 16px 10px;padding:10px 14px;border:1.5px solid var(--border);
+  border-radius:12px;font-size:.9rem;font-family:inherit;color:var(--text);
+  background:var(--surface);outline:none;
+}
+.country-sheet-search:focus{border-color:var(--navy)}
+.country-list{overflow-y:auto;padding:0 8px 32px;flex:1}
+.country-item{
+  display:flex;align-items:center;gap:12px;padding:11px 12px;
+  border-radius:12px;cursor:pointer;transition:background .15s;
+  border:none;background:none;width:100%;font-family:inherit;text-align:left;
+}
+.country-item:hover,.country-item:active{background:var(--greenbg)}
+.country-item.selected{background:var(--greenlt);font-weight:700}
+.country-item-flag{font-size:1.5rem;flex-shrink:0}
+.country-item-name{flex:1;font-size:.9rem;color:var(--text);font-weight:600}
+.country-item-check{color:var(--navy);font-size:1rem;font-weight:900;opacity:0}
+.country-item.selected .country-item-check{opacity:1}
+.country-region-label{
+  font-size:.68rem;font-weight:700;color:var(--text3);letter-spacing:.06em;
+  text-transform:uppercase;padding:12px 12px 4px;
+}
+/* Settings country row */
+.settings-country-row{
+  display:flex;align-items:center;gap:12px;padding:14px 18px;
+  background:var(--white);border:1px solid var(--border);border-radius:14px;
+  margin:0 16px 12px;cursor:pointer;transition:background .15s;
+}
+.settings-country-row:hover{background:var(--greenbg)}
+.settings-country-flag{font-size:1.6rem}
+.settings-country-info{flex:1}
+.settings-country-label{font-size:.72rem;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.04em}
+.settings-country-val{font-size:.95rem;font-weight:800;color:var(--text)}
+.settings-country-arrow{font-size:.9rem;color:var(--text3)}
+
 /* Theme swatches */
 .theme-swatches{display:flex;gap:10px;padding:12px 16px 16px;flex-wrap:wrap}
 .theme-swatch{width:44px;height:44px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:all .2s;position:relative}
@@ -1490,6 +1542,17 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
       <div class="support-price-badge" data-i18n="supportPrice">1,99 € / Monat</div>
       <button class="support-btn" onclick="openSupport()" data-i18n="supportBtn">❤️ Jetzt unterstützen</button>
       <div class="support-note" data-i18n="supportNote">Kündigung jederzeit möglich · Sicher via Ko-fi</div>
+    </div>
+
+    <!-- Country / Region Setting -->
+    <div class="settings-section-label" data-i18n="secCountry">🌍 Mein Land / My Region</div>
+    <div class="settings-country-row" onclick="openCountryPicker()">
+      <div class="settings-country-flag" id="settings-country-flag">🌍</div>
+      <div class="settings-country-info">
+        <div class="settings-country-label" data-i18n="countryLabel">Ausgewähltes Land</div>
+        <div class="settings-country-val" id="settings-country-val">Noch nicht gewählt</div>
+      </div>
+      <div class="settings-country-arrow">›</div>
     </div>
 
     <!-- App teilen -->
@@ -4175,11 +4238,143 @@ const STORE_COUNTRY = {
   'MERCADONA':'ES','CARREFOUR ES':'ES','DIA':'ES','LIDL ES':'ES','EROSKI':'ES',
   'ESSELUNGA':'IT','CONAD':'IT','CARREFOUR IT':'IT','ALDI IT':'IT',
   'MiGROS TR':'TR','BiM':'TR','A101':'TR','ŞOK':'TR','CARREFOURSA':'TR',
+  // ── New EU + US + GB stores ───────────────────────
+  'BILLA':'AT','HOFER':'AT','SPAR_AT':'AT',
+  'MIGROS':'CH','COOP_CH':'CH',
+  'ESSELUNGA':'IT','CONAD':'IT','COOP_IT':'IT',
+  'ALBERT_HEIJN':'NL','JUMBO':'NL',
+  'COLRUYT':'BE','DELHAIZE':'BE',
+  'BIEDRONKA':'PL','KAUFLAND_PL':'PL',
+  'PINGO_DOCE':'PT','CONTINENTE':'PT',
+  'ICA':'SE','COOP_SE':'SE',
+  'NETTO_DK':'DK','REMA1000':'DK',
+  'S_MARKET':'FI','K_MARKET':'FI',
+  'AB_VASSILOPOULOS':'GR','SKLAVENITIS':'GR',
+  'ALBERT_CZ':'CZ','KAUFLAND_CZ':'CZ',
+  'TESCO_HU':'HU','AUCHAN_HU':'HU',
+  'KAUFLAND_RO':'RO',
+  'KAUFLAND_BG':'BG',
+  'KAUFLAND_HR':'HR',
+  'TESCO_IE':'IE','SUPERVALU':'IE',
+  'CACTUS':'LU',
+  'MAXIMA':'LT',
+  'RIMI':'LV',
+  'PRISMA':'EE',
+  'WALMART':'US','TARGET':'US','KROGER':'US','WHOLE_FOODS':'US','ALDI_US':'US',
+  'TESCO':'GB','ASDA':'GB','SAINSBURYS':'GB','MORRISONS':'GB',
 };
 const COUNTRY_FLAGS = {
-  'DE':'🇩🇪','AT':'🇦🇹','CH':'🇨🇭','US':'🇺🇸','UK':'🇬🇧',
-  'FR':'🇫🇷','NL':'🇳🇱','ES':'🇪🇸','IT':'🇮🇹','TR':'🇹🇷'
+  'DE':'🇩🇪','AT':'🇦🇹','CH':'🇨🇭','US':'🇺🇸','UK':'🇬🇧','GB':'🇬🇧',
+  'FR':'🇫🇷','NL':'🇳🇱','ES':'🇪🇸','IT':'🇮🇹','TR':'🇹🇷',
+  'BE':'🇧🇪','PL':'🇵🇱','PT':'🇵🇹','SE':'🇸🇪','DK':'🇩🇰','FI':'🇫🇮',
+  'GR':'🇬🇷','CZ':'🇨🇿','HU':'🇭🇺','RO':'🇷🇴','BG':'🇧🇬','HR':'🇭🇷',
+  'SK':'🇸🇰','SI':'🇸🇮','LT':'🇱🇹','LV':'🇱🇻','EE':'🇪🇪','IE':'🇮🇪',
+  'LU':'🇱🇺','MT':'🇲🇹','CY':'🇨🇾',
 };
+const COUNTRY_LIST = [
+  // Europe
+  {code:'DE',flag:'🇩🇪',name:'Deutschland',nameEn:'Germany',region:'Europe'},
+  {code:'AT',flag:'🇦🇹',name:'Österreich',nameEn:'Austria',region:'Europe'},
+  {code:'CH',flag:'🇨🇭',name:'Schweiz',nameEn:'Switzerland',region:'Europe'},
+  {code:'FR',flag:'🇫🇷',name:'Frankreich',nameEn:'France',region:'Europe'},
+  {code:'ES',flag:'🇪🇸',name:'Spanien',nameEn:'Spain',region:'Europe'},
+  {code:'IT',flag:'🇮🇹',name:'Italien',nameEn:'Italy',region:'Europe'},
+  {code:'NL',flag:'🇳🇱',name:'Niederlande',nameEn:'Netherlands',region:'Europe'},
+  {code:'BE',flag:'🇧🇪',name:'Belgien',nameEn:'Belgium',region:'Europe'},
+  {code:'PL',flag:'🇵🇱',name:'Polen',nameEn:'Poland',region:'Europe'},
+  {code:'PT',flag:'🇵🇹',name:'Portugal',nameEn:'Portugal',region:'Europe'},
+  {code:'SE',flag:'🇸🇪',name:'Schweden',nameEn:'Sweden',region:'Europe'},
+  {code:'DK',flag:'🇩🇰',name:'Dänemark',nameEn:'Denmark',region:'Europe'},
+  {code:'FI',flag:'🇫🇮',name:'Finnland',nameEn:'Finland',region:'Europe'},
+  {code:'GR',flag:'🇬🇷',name:'Griechenland',nameEn:'Greece',region:'Europe'},
+  {code:'CZ',flag:'🇨🇿',name:'Tschechien',nameEn:'Czech Republic',region:'Europe'},
+  {code:'HU',flag:'🇭🇺',name:'Ungarn',nameEn:'Hungary',region:'Europe'},
+  {code:'RO',flag:'🇷🇴',name:'Rumänien',nameEn:'Romania',region:'Europe'},
+  {code:'BG',flag:'🇧🇬',name:'Bulgarien',nameEn:'Bulgaria',region:'Europe'},
+  {code:'HR',flag:'🇭🇷',name:'Kroatien',nameEn:'Croatia',region:'Europe'},
+  {code:'SK',flag:'🇸🇰',name:'Slowakei',nameEn:'Slovakia',region:'Europe'},
+  {code:'SI',flag:'🇸🇮',name:'Slowenien',nameEn:'Slovenia',region:'Europe'},
+  {code:'LT',flag:'🇱🇹',name:'Litauen',nameEn:'Lithuania',region:'Europe'},
+  {code:'LV',flag:'🇱🇻',name:'Lettland',nameEn:'Latvia',region:'Europe'},
+  {code:'EE',flag:'🇪🇪',name:'Estland',nameEn:'Estonia',region:'Europe'},
+  {code:'IE',flag:'🇮🇪',name:'Irland',nameEn:'Ireland',region:'Europe'},
+  {code:'LU',flag:'🇱🇺',name:'Luxemburg',nameEn:'Luxembourg',region:'Europe'},
+  {code:'MT',flag:'🇲🇹',name:'Malta',nameEn:'Malta',region:'Europe'},
+  {code:'CY',flag:'🇨🇾',name:'Zypern',nameEn:'Cyprus',region:'Europe'},
+  {code:'GB',flag:'🇬🇧',name:'Vereinigtes Königreich',nameEn:'United Kingdom',region:'Europe'},
+  // Middle East / Asia
+  {code:'TR',flag:'🇹🇷',name:'Türkei',nameEn:'Turkey',region:'Asia'},
+  // Americas
+  {code:'US',flag:'🇺🇸',name:'USA',nameEn:'United States',region:'Americas'},
+];
+
+let _userCountry = localStorage.getItem('shopsmartCountry') || null;
+
+function openCountryPicker(){
+  const overlay = document.getElementById('country-sheet-overlay');
+  buildCountryList('');
+  overlay.classList.add('open');
+  document.getElementById('cs-search').value='';
+  document.getElementById('cs-search').focus();
+}
+function closeCountryPicker(){
+  document.getElementById('country-sheet-overlay').classList.remove('open');
+}
+function countrySheetBgClick(e){
+  if(e.target===document.getElementById('country-sheet-overlay')) closeCountryPicker();
+}
+function filterCountryList(q){
+  buildCountryList(q);
+}
+function buildCountryList(q){
+  const q2=(q||'').toLowerCase();
+  const body=document.getElementById('country-list-body');
+  const regions={};
+  COUNTRY_LIST.forEach(c=>{
+    if(q2&&!c.name.toLowerCase().includes(q2)&&!c.nameEn.toLowerCase().includes(q2)&&!c.code.toLowerCase().includes(q2)) return;
+    if(!regions[c.region]) regions[c.region]=[];
+    regions[c.region].push(c);
+  });
+  let html='';
+  Object.keys(regions).forEach(r=>{
+    html+=`<div class="country-region-label">${r==='Americas'?'🌎 Americas':r==='Asia'?'🌏 Asia / Middle East':'🌍 Europe'}</div>`;
+    regions[r].forEach(c=>{
+      const sel=_userCountry===c.code;
+      html+=`<button class="country-item${sel?' selected':''}" onclick="setUserCountry('${c.code}')">
+        <span class="country-item-flag">${c.flag}</span>
+        <span class="country-item-name">${c.flag} ${c.name} <span style="font-weight:400;opacity:.6;font-size:.8em">· ${c.nameEn}</span></span>
+        <span class="country-item-check">✓</span>
+      </button>`;
+    });
+  });
+  body.innerHTML=html||'<div style="padding:20px;text-align:center;color:var(--text3)">No results</div>';
+}
+function setUserCountry(code){
+  _userCountry=code;
+  localStorage.setItem('shopsmartCountry',code);
+  const c=COUNTRY_LIST.find(x=>x.code===code);
+  // Update settings display
+  const flagEl=document.getElementById('settings-country-flag');
+  const valEl=document.getElementById('settings-country-val');
+  if(flagEl&&c) flagEl.textContent=c.flag;
+  if(valEl&&c) valEl.textContent=c.name+' ('+c.nameEn+')';
+  // Auto-set offers filter to this country
+  _offerCountryFilter=code;
+  if(typeof renderOffersSection==='function') renderOffersSection();
+  closeCountryPicker();
+}
+function initCountryDisplay(){
+  if(!_userCountry) return;
+  const c=COUNTRY_LIST.find(x=>x.code===_userCountry);
+  if(!c) return;
+  const flagEl=document.getElementById('settings-country-flag');
+  const valEl=document.getElementById('settings-country-val');
+  if(flagEl) flagEl.textContent=c.flag;
+  if(valEl) valEl.textContent=c.name+' ('+c.nameEn+')';
+  // Pre-filter offers to user country
+  _offerCountryFilter=_userCountry;
+}
+
 let _offerCountryFilter = 'ALL';
 
 function renderOffersSection(){
@@ -7092,6 +7287,7 @@ applyI18n();
 renderHome();
 checkShareParam(); // ?share= URL prüfen
 loadOffers();     // Wochenangebote asynchron laden
+initCountryDisplay(); // Länderauswahl initialisieren
 
 // Apply profile
 if(PROFILE.avatar){ const ab=document.getElementById('avatar-btn'); if(ab) ab.textContent=PROFILE.avatar; }
@@ -7125,6 +7321,10 @@ function finishOnboarding(){
   localStorage.setItem('onboarding_v1','1');
   const el = document.getElementById('onboarding-overlay');
   if(el){ el.style.opacity='0'; el.style.transition='opacity .4s'; setTimeout(()=>el.style.display='none',400); }
+  // Show country picker if not yet set
+  if(!localStorage.getItem('shopsmartCountry')){
+    setTimeout(()=>openCountryPicker(), 400);
+  }
 }
 // Onboarding beim Start prüfen
 if(!localStorage.getItem('onboarding_v1')){
@@ -7274,5 +7474,16 @@ if('serviceWorker' in navigator){
   }).catch(()=>{});
 }
 </script>
+
+<!-- Country Picker Bottom Sheet -->
+<div class="country-sheet-overlay" id="country-sheet-overlay" onclick="countrySheetBgClick(event)">
+  <div class="country-sheet" id="country-sheet">
+    <div class="country-sheet-handle"></div>
+    <div class="country-sheet-head" id="cs-title">🌍 Dein Land / Your Region</div>
+    <div class="country-sheet-sub" id="cs-sub">Angebote werden automatisch für dein Land gefiltert.</div>
+    <input class="country-sheet-search" id="cs-search" placeholder="Suchen / Search …" oninput="filterCountryList(this.value)"/>
+    <div class="country-list" id="country-list-body"></div>
+  </div>
+</div>
 </body>
 </html>
