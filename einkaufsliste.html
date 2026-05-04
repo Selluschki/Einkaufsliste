@@ -502,37 +502,33 @@ html[data-theme="dark"] .settings-section{background:#0f1f4a;box-shadow:0 2px 12
 .srow-sub{font-size:.77rem;color:var(--text3);margin-top:2px}
 .srow-val{font-size:.85rem;color:var(--text3)}
 
-/* ── Pro Upsell Card ── */
-.pro-card{
-  background:linear-gradient(135deg,#0f1f5c 0%,#1a3a8f 50%,#1e3a8a 100%);
+/* ── Support Card ── */
+.support-card{
+  background:linear-gradient(135deg,#0f1f5c 0%,#1a3a8f 60%,#1e3a8a 100%);
   border-radius:20px;padding:22px 20px 20px;margin-bottom:16px;
   position:relative;overflow:hidden;
 }
-.pro-card::before{
+.support-card::before{
   content:'';position:absolute;top:-30px;right:-30px;
   width:140px;height:140px;
-  background:radial-gradient(circle,rgba(245,158,11,.25) 0%,transparent 70%);
+  background:radial-gradient(circle,rgba(245,158,11,.22) 0%,transparent 70%);
   pointer-events:none;
 }
-.pro-card-crown{font-size:2.2rem;margin-bottom:8px}
-.pro-card-title{font-size:1.15rem;font-weight:900;color:#fff;letter-spacing:-.01em}
-.pro-card-sub{font-size:.8rem;color:rgba(255,255,255,.7);margin-top:3px;margin-bottom:14px}
-.pro-features{display:flex;flex-direction:column;gap:6px;margin-bottom:18px}
-.pro-feature-item{display:flex;align-items:center;gap:8px;font-size:.82rem;color:rgba(255,255,255,.88)}
-.pro-feature-item::before{content:'✓';color:#fbbf24;font-weight:900;flex-shrink:0}
-.pro-btn{
+.support-card-emoji{font-size:2rem;margin-bottom:8px}
+.support-card-title{font-size:1.1rem;font-weight:900;color:#fff;letter-spacing:-.01em}
+.support-card-sub{font-size:.8rem;color:rgba(255,255,255,.72);margin-top:4px;margin-bottom:6px;line-height:1.45}
+.support-price-badge{
+  display:inline-block;background:rgba(245,158,11,.18);border:1.5px solid rgba(245,158,11,.5);
+  color:#fde68a;font-size:.82rem;font-weight:800;padding:5px 14px;border-radius:50px;margin:10px 0 16px;
+}
+.support-btn{
   width:100%;background:linear-gradient(135deg,#f59e0b,#d97706);
   color:#fff;border:none;border-radius:14px;padding:14px;
   font-size:.95rem;font-weight:900;cursor:pointer;font-family:inherit;
   box-shadow:0 4px 16px rgba(245,158,11,.45);transition:all .2s;letter-spacing:.01em;
 }
-.pro-btn:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(245,158,11,.55)}
-.pro-badge{
-  position:absolute;top:14px;right:14px;
-  background:linear-gradient(135deg,#f59e0b,#fbbf24);
-  color:#0f1f5c;font-size:.62rem;font-weight:900;padding:4px 10px;
-  border-radius:50px;letter-spacing:.04em;text-transform:uppercase;
-}
+.support-btn:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(245,158,11,.55)}
+.support-note{font-size:.72rem;color:rgba(255,255,255,.45);text-align:center;margin-top:10px}
 
 /* Theme swatches */
 .theme-swatches{display:flex;gap:10px;padding:12px 16px 16px;flex-wrap:wrap}
@@ -1477,19 +1473,14 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
   </div>
   <div class="settings-body">
 
-    <!-- Pro Upsell Card -->
-    <div class="pro-card" id="pro-card">
-      <div class="pro-badge">PRO</div>
-      <div class="pro-card-crown">👑</div>
-      <div class="pro-card-title" id="pro-card-title">ShopSmart Pro</div>
-      <div class="pro-card-sub" id="pro-card-sub">Smart sortiert. Einfach einkaufen.</div>
-      <div class="pro-features" id="pro-features">
-        <div class="pro-feature-item" id="pro-f1">Unbegrenzte Listen &amp; Artikel</div>
-        <div class="pro-feature-item" id="pro-f2">Budget-Tracking &amp; Ersparnis-Analyse</div>
-        <div class="pro-feature-item" id="pro-f3">80+ internationale Supermärkte</div>
-        <div class="pro-feature-item" id="pro-f4">Offline-Rezepte &amp; Spracherkennung</div>
-      </div>
-      <button class="pro-btn" id="pro-btn" onclick="openProInfo()">🚀 Pro freischalten</button>
+    <!-- Support Card -->
+    <div class="support-card" id="support-card">
+      <div class="support-card-emoji">☕</div>
+      <div class="support-card-title" data-i18n="supportTitle">ShopSmart unterstützen</div>
+      <div class="support-card-sub" data-i18n="supportSub">Die App ist kostenlos – wenn sie dir gefällt, freuen wir uns über eine kleine Unterstützung.</div>
+      <div class="support-price-badge" data-i18n="supportPrice">1,99 € / Monat</div>
+      <button class="support-btn" onclick="openSupport()" data-i18n="supportBtn">❤️ Jetzt unterstützen</button>
+      <div class="support-note" data-i18n="supportNote">Kündigung jederzeit möglich · Sicher via Ko-fi</div>
     </div>
 
     <!-- App teilen -->
@@ -2365,13 +2356,11 @@ const i18n = {
     statDoneLabel:'Erledigt',
     statBudgetLabel:'Budget',
     statSavedLabel:'💚 Gespart',
-    proTitle:'ShopSmart Pro',
-    proSub:'Alle Features freigeschaltet – danke!',
-    proFeature1:'Unbegrenzte Listen & Artikel',
-    proFeature2:'Budget-Tracking & Ersparnis-Analyse',
-    proFeature3:'80+ internationale Supermärkte',
-    proFeature4:'Offline-Rezepte & Spracherkennung',
-    proUpgradeBtn:'🚀 Pro freischalten',
+    supportTitle:'ShopSmart unterstützen',
+    supportSub:'Die App ist kostenlos – wenn sie dir gefällt, freuen wir uns über eine kleine Unterstützung.',
+    supportPrice:'1,99 € / Monat',
+    supportBtn:'❤️ Jetzt unterstützen',
+    supportNote:'Kündigung jederzeit möglich · Sicher via Ko-fi',
     recentLabel:'Zuletzt:',
     voiceStatusHint:'Tippe auf das Mikrofon und sprich',
     voiceNothingFound:'Nichts erkannt – bitte nochmal versuchen',
@@ -2568,10 +2557,11 @@ const i18n = {
     statDoneLabel:'Done',
     statBudgetLabel:'Budget',
     statSavedLabel:'💚 Saved',
-    proTitle:'ShopSmart Pro',proSub:'All features unlocked – thank you!',
-    proFeature1:'Unlimited lists & items',proFeature2:'Budget tracking & savings analysis',
-    proFeature3:'80+ international supermarkets',proFeature4:'Offline recipes & voice recognition',
-    proUpgradeBtn:'🚀 Unlock Pro',
+    supportTitle:'Support ShopSmart',
+    supportSub:'The app is free – if you enjoy it, a small contribution means a lot.',
+    supportPrice:'€1.99 / month',
+    supportBtn:'❤️ Support now',
+    supportNote:'Cancel anytime · Secure via Ko-fi',
     recentLabel:'Recent:',
     voiceStatusHint:'Tap the microphone and speak',
     voiceNothingFound:'Nothing detected – please try again',
@@ -2768,10 +2758,11 @@ const i18n = {
     statDoneLabel:'Tamamlandı',
     statBudgetLabel:'Bütçe',
     statSavedLabel:'💚 Tasarruf',
-    proTitle:'ShopSmart Pro',proSub:'Tüm özellikler açık – teşekkürler!',
-    proFeature1:'Sınırsız liste ve ürün',proFeature2:'Bütçe takibi ve tasarruf analizi',
-    proFeature3:'80+ uluslararası market',proFeature4:'Çevrimdışı tarif & ses tanıma',
-    proUpgradeBtn:'🚀 Pro\'yu Aç',
+    supportTitle:'ShopSmart\'ı Destekle',
+    supportSub:'Uygulama ücretsizdir – beğendiysen küçük bir destek çok şey ifade eder.',
+    supportPrice:'1,99 € / ay',
+    supportBtn:'❤️ Şimdi destekle',
+    supportNote:'İstediğin zaman iptal edebilirsin · Ko-fi üzerinden güvenli',
     recentLabel:'Son:',
     voiceStatusHint:'Mikrofona dokunun ve konuşun',
     voiceNothingFound:'Hiçbir şey algılanmadı – lütfen tekrar deneyin',
@@ -2968,10 +2959,11 @@ const i18n = {
     statDoneLabel:'Fait',
     statBudgetLabel:'Budget',
     statSavedLabel:'💚 Économisé',
-    proTitle:'ShopSmart Pro',proSub:'Toutes les fonctions débloquées – merci !',
-    proFeature1:'Listes & articles illimités',proFeature2:'Suivi du budget & analyse des économies',
-    proFeature3:'80+ supermarchés internationaux',proFeature4:'Recettes hors-ligne & reconnaissance vocale',
-    proUpgradeBtn:'🚀 Débloquer Pro',
+    supportTitle:'Soutenir ShopSmart',
+    supportSub:'L\'app est gratuite – si vous l\'aimez, une petite contribution compte beaucoup.',
+    supportPrice:'1,99 € / mois',
+    supportBtn:'❤️ Soutenir maintenant',
+    supportNote:'Annulation à tout moment · Sécurisé via Ko-fi',
     recentLabel:'Récent :',
     voiceStatusHint:'Appuyez sur le micro et parlez',
     voiceNothingFound:'Rien détecté – veuillez réessayer',
@@ -3168,10 +3160,11 @@ const i18n = {
     statDoneLabel:'Hecho',
     statBudgetLabel:'Presupuesto',
     statSavedLabel:'💚 Ahorrado',
-    proTitle:'ShopSmart Pro',proSub:'¡Todas las funciones desbloqueadas – gracias!',
-    proFeature1:'Listas y artículos ilimitados',proFeature2:'Seguimiento de presupuesto y análisis de ahorros',
-    proFeature3:'80+ supermercados internacionales',proFeature4:'Recetas sin conexión y reconocimiento de voz',
-    proUpgradeBtn:'🚀 Desbloquear Pro',
+    supportTitle:'Apoyar ShopSmart',
+    supportSub:'La app es gratuita – si te gusta, una pequeña contribución significa mucho.',
+    supportPrice:'1,99 € / mes',
+    supportBtn:'❤️ Apoyar ahora',
+    supportNote:'Cancela cuando quieras · Seguro via Ko-fi',
     recentLabel:'Reciente:',
     voiceStatusHint:'Toca el micrófono y habla',
     voiceNothingFound:'Nada detectado – por favor inténtalo de nuevo',
@@ -4536,16 +4529,11 @@ function renderItems(){
   body.innerHTML=html;
 }
 
-function openProInfo(){
-  // Show a friendly info that the app is free/donation-based
-  const msg = {
-    de:'💛 ShopSmart ist kostenlos!\n\nAlle Features sind für dich freigeschaltet.\nWenn dir die App gefällt, teile sie mit Freunden – das ist unsere beste Unterstützung! 😊',
-    en:'💛 ShopSmart is free!\n\nAll features are unlocked for you.\nIf you enjoy the app, share it with friends – that\'s the best support you can give! 😊',
-    tr:'💛 ShopSmart ücretsizdir!\n\nTüm özellikler senin için açıktır.\nUygulamayı beğendiysen arkadaşlarınla paylaş – bu bizim için en iyi destek! 😊',
-    fr:'💛 ShopSmart est gratuit !\n\nToutes les fonctions sont débloquées pour vous.\nSi vous aimez l\'app, partagez-la avec vos amis – c\'est le meilleur soutien ! 😊',
-    es:'💛 ¡ShopSmart es gratuito!\n\nTodas las funciones están desbloqueadas para ti.\n¡Si te gusta la app, compártela con amigos – eso es el mejor apoyo! 😊',
-  };
-  alert(msg[lang]||msg.de);
+function openSupport(){
+  // Opens Ko-fi support page in new tab
+  // Replace the URL below with your own Ko-fi or Stripe payment link
+  const SUPPORT_URL = 'https://ko-fi.com/shopsmart';
+  window.open(SUPPORT_URL, '_blank', 'noopener');
 }
 
 function applyOnboardingI18n(){
@@ -4656,16 +4644,7 @@ function applyOnboardingI18n(){
   if(btnSkip) btnSkip.textContent = o.skip;
 }
 
-function applyProI18n(){
-  const el=id=>document.getElementById(id);
-  if(el('pro-card-title')) el('pro-card-title').textContent=t.proTitle||'ShopSmart Pro';
-  if(el('pro-card-sub'))   el('pro-card-sub').textContent=t.proSub||'Smart sortiert. Einfach einkaufen.';
-  if(el('pro-f1'))  el('pro-f1').textContent=t.proFeature1||'Unbegrenzte Listen & Artikel';
-  if(el('pro-f2'))  el('pro-f2').textContent=t.proFeature2||'Budget-Tracking & Ersparnis-Analyse';
-  if(el('pro-f3'))  el('pro-f3').textContent=t.proFeature3||'80+ internationale Supermärkte';
-  if(el('pro-f4'))  el('pro-f4').textContent=t.proFeature4||'Offline-Rezepte & Spracherkennung';
-  if(el('pro-btn')) el('pro-btn').textContent=t.proUpgradeBtn||'🚀 Pro freischalten';
-}
+// (Pro card removed – replaced with support card using data-i18n)
 
 function togglePriceField(){
   const priceEl=document.getElementById('add-price');
@@ -5860,8 +5839,7 @@ function applyI18n(){
   // api-status-text initial value (only if not yet checked)
   const apiStatusText = document.getElementById('api-status-text');
   if(apiStatusText) apiStatusText.textContent = t.apiNotChecked;
-  // Pro card
-  applyProI18n();
+  // Support card uses data-i18n → handled by querySelectorAll above
   // About title
   const aboutTitle = document.getElementById('about-app-title');
   if(aboutTitle) aboutTitle.textContent = t.appTitle || 'ShopSmart';
