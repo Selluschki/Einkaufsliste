@@ -1136,6 +1136,8 @@ html[data-theme="dark"] .item-price-badge{background:#451a03;color:#fbbf24;borde
 /* ════ RATE OVERLAY ════ */
 .rate-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(6px);z-index:400;display:flex;align-items:center;justify-content:center;padding:24px}
 .rate-sheet{background:var(--white);border-radius:24px;padding:28px 24px;max-width:340px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+#offer-list-picker{z-index:310}
+#offer-list-picker .rate-sheet{text-align:center}
 html[data-theme="dark"] .rate-sheet{background:#1a2332}
 .ob-style-btn{width:100%;border:none;border-radius:14px;padding:14px;font-size:.92rem;font-weight:700;cursor:pointer;font-family:inherit;transition:opacity .15s}
 .ob-style-btn:hover{opacity:.88}
@@ -1145,9 +1147,52 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
 .home-stat-card{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:12px 18px;text-align:center;backdrop-filter:blur(8px)}
 .home-stat-card-val{font-size:1.5rem;font-weight:900;color:#fbbf24;line-height:1}
 .home-stat-card-lbl{font-size:.65rem;color:rgba(255,255,255,.65);margin-top:4px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+
+/* ════ PIN LOCK ════ */
+#pin-lock-screen{display:none}
+#pin-lock-screen.active{display:flex!important}
+.pin-dot{width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,.5);background:transparent;transition:background .15s}
+.pin-dot.filled{background:#fbbf24;border-color:#fbbf24}
+.pin-key{
+  width:72px;height:72px;border-radius:50%;border:none;
+  background:rgba(255,255,255,.12);color:#fff;font-size:1.4rem;font-weight:600;
+  cursor:pointer;font-family:inherit;transition:all .15s;
+  backdrop-filter:blur(8px);
+}
+.pin-key:active{background:rgba(255,255,255,.28);transform:scale(.93)}
+.pin-del{font-size:1.1rem}
+
+/* ════ AVATAR ════ */
+.avatar-opt{font-size:1.8rem;background:var(--surface);border:2px solid var(--border);border-radius:12px;width:52px;height:52px;cursor:pointer;transition:all .15s;line-height:1}
+.avatar-opt:active{transform:scale(.88)}
 </style>
 </head>
 <body>
+
+<!-- PIN Lock Screen -->
+<div id="pin-lock-screen" style="display:none;position:fixed;inset:0;z-index:10000;background:linear-gradient(135deg,#0f1f5c,#1a3a8f);flex-direction:column;align-items:center;justify-content:center;color:#fff">
+  <div style="font-size:3.5rem;margin-bottom:16px" id="pin-lock-avatar">🛒</div>
+  <div style="font-weight:800;font-size:1.3rem;margin-bottom:6px" id="pin-lock-name">Hallo!</div>
+  <div style="font-size:.85rem;opacity:.7;margin-bottom:32px" id="pin-lock-hint">PIN eingeben</div>
+  <div style="display:flex;gap:12px;margin-bottom:28px" id="pin-dots">
+    <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(3,72px);gap:10px" id="pin-pad">
+    <button class="pin-key" onclick="_pinKey('1')">1</button>
+    <button class="pin-key" onclick="_pinKey('2')">2</button>
+    <button class="pin-key" onclick="_pinKey('3')">3</button>
+    <button class="pin-key" onclick="_pinKey('4')">4</button>
+    <button class="pin-key" onclick="_pinKey('5')">5</button>
+    <button class="pin-key" onclick="_pinKey('6')">6</button>
+    <button class="pin-key" onclick="_pinKey('7')">7</button>
+    <button class="pin-key" onclick="_pinKey('8')">8</button>
+    <button class="pin-key" onclick="_pinKey('9')">9</button>
+    <div></div>
+    <button class="pin-key" onclick="_pinKey('0')">0</button>
+    <button class="pin-key pin-del" onclick="_pinDel()">⌫</button>
+  </div>
+  <button style="margin-top:28px;background:none;border:none;color:rgba(255,255,255,.5);font-size:.8rem;cursor:pointer;font-family:inherit" onclick="_pinForgot()">PIN vergessen?</button>
+</div>
 
 <!-- ══════════════════════════════════════
      UPDATE BANNER (automatisch eingeblendet)
@@ -1395,12 +1440,39 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
       <button class="install-card-btn" id="install-card-btn" data-i18n="installBtn" onclick="triggerInstall()">Installieren</button>
     </div>
 
-    <!-- Name -->
+    <!-- Profil -->
     <div class="settings-section">
-      <div class="settings-sec-title" data-i18n="secName">👤 Mein Name</div>
-      <div class="settings-name-wrap">
-        <input class="settings-name-input" id="settings-name" data-i18n-ph="namePlaceholder" placeholder="Dein Name (für die Begrüßung)" maxlength="20"/>
-        <button class="settings-save-btn" onclick="saveName()">OK</button>
+      <div class="settings-sec-title" data-i18n="secProfile">👤 Mein Profil</div>
+      <div style="padding:14px 16px;display:flex;align-items:center;gap:14px">
+        <button id="avatar-btn" onclick="_openAvatarPicker()" style="font-size:2.4rem;background:var(--surface);border:2px solid var(--border);border-radius:50%;width:60px;height:60px;cursor:pointer;line-height:1;flex-shrink:0">🛒</button>
+        <div style="flex:1">
+          <div class="settings-name-wrap">
+            <input class="settings-name-input" id="settings-name" data-i18n-ph="namePlaceholder" placeholder="Dein Name" maxlength="20"/>
+            <button class="settings-save-btn" onclick="saveName()">OK</button>
+          </div>
+        </div>
+      </div>
+      <!-- PIN -->
+      <div class="settings-row" style="border-top:1px solid var(--border)">
+        <span class="srow-icon">🔐</span>
+        <div style="flex:1">
+          <div class="srow-label" data-i18n="pinLabel">PIN-Schutz</div>
+          <div class="srow-sub" data-i18n="pinSub">Schütze deine Listen mit einem 4-stelligen PIN</div>
+        </div>
+        <div>
+          <div style="width:42px;height:24px;border-radius:12px;cursor:pointer;position:relative;transition:background .2s" id="pin-toggle-track" onclick="_togglePin()">
+            <div id="pin-toggle-dot" style="width:18px;height:18px;border-radius:50%;background:#fff;position:absolute;top:3px;transition:right .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)"></div>
+          </div>
+        </div>
+      </div>
+      <!-- Profil teilen -->
+      <div class="settings-row clickable" onclick="shareProfile()" style="border-top:1px solid var(--border)">
+        <span class="srow-icon">📤</span>
+        <div>
+          <div class="srow-label" data-i18n="shareProfileLabel">Profil &amp; Listen teilen</div>
+          <div class="srow-sub" data-i18n="shareProfileSub">Mit Familie oder Freunden teilen</div>
+        </div>
+        <span class="srow-val">›</span>
       </div>
     </div>
 
@@ -1554,6 +1626,47 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
       </div>
     </div>
 
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     OVERLAY: Angebot → Liste wählen
+══════════════════════════════════════ -->
+<div class="rate-overlay" id="offer-list-picker" style="display:none" onclick="if(event.target===this)_closeOfferPicker()">
+  <div class="rate-sheet" style="max-height:70vh;overflow-y:auto">
+    <div style="font-size:2.2rem;margin-bottom:8px">🛒</div>
+    <h3 id="offer-picker-title" style="font-weight:800;font-size:1rem;margin-bottom:6px;color:var(--text)">Zu welcher Liste hinzufügen?</h3>
+    <p id="offer-picker-sub" style="font-size:.82rem;color:var(--text2);margin-bottom:16px;line-height:1.4"></p>
+    <div id="offer-picker-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px"></div>
+    <button class="ob-style-btn" style="background:var(--surface);border:1.5px solid var(--border);color:var(--text);margin-top:4px" onclick="_closeOfferPicker()" data-i18n="cancelBtn">Abbrechen</button>
+  </div>
+</div>
+
+<!-- Avatar Picker -->
+<div class="rate-overlay" id="avatar-picker-overlay" style="display:none" onclick="if(event.target===this)closeAvatarPicker()">
+  <div class="rate-sheet">
+    <div style="font-weight:800;font-size:1rem;margin-bottom:14px;color:var(--text)">Avatar wählen</div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:16px">
+      <button class="avatar-opt" onclick="setAvatar('🛒')">🛒</button>
+      <button class="avatar-opt" onclick="setAvatar('👤')">👤</button>
+      <button class="avatar-opt" onclick="setAvatar('👩')">👩</button>
+      <button class="avatar-opt" onclick="setAvatar('👨')">👨</button>
+      <button class="avatar-opt" onclick="setAvatar('👦')">👦</button>
+      <button class="avatar-opt" onclick="setAvatar('👧')">👧</button>
+      <button class="avatar-opt" onclick="setAvatar('🧑')">🧑</button>
+      <button class="avatar-opt" onclick="setAvatar('👵')">👵</button>
+      <button class="avatar-opt" onclick="setAvatar('👴')">👴</button>
+      <button class="avatar-opt" onclick="setAvatar('🐶')">🐶</button>
+      <button class="avatar-opt" onclick="setAvatar('🐱')">🐱</button>
+      <button class="avatar-opt" onclick="setAvatar('🦊')">🦊</button>
+      <button class="avatar-opt" onclick="setAvatar('🐻')">🐻</button>
+      <button class="avatar-opt" onclick="setAvatar('🐼')">🐼</button>
+      <button class="avatar-opt" onclick="setAvatar('🌟')">🌟</button>
+      <button class="avatar-opt" onclick="setAvatar('🔥')">🔥</button>
+      <button class="avatar-opt" onclick="setAvatar('💎')">💎</button>
+      <button class="avatar-opt" onclick="setAvatar('🚀')">🚀</button>
+    </div>
+    <button class="ob-style-btn" style="background:var(--surface);border:1.5px solid var(--border);color:var(--text)" onclick="closeAvatarPicker()">Schließen</button>
   </div>
 </div>
 
@@ -1892,6 +2005,15 @@ CFG.layout  = CFG.layout  || 'list';
 CFG.lang    = CFG.lang    || null;
 CFG.name    = CFG.name    || '';
 
+const PKEY = 'el3_profile';
+let PROFILE = JSON.parse(localStorage.getItem(PKEY)||'{}');
+PROFILE.name    = PROFILE.name    || CFG.name || '';
+PROFILE.avatar  = PROFILE.avatar  || '🛒';
+PROFILE.pin     = PROFILE.pin     || '';      // '' = no PIN
+PROFILE.pinEnabled = PROFILE.pinEnabled || false;
+PROFILE.lastLock   = PROFILE.lastLock   || 0;
+function saveProfile(){ localStorage.setItem(PKEY, JSON.stringify(PROFILE)); }
+
 function saveCFG(){ localStorage.setItem(SKEY,JSON.stringify(CFG)); }
 
 function applyTheme(name){
@@ -1926,7 +2048,118 @@ function setLang(l){
 function saveName(){
   const v=document.getElementById('settings-name').value.trim();
   CFG.name=v; saveCFG(); updateGreeting();
+  PROFILE.name=v; saveProfile();
   toast('👤 '+(v?t.helloName+v+'!':t.nameSaved));
+}
+
+// ── PIN Lock System ─────────────────────────────────
+let _pinBuffer = '';
+const PIN_LOCK_TIMEOUT = 5 * 60 * 1000; // 5 Minuten
+
+function _checkPinLock(){
+  if(!PROFILE.pinEnabled || !PROFILE.pin) return;
+  const elapsed = Date.now() - (PROFILE.lastLock||0);
+  if(elapsed > PIN_LOCK_TIMEOUT){
+    _showPinLock();
+  }
+}
+function _showPinLock(){
+  _pinBuffer = '';
+  _updatePinDots();
+  const el = document.getElementById('pin-lock-screen');
+  const av = document.getElementById('pin-lock-avatar');
+  const nm = document.getElementById('pin-lock-name');
+  if(el){ el.classList.add('active'); }
+  if(av) av.textContent = PROFILE.avatar||'🛒';
+  if(nm) nm.textContent = (PROFILE.name ? t.greetDay+', '+PROFILE.name+'!' : t.greetDay+'!');
+}
+function _hidePinLock(){
+  const el = document.getElementById('pin-lock-screen');
+  if(el) el.classList.remove('active');
+  PROFILE.lastLock = Date.now();
+  saveProfile();
+}
+function _pinKey(digit){
+  if(_pinBuffer.length >= 4) return;
+  _pinBuffer += digit;
+  _updatePinDots();
+  if(_pinBuffer.length === 4){
+    if(_pinBuffer === PROFILE.pin){
+      setTimeout(_hidePinLock, 200);
+    } else {
+      // Wrong PIN – shake and clear
+      const dots = document.getElementById('pin-dots');
+      if(dots){ dots.style.animation='shake .35s ease'; setTimeout(()=>{dots.style.animation='';_pinBuffer='';_updatePinDots();},400); }
+    }
+  }
+}
+function _pinDel(){
+  _pinBuffer = _pinBuffer.slice(0,-1);
+  _updatePinDots();
+}
+function _updatePinDots(){
+  document.querySelectorAll('.pin-dot').forEach((d,i)=>d.classList.toggle('filled',i<_pinBuffer.length));
+}
+function _pinForgot(){
+  if(confirm('PIN zurücksetzen? Alle Daten bleiben erhalten.')){
+    PROFILE.pin=''; PROFILE.pinEnabled=false; saveProfile();
+    _hidePinLock();
+    toast('🔓 PIN deaktiviert');
+  }
+}
+// Lock on visibility change (app in background)
+document.addEventListener('visibilitychange',()=>{
+  if(document.hidden){ PROFILE.lastLock=0; saveProfile(); }
+  else { _checkPinLock(); }
+});
+
+// ── Avatar & Profile functions ─────────────────────
+function _openAvatarPicker(){ document.getElementById('avatar-picker-overlay').style.display='flex'; }
+function closeAvatarPicker(){ document.getElementById('avatar-picker-overlay').style.display='none'; }
+function setAvatar(emoji){
+  PROFILE.avatar=emoji; saveProfile();
+  document.getElementById('avatar-btn').textContent=emoji;
+  closeAvatarPicker();
+}
+function _togglePin(){
+  if(PROFILE.pinEnabled){
+    PROFILE.pinEnabled=false; PROFILE.pin=''; saveProfile();
+    _applyPinToggleUI();
+    toast('🔓 PIN deaktiviert');
+  } else {
+    _setupNewPin();
+  }
+}
+function _setupNewPin(){
+  const p1=prompt('Neuen 4-stelligen PIN eingeben:');
+  if(!p1||p1.length!==4||!/^\d{4}$/.test(p1)){toast('⚠️ Bitte genau 4 Ziffern eingeben');return;}
+  const p2=prompt('PIN bestätigen:');
+  if(p1!==p2){toast('⚠️ PINs stimmen nicht überein');return;}
+  PROFILE.pin=p1; PROFILE.pinEnabled=true; PROFILE.lastLock=0; saveProfile();
+  _applyPinToggleUI();
+  toast('🔐 PIN aktiviert');
+}
+function _applyPinToggleUI(){
+  const track=document.getElementById('pin-toggle-track');
+  const dot=document.getElementById('pin-toggle-dot');
+  if(!track||!dot) return;
+  const on=PROFILE.pinEnabled;
+  track.style.background=on?'var(--green)':'#cbd5e1';
+  dot.style.right=on?'3px':'auto'; dot.style.left=on?'auto':'3px';
+}
+function shareProfile(){
+  const data={
+    name: PROFILE.name||CFG.name||'',
+    avatar: PROFILE.avatar||'🛒',
+    lists: lists.map(l=>({...l}))
+  };
+  const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+  const url = location.origin+location.pathname+'?share='+encoded;
+  if(navigator.share){
+    navigator.share({title:'Meine Einkaufslisten', url}).catch(()=>{});
+  } else {
+    navigator.clipboard.writeText(url).then(()=>toast('📋 Link kopiert!')).catch(()=>toast('Link: '+url));
+  }
 }
 function exportData(){
   const d=JSON.stringify({lists,settings:CFG,exported:new Date().toISOString()},null,2);
@@ -2131,6 +2364,12 @@ const i18n = {
     homeShareBtn:'📤 App teilen',
     offersTitle:'🔥 Angebote diese Woche',
     offersLoading:'Lade Angebote …',
+    secProfile:'👤 Mein Profil',
+    pinLabel:'🔐 PIN-Schutz',
+    pinSub:'Schütze deine Listen mit einem 4-stelligen PIN',
+    shareProfileLabel:'Profil & Listen teilen',
+    shareProfileSub:'Mit Familie oder Freunden teilen',
+    offerPickerTitle:'Zu welcher Liste?',
   },
   en:{
     appTitle:'Shopping List III',appSub:'Smart sorted. Easy shopping.',
@@ -2318,6 +2557,12 @@ const i18n = {
     homeShareBtn:'📤 Share App',
     offersTitle:'🔥 Deals This Week',
     offersLoading:'Loading deals …',
+    secProfile:'👤 My Profile',
+    pinLabel:'🔐 PIN Protection',
+    pinSub:'Protect your lists with a 4-digit PIN',
+    shareProfileLabel:'Share Profile & Lists',
+    shareProfileSub:'Share with family or friends',
+    offerPickerTitle:'Add to which list?',
   },
   tr:{
     appTitle:'Alışveriş Listesi III',appSub:'Akıllı sıralama. Kolay alışveriş.',
@@ -2505,6 +2750,12 @@ const i18n = {
     homeShareBtn:'📤 Uygulamayı Paylaş',
     offersTitle:'🔥 Bu Haftanın Fırsatları',
     offersLoading:'Fırsatlar yükleniyor …',
+    secProfile:'👤 Profilim',
+    pinLabel:'🔐 PIN Koruması',
+    pinSub:'Listelerinizi 4 haneli PIN ile koruyun',
+    shareProfileLabel:'Profil & Listeler Paylaş',
+    shareProfileSub:'Aile veya arkadaşlarla paylaş',
+    offerPickerTitle:'Hangi listeye?',
   },
   fr:{
     appTitle:'Liste de courses III',appSub:'Triée intelligemment. Facile.',
@@ -2692,6 +2943,12 @@ const i18n = {
     homeShareBtn:'📤 Partager l\'app',
     offersTitle:'🔥 Offres de la semaine',
     offersLoading:'Chargement des offres …',
+    secProfile:'👤 Mon Profil',
+    pinLabel:'🔐 Protection PIN',
+    pinSub:'Protégez vos listes avec un PIN à 4 chiffres',
+    shareProfileLabel:'Partager profil & listes',
+    shareProfileSub:'Partager avec famille ou amis',
+    offerPickerTitle:'Ajouter à quelle liste ?',
   },
   es:{
     appTitle:'Lista de compras III',appSub:'Ordenada inteligentemente. Fácil.',
@@ -2879,6 +3136,12 @@ const i18n = {
     homeShareBtn:'📤 Compartir App',
     offersTitle:'🔥 Ofertas de la semana',
     offersLoading:'Cargando ofertas …',
+    secProfile:'👤 Mi Perfil',
+    pinLabel:'🔐 Protección PIN',
+    pinSub:'Protege tus listas con un PIN de 4 dígitos',
+    shareProfileLabel:'Compartir perfil y listas',
+    shareProfileSub:'Compartir con familia o amigos',
+    offerPickerTitle:'¿Añadir a qué lista?',
   },
 };
 const t = i18n[lang]||i18n.de;
@@ -3803,24 +4066,86 @@ function renderOffersSection(){
     </div>`}).join('');
 }
 
+function _addOfferItem(list, offer){
+  list.items.push({
+    id:uid(), name:offer.name, qty:'1', unit:offer.unit||'Stk',
+    cat:offer.cat||'other', checked:false, price:String(offer.salePrice),
+    offerStore: offer.store, offerDiscount: offer.discount,
+    offerUntil: offer.validUntil || offersData?.meta?.validUntil || ''
+  });
+  addToRecent(offer.name);
+  save();
+}
+
 function addOfferToCurrentList(offer){
-  // Wenn aktuell eine Liste offen ist, dort hinzufügen; sonst auf Home
   const list = getList();
   if(list){
-    list.items.push({
-      id:uid(), name:offer.name, qty:'1', unit:offer.unit||'Stk',
-      cat:offer.cat||'other', checked:false, price:String(offer.salePrice),
-      offerStore: offer.store,
-      offerDiscount: offer.discount,
-      offerUntil: offer.validUntil || offersData?.meta?.validUntil || ''
-    });
-    addToRecent(offer.name);
-    save(); renderItems();
+    // Liste bereits offen → direkt hinzufügen
+    _addOfferItem(list, offer);
+    renderItems();
+    toast(`✅ ${offer.name} ${t.offerAdded} · ${offer.salePrice.toFixed(2)}€ 🏪 ${offer.store}`);
+    return;
+  }
+  if(lists.length === 0){
+    // Keine Liste → auto-erstellen und navigieren
+    const COLORS=['#2563eb','#16a34a','#ea580c','#7c3aed','#db2777'];
+    const newId = uid();
+    const newList = {id:newId, name:t.autoListPrefix+' 🛒', emoji:'🛒', color:COLORS[0], store:'', items:[], created:Date.now()};
+    lists.push(newList);
+    currentListId = newId;
+    _addOfferItem(newList, offer);
+    renderHome(); renderListView(); showView('list');
+    toast(`✅ ${offer.name} ${t.offerAdded} · ${offer.salePrice.toFixed(2)}€ 🏪 ${offer.store}`);
+  } else if(lists.length === 1){
+    // Genau eine Liste → automatisch hinzufügen
+    currentListId = lists[0].id;
+    _addOfferItem(lists[0], offer);
+    renderListView(); showView('list');
     toast(`✅ ${offer.name} ${t.offerAdded} · ${offer.salePrice.toFixed(2)}€ 🏪 ${offer.store}`);
   } else {
-    // Zur Startseite navigieren und Modal öffnen
-    toast(`💡 ${t.offerOpenList}`, 3500);
+    // Mehrere Listen → Auswahl-Sheet anzeigen
+    _showOfferListPicker(offer);
   }
+}
+
+let _pendingOffer = null;
+function _showOfferListPicker(offer){
+  _pendingOffer = offer;
+  const overlay = document.getElementById('offer-list-picker');
+  const sub = document.getElementById('offer-picker-sub');
+  const listContainer = document.getElementById('offer-picker-list');
+  if(sub) sub.textContent = `${offer.emoji||'🛒'} ${offer.name} · ${offer.salePrice.toFixed(2)}€ 🏪 ${offer.store}`;
+  if(listContainer){
+    listContainer.innerHTML = lists.map(l=>`
+      <button onclick="_addOfferToList('${l.id}')" style="
+        display:flex;align-items:center;gap:12px;padding:12px 14px;
+        background:var(--surface);border:1.5px solid var(--border);border-radius:14px;
+        cursor:pointer;font-family:inherit;text-align:left;width:100%;
+        transition:all .15s;color:var(--text);"
+        onmouseover="this.style.borderColor='var(--gold)'"
+        onmouseout="this.style.borderColor='var(--border)'">
+        <span style="font-size:1.5rem">${l.emoji||'🛒'}</span>
+        <div>
+          <div style="font-weight:700;font-size:.9rem">${l.name}</div>
+          <div style="font-size:.72rem;color:var(--text3)">${l.items.length} ${t.statItemsLabel}</div>
+        </div>
+      </button>`).join('');
+  }
+  if(overlay){ overlay.style.display='flex'; requestAnimationFrame(()=>overlay.style.display='flex'); }
+}
+function _closeOfferPicker(){
+  const overlay = document.getElementById('offer-list-picker');
+  if(overlay) overlay.style.display='none';
+  _pendingOffer = null;
+}
+function _addOfferToList(listId){
+  const list = lists.find(l=>l.id===listId);
+  if(!list || !_pendingOffer) return;
+  currentListId = listId;
+  _addOfferItem(list, _pendingOffer);
+  _closeOfferPicker();
+  renderListView(); showView('list');
+  toast(`✅ ${_pendingOffer.name} ${t.offerAdded} · ${_pendingOffer.salePrice.toFixed(2)}€ 🏪 ${_pendingOffer.store}`);
 }
 
 // ── Home ──────────────────────────────────────────
@@ -4461,10 +4786,10 @@ function parseVoiceText(text){
   FILLER_PHRASES.forEach(rx => { t = t.replace(rx, ' '); });
 
   // 2) Treat conjunctions & "plus"/"sowie" as item separators → comma
-  t = t.replace(/\b(und|and|oder|plus|sowie|dazu|außerdem|ve|ile|dann|danach)\b/gi, ',');
+  t = t.replace(/\b(und|and|oder|plus|sowie|dazu|außerdem|ve|ile|dann|danach|noch|et|y)\b/gi, ',');
 
   // 3) Split on commas, semicolons, colons, numbered lists (e.g. "1. Milch 2. Brot")
-  const segments = t.split(/[,;:]+|\b\d+\.\s+/);
+  const segments = t.split(/,|\.|\bund\b|\bplus\b|\bdann\b|\bnoch\b|\bdazu\b|\baußerdem\b|\band\b|\bve\b|\bet\b|\by\b/i);
 
   /* ── Zahlwörter → Ziffern (DE + EN + TR) ── */
   const NUM_WORDS = {
@@ -4957,12 +5282,27 @@ const GROCERY_DB=[
   {n:'Tiefkühlpizza',c:'frozen'},{n:'Eis',c:'frozen'},{n:'Pommes',c:'frozen'},{n:'Tiefkühlgemüse',c:'frozen'}
 ];
 
+// Fuzzy distance helper (Levenshtein, max distance 2 for short words)
+function _fuzzyMatch(query, target){
+  query=query.toLowerCase(); target=target.toLowerCase();
+  if(target.includes(query)) return true;
+  if(query.length<3) return false;
+  // Simple 1-char tolerance
+  for(let i=0;i<query.length-1;i++){
+    const swapped=query.slice(0,i)+query[i+1]+query[i]+query.slice(i+2);
+    if(target.includes(swapped)) return true;
+  }
+  return false;
+}
+
 function showAcSuggestions(val){
   const dd=document.getElementById('ac-dropdown');
   if(!dd) return;
   if(!val||val.length<2){dd.style.display='none';return;}
   const q=val.toLowerCase();
-  const matches=GROCERY_DB.filter(x=>x.n.toLowerCase().startsWith(q)||x.n.toLowerCase().includes(q)).slice(0,6);
+  const direct=GROCERY_DB.filter(x=>x.n.toLowerCase().startsWith(q)||x.n.toLowerCase().includes(q));
+  const fuzzy=direct.length?[]:GROCERY_DB.filter(x=>_fuzzyMatch(q,x.n.toLowerCase()));
+  const matches=[...direct,...fuzzy].slice(0,6);
   if(!matches.length){dd.style.display='none';return;}
   const cats=typeof CATS!=='undefined'?CATS:{};
   dd.innerHTML=matches.map(x=>{
@@ -6363,6 +6703,11 @@ applyI18n();
 renderHome();
 checkShareParam(); // ?share= URL prüfen
 loadOffers();     // Wochenangebote asynchron laden
+
+// Apply profile
+if(PROFILE.avatar){ const ab=document.getElementById('avatar-btn'); if(ab) ab.textContent=PROFILE.avatar; }
+_applyPinToggleUI();
+_checkPinLock();
 
 // Init API toggle state visually
 (()=>{
