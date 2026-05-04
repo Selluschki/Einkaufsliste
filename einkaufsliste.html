@@ -11,18 +11,18 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
-<title>Einkaufsliste III – Die smarteste Einkaufs-App</title>
-<meta name="description" content="Kostenlose Einkaufsliste mit Spracherkennung, Barcode-Scanner, automatischer Supermarkt-Sortierung und Offline-Funktion. Kein Login, kein Abo."/>
-<meta name="keywords" content="Einkaufsliste, App, Spracherkennung, Barcode Scanner, Supermarkt, kostenlos, offline, PWA"/>
-<meta property="og:title" content="Einkaufsliste III – Smarter einkaufen"/>
-<meta property="og:description" content="Spreche deinen Einkauf einfach ein – die App erkennt alle Produkte, sortiert nach Supermarkt-Bereichen und funktioniert komplett offline."/>
+<title>ShopSmart – Die smarteste Einkaufs-App</title>
+<meta name="description" content="ShopSmart: Kostenlose Einkaufsliste mit Spracherkennung, Barcode-Scanner, 80+ Supermärkten, Wochenangeboten, Budget-Tracking und 100% Offline. Kein Login, kein Abo."/>
+<meta name="keywords" content="Einkaufsliste, ShopSmart, App, Spracherkennung, Barcode Scanner, Supermarkt, Angebote, Budget, kostenlos, offline, PWA"/>
+<meta property="og:title" content="ShopSmart – Smarter einkaufen, mehr sparen"/>
+<meta property="og:description" content="Sprich deinen Einkauf einfach ein – ShopSmart erkennt alle Produkte, sortiert nach Supermarkt-Gängen, zeigt Wochenangebote und trackt dein Budget. 100% kostenlos & offline."/>
 <meta property="og:image" content="https://selluschki.github.io/Einkaufsliste/icon-512.png"/>
 <meta property="og:url" content="https://selluschki.github.io/Einkaufsliste/einkaufsliste.html"/>
 <meta property="og:type" content="website"/>
 <meta property="og:locale" content="de_DE"/>
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:title" content="Einkaufsliste III – Die smarteste Einkaufs-App"/>
-<meta name="twitter:description" content="Spracherkennung · Barcode-Scanner · 30+ Supermärkte · Offline · Kostenlos"/>
+<meta name="twitter:title" content="ShopSmart – Einkaufen neu gedacht"/>
+<meta name="twitter:description" content="Spracherkennung · Barcode-Scanner · 80+ Supermärkte · Wochenangebote · Budget-Tracker · Offline · Kostenlos"/>
 <meta name="twitter:image" content="https://selluschki.github.io/Einkaufsliste/icon-512.png"/>
 <link rel="canonical" href="https://selluschki.github.io/Einkaufsliste/einkaufsliste.html"/>
 <style>
@@ -486,6 +486,38 @@ html[data-theme="dark"] .settings-section{background:#0f1f4a;box-shadow:0 2px 12
 .srow-label{flex:1;font-size:.92rem;font-weight:600;color:var(--text)}
 .srow-sub{font-size:.77rem;color:var(--text3);margin-top:2px}
 .srow-val{font-size:.85rem;color:var(--text3)}
+
+/* ── Pro Upsell Card ── */
+.pro-card{
+  background:linear-gradient(135deg,#0f1f5c 0%,#1a3a8f 50%,#1e3a8a 100%);
+  border-radius:20px;padding:22px 20px 20px;margin-bottom:16px;
+  position:relative;overflow:hidden;
+}
+.pro-card::before{
+  content:'';position:absolute;top:-30px;right:-30px;
+  width:140px;height:140px;
+  background:radial-gradient(circle,rgba(245,158,11,.25) 0%,transparent 70%);
+  pointer-events:none;
+}
+.pro-card-crown{font-size:2.2rem;margin-bottom:8px}
+.pro-card-title{font-size:1.15rem;font-weight:900;color:#fff;letter-spacing:-.01em}
+.pro-card-sub{font-size:.8rem;color:rgba(255,255,255,.7);margin-top:3px;margin-bottom:14px}
+.pro-features{display:flex;flex-direction:column;gap:6px;margin-bottom:18px}
+.pro-feature-item{display:flex;align-items:center;gap:8px;font-size:.82rem;color:rgba(255,255,255,.88)}
+.pro-feature-item::before{content:'✓';color:#fbbf24;font-weight:900;flex-shrink:0}
+.pro-btn{
+  width:100%;background:linear-gradient(135deg,#f59e0b,#d97706);
+  color:#fff;border:none;border-radius:14px;padding:14px;
+  font-size:.95rem;font-weight:900;cursor:pointer;font-family:inherit;
+  box-shadow:0 4px 16px rgba(245,158,11,.45);transition:all .2s;letter-spacing:.01em;
+}
+.pro-btn:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(245,158,11,.55)}
+.pro-badge{
+  position:absolute;top:14px;right:14px;
+  background:linear-gradient(135deg,#f59e0b,#fbbf24);
+  color:#0f1f5c;font-size:.62rem;font-weight:900;padding:4px 10px;
+  border-radius:50px;letter-spacing:.04em;text-transform:uppercase;
+}
 
 /* Theme swatches */
 .theme-swatches{display:flex;gap:10px;padding:12px 16px 16px;flex-wrap:wrap}
@@ -1147,6 +1179,21 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
 .home-stat-card{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:12px 18px;text-align:center;backdrop-filter:blur(8px)}
 .home-stat-card-val{font-size:1.5rem;font-weight:900;color:#fbbf24;line-height:1}
 .home-stat-card-lbl{font-size:.65rem;color:rgba(255,255,255,.65);margin-top:4px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.savings-card{background:rgba(22,163,74,.2);border-color:rgba(34,197,94,.4)}
+.savings-val{color:#4ade80}
+
+/* ── Swipe Gestures on Item Rows ── */
+.item-row{position:relative;overflow:hidden;user-select:none}
+.swipe-hint-left,.swipe-hint-right{
+  position:absolute;top:0;bottom:0;display:flex;align-items:center;
+  padding:0 18px;font-size:.85rem;font-weight:800;pointer-events:none;
+  opacity:0;transition:opacity .15s;z-index:0;white-space:nowrap;
+}
+.swipe-hint-right{left:0;background:linear-gradient(90deg,rgba(22,163,74,.18),transparent);color:#16a34a;}
+.swipe-hint-left {right:0;background:linear-gradient(270deg,rgba(239,68,68,.18),transparent);color:#ef4444;}
+.item-row.swiping-right .swipe-hint-right{opacity:1}
+.item-row.swiping-left  .swipe-hint-left {opacity:1}
+.item-row-inner{position:relative;z-index:1;display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--border);transition:transform .15s ease;}
 
 /* ════ PIN LOCK ════ */
 #pin-lock-screen{display:none}
@@ -1210,32 +1257,48 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
 <div class="onboarding-overlay" id="onboarding-overlay" style="display:none">
   <div class="onboarding-wrap">
     <div class="onboarding-slides" id="onboarding-slides">
-      <!-- Slide 1 -->
+      <!-- Slide 1 – Welcome -->
       <div class="onboarding-slide">
         <div class="ob-hero">🛒</div>
-        <h1 class="ob-title">Willkommen bei<br><span class="ob-brand">Einkaufsliste III</span></h1>
-        <p class="ob-desc">Die smarteste Einkaufsliste – mit Spracherkennung, automatischer Sortierung und Barcode-Scanner.</p>
+        <h1 class="ob-title">Willkommen bei<br><span class="ob-brand">ShopSmart</span></h1>
+        <p class="ob-desc">Die intelligenteste Einkaufsliste – mit Spracherkennung, Supermarkt-Routenplanung, Barcode-Scanner und Angebots-Tracker.</p>
+        <div class="ob-feature-list">
+          <div class="ob-feature">🌍 5 Sprachen &amp; 80+ Supermärkte</div>
+          <div class="ob-feature">📴 100 % offline – kein Login, kein Abo</div>
+          <div class="ob-feature">💰 Budget-Tracking &amp; Ersparnis-Anzeige</div>
+        </div>
       </div>
-      <!-- Slide 2 -->
+      <!-- Slide 2 – Voice -->
       <div class="onboarding-slide">
         <div class="ob-hero">🎤</div>
         <h1 class="ob-title">Einfach sprechen</h1>
-        <p class="ob-desc">Sage einfach „Milch, Eier, Brot und Butter" – die App erkennt alle Produkte automatisch und sortiert sie nach Supermarkt-Bereichen.</p>
+        <p class="ob-desc">Sage einfach „Milch, 2 Eier, Brot und Butter" – die App erkennt alle Produkte, Mengen und Einheiten automatisch.</p>
         <div class="ob-feature-list">
           <div class="ob-feature">✅ Spracherkennung in 5 Sprachen</div>
-          <div class="ob-feature">✅ Mengenangaben werden erkannt</div>
-          <div class="ob-feature">✅ Automatische Kategorisierung</div>
+          <div class="ob-feature">✅ Mengen &amp; Einheiten werden erkannt</div>
+          <div class="ob-feature">✅ Mehrere Artikel gleichzeitig per Stimme</div>
         </div>
       </div>
-      <!-- Slide 3 -->
+      <!-- Slide 3 – Route -->
       <div class="onboarding-slide">
         <div class="ob-hero">🗺️</div>
-        <h1 class="ob-title">Smart einkaufen</h1>
-        <p class="ob-desc">Wähle deinen Supermarkt und die App sortiert deine Liste nach dem optimalen Laufweg – spart Zeit und Nerven.</p>
+        <h1 class="ob-title">Optimale Route</h1>
+        <p class="ob-desc">Wähle deinen Supermarkt – die App sortiert deine Liste nach dem optimalen Laufweg durch den Laden. Spart Zeit und Nerven.</p>
         <div class="ob-feature-list">
-          <div class="ob-feature">🏪 30+ Supermärkte weltweit</div>
+          <div class="ob-feature">🏪 80+ Supermärkte in 20+ Ländern</div>
           <div class="ob-feature">📷 Barcode-Scanner mit Produktsuche</div>
-          <div class="ob-feature">📴 100% offline nutzbar</div>
+          <div class="ob-feature">🍽 Rezepte direkt als Einkaufsliste</div>
+        </div>
+      </div>
+      <!-- Slide 4 – Offers & Budget -->
+      <div class="onboarding-slide">
+        <div class="ob-hero">💸</div>
+        <h1 class="ob-title">Sparen mit Angeboten</h1>
+        <p class="ob-desc">Sieh die aktuellen Angebote deiner Supermärkte mit echten Produktfotos – füge Schnäppchen mit einem Tap zur Liste hinzu.</p>
+        <div class="ob-feature-list">
+          <div class="ob-feature">🔥 Wochenangebote mit echten Fotos</div>
+          <div class="ob-feature">💰 Preis-Tracking &amp; Ersparnis-Anzeige</div>
+          <div class="ob-feature">🏷 Angebots-Badge bleibt am Artikel</div>
         </div>
       </div>
     </div>
@@ -1243,6 +1306,7 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
       <div class="ob-dot active" onclick="goToSlide(0)"></div>
       <div class="ob-dot" onclick="goToSlide(1)"></div>
       <div class="ob-dot" onclick="goToSlide(2)"></div>
+      <div class="ob-dot" onclick="goToSlide(3)"></div>
     </div>
     <button class="ob-btn-primary" id="ob-btn-primary" onclick="obNext()">Weiter →</button>
     <button class="ob-btn-skip" onclick="finishOnboarding()">Überspringen</button>
@@ -1263,7 +1327,7 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
       <div class="home-date-label" id="home-date-label">Montag, 1. Januar</div>
     </div>
     <div class="home-greeting" id="home-greeting">Guten Tag!</div>
-    <div class="home-hero-name" id="home-hero-name">🛒 Einkaufsliste III</div>
+    <div class="home-hero-name" id="home-hero-name">🛒 ShopSmart</div>
     <div class="home-hero-sub" id="home-sub">Smart sortiert. Einfach einkaufen.</div>
     <div class="home-slogan">🏪 <span id="home-slogan-text">Die einzige App die weiß, wie dein Supermarkt von innen aussieht</span></div>
     <div class="home-stats">
@@ -1342,6 +1406,7 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
         <option>Paar</option><option>EL</option><option>TL</option>
       </select>
     </div>
+    <button class="price-toggle-btn" id="btn-price-toggle" title="Preis eingeben" onclick="togglePriceField()" style="background:var(--surface);border:1.5px solid var(--border);color:var(--text3);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:.8rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s">€</button>
     <button class="cam-btn" id="btn-cam" title="Foto / Kamera">📷</button>
     <button class="mic-btn" id="btn-mic" title="Spracheingabe">🎤</button>
     <button class="add-btn" id="btn-add-item">+</button>
@@ -1396,10 +1461,25 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
   </div>
   <div class="settings-body">
 
+    <!-- Pro Upsell Card -->
+    <div class="pro-card" id="pro-card">
+      <div class="pro-badge">PRO</div>
+      <div class="pro-card-crown">👑</div>
+      <div class="pro-card-title" id="pro-card-title">ShopSmart Pro</div>
+      <div class="pro-card-sub" id="pro-card-sub">Smart sortiert. Einfach einkaufen.</div>
+      <div class="pro-features" id="pro-features">
+        <div class="pro-feature-item" id="pro-f1">Unbegrenzte Listen &amp; Artikel</div>
+        <div class="pro-feature-item" id="pro-f2">Budget-Tracking &amp; Ersparnis-Analyse</div>
+        <div class="pro-feature-item" id="pro-f3">80+ internationale Supermärkte</div>
+        <div class="pro-feature-item" id="pro-f4">Offline-Rezepte &amp; Spracherkennung</div>
+      </div>
+      <button class="pro-btn" id="pro-btn" onclick="openProInfo()">🚀 Pro freischalten</button>
+    </div>
+
     <!-- App teilen -->
     <div class="app-share-card">
       <div class="app-share-title" data-i18n="shareCardTitle">📤 App weiterempfehlen</div>
-      <div class="app-share-sub" data-i18n="shareCardSub">Teile Einkaufsliste III mit Freunden & Familie</div>
+      <div class="app-share-sub" data-i18n="shareCardSub">Teile ShopSmart mit Freunden & Familie</div>
       <div class="app-share-btns">
         <button class="app-share-btn whatsapp" onclick="shareAppVia('whatsapp')">
           <span class="app-share-btn-icon">💬</span>
@@ -2179,7 +2259,7 @@ const storedLang = CFG.lang || (navigator.language||'de').slice(0,2).toLowerCase
 const lang = ['de','en','tr','fr','es'].includes(storedLang) ? storedLang : 'de';
 const i18n = {
   de:{
-    appTitle:'Einkaufsliste III',appSub:'Smart sortiert. Einfach einkaufen.',
+    appTitle:'ShopSmart',appSub:'Smart sortiert. Einfach einkaufen.',
     newList:'Neue Liste',listName:'Name',listEmoji:'Symbol',listColor:'Farbe',
     createList:'Liste erstellen',addItem:'Artikel hinzufügen …',
     chooseStore:'Supermarkt wählen',noLists:'Noch keine Listen',
@@ -2215,7 +2295,7 @@ const i18n = {
     deleteLabel:'Alle Daten löschen', deleteSub:'Nicht rückgängig zu machen!',
     secUpdate:'🔄 App-Updates', updateCurrentText:'App ist aktuell', updateNeverChecked:'Zuletzt geprüft: noch nie',
     updateCheckBtn:'🔍 Nach Updates suchen', updateApplyBtn:'⚡ Jetzt installieren',
-    secAbout:'ℹ️ Über die App', aboutSub1:'Smart sortiert. Einfach einkaufen.', aboutSub2:'Navy & Gold Edition · Barcode · Sprache · 5 Länder · Offline',
+    secAbout:'ℹ️ Über die App', aboutSub1:'ShopSmart – Smart sortiert. Einfach einkaufen.', aboutSub2:'Navy & Gold Edition · Barcode · Sprache · 80+ Märkte · 20+ Länder · Offline',
     recipesTitle:'🍽 Rezepte', recipesSub:'Zutaten direkt zur Einkaufsliste hinzufügen', recipesSearch:'🔍 Rezept suchen …',
     updateBannerTitle:'Update verfügbar!', updateBannerSub:'Neue Version bereit – jetzt installieren', updateBannerBtn:'Installieren',
     shareSheetTitle:'App teilen', shareSheetSub:'Empfehle die App weiter',
@@ -2268,6 +2348,14 @@ const i18n = {
     statItemsLabel:'Artikel',
     statDoneLabel:'Erledigt',
     statBudgetLabel:'Budget',
+    statSavedLabel:'💚 Gespart',
+    proTitle:'ShopSmart Pro',
+    proSub:'Alle Features freigeschaltet – danke!',
+    proFeature1:'Unbegrenzte Listen & Artikel',
+    proFeature2:'Budget-Tracking & Ersparnis-Analyse',
+    proFeature3:'80+ internationale Supermärkte',
+    proFeature4:'Offline-Rezepte & Spracherkennung',
+    proUpgradeBtn:'🚀 Pro freischalten',
     recentLabel:'Zuletzt:',
     voiceStatusHint:'Tippe auf das Mikrofon und sprich',
     voiceNothingFound:'Nichts erkannt – bitte nochmal versuchen',
@@ -2372,7 +2460,7 @@ const i18n = {
     offerPickerTitle:'Zu welcher Liste?',
   },
   en:{
-    appTitle:'Shopping List III',appSub:'Smart sorted. Easy shopping.',
+    appTitle:'ShopSmart',appSub:'Smart sorted. Easy shopping.',
     newList:'New List',listName:'Name',listEmoji:'Icon',listColor:'Color',
     createList:'Create List',addItem:'Add item …',
     chooseStore:'Choose Supermarket',noLists:'No lists yet',
@@ -2408,7 +2496,7 @@ const i18n = {
     deleteLabel:'Delete all data', deleteSub:'Cannot be undone!',
     secUpdate:'🔄 App Updates', updateCurrentText:'App is up to date', updateNeverChecked:'Last checked: never',
     updateCheckBtn:'🔍 Check for updates', updateApplyBtn:'⚡ Install now',
-    secAbout:'ℹ️ About', aboutSub1:'Smart sorted. Easy shopping.', aboutSub2:'Navy & Gold Edition · Barcode · Voice · 5 Countries · Offline',
+    secAbout:'ℹ️ About', aboutSub1:'ShopSmart – Smart sorted. Easy shopping.', aboutSub2:'Navy & Gold Edition · Barcode · Voice · 80+ Stores · 20+ Countries · Offline',
     recipesTitle:'🍽 Recipes', recipesSub:'Add ingredients directly to shopping list', recipesSearch:'🔍 Search recipe …',
     updateBannerTitle:'Update available!', updateBannerSub:'New version ready – install now', updateBannerBtn:'Install',
     shareSheetTitle:'Share app', shareSheetSub:'Recommend the app to others',
@@ -2461,6 +2549,11 @@ const i18n = {
     statItemsLabel:'Items',
     statDoneLabel:'Done',
     statBudgetLabel:'Budget',
+    statSavedLabel:'💚 Saved',
+    proTitle:'ShopSmart Pro',proSub:'All features unlocked – thank you!',
+    proFeature1:'Unlimited lists & items',proFeature2:'Budget tracking & savings analysis',
+    proFeature3:'80+ international supermarkets',proFeature4:'Offline recipes & voice recognition',
+    proUpgradeBtn:'🚀 Unlock Pro',
     recentLabel:'Recent:',
     voiceStatusHint:'Tap the microphone and speak',
     voiceNothingFound:'Nothing detected – please try again',
@@ -2565,7 +2658,7 @@ const i18n = {
     offerPickerTitle:'Add to which list?',
   },
   tr:{
-    appTitle:'Alışveriş Listesi III',appSub:'Akıllı sıralama. Kolay alışveriş.',
+    appTitle:'ShopSmart',appSub:'Akıllı sıralama. Kolay alışveriş.',
     newList:'Yeni Liste',listName:'Ad',listEmoji:'Simge',listColor:'Renk',
     createList:'Liste Oluştur',addItem:'Ürün ekle …',
     chooseStore:'Market Seç',noLists:'Henüz liste yok',
@@ -2654,6 +2747,11 @@ const i18n = {
     statItemsLabel:'Ürün',
     statDoneLabel:'Tamamlandı',
     statBudgetLabel:'Bütçe',
+    statSavedLabel:'💚 Tasarruf',
+    proTitle:'ShopSmart Pro',proSub:'Tüm özellikler açık – teşekkürler!',
+    proFeature1:'Sınırsız liste ve ürün',proFeature2:'Bütçe takibi ve tasarruf analizi',
+    proFeature3:'80+ uluslararası market',proFeature4:'Çevrimdışı tarif & ses tanıma',
+    proUpgradeBtn:'🚀 Pro\'yu Aç',
     recentLabel:'Son:',
     voiceStatusHint:'Mikrofona dokunun ve konuşun',
     voiceNothingFound:'Hiçbir şey algılanmadı – lütfen tekrar deneyin',
@@ -2758,7 +2856,7 @@ const i18n = {
     offerPickerTitle:'Hangi listeye?',
   },
   fr:{
-    appTitle:'Liste de courses III',appSub:'Triée intelligemment. Facile.',
+    appTitle:'ShopSmart',appSub:'Triée intelligemment. Facile.',
     newList:'Nouvelle liste',listName:'Nom',listEmoji:'Icône',listColor:'Couleur',
     createList:'Créer la liste',addItem:'Ajouter un article …',
     chooseStore:'Choisir un magasin',noLists:'Aucune liste',
@@ -2847,6 +2945,11 @@ const i18n = {
     statItemsLabel:'Articles',
     statDoneLabel:'Fait',
     statBudgetLabel:'Budget',
+    statSavedLabel:'💚 Économisé',
+    proTitle:'ShopSmart Pro',proSub:'Toutes les fonctions débloquées – merci !',
+    proFeature1:'Listes & articles illimités',proFeature2:'Suivi du budget & analyse des économies',
+    proFeature3:'80+ supermarchés internationaux',proFeature4:'Recettes hors-ligne & reconnaissance vocale',
+    proUpgradeBtn:'🚀 Débloquer Pro',
     recentLabel:'Récent :',
     voiceStatusHint:'Appuyez sur le micro et parlez',
     voiceNothingFound:'Rien détecté – veuillez réessayer',
@@ -2951,7 +3054,7 @@ const i18n = {
     offerPickerTitle:'Ajouter à quelle liste ?',
   },
   es:{
-    appTitle:'Lista de compras III',appSub:'Ordenada inteligentemente. Fácil.',
+    appTitle:'ShopSmart',appSub:'Ordenada inteligentemente. Fácil.',
     newList:'Nueva lista',listName:'Nombre',listEmoji:'Icono',listColor:'Color',
     createList:'Crear lista',addItem:'Añadir artículo …',
     chooseStore:'Elegir supermercado',noLists:'Sin listas',
@@ -3040,6 +3143,11 @@ const i18n = {
     statItemsLabel:'Artículos',
     statDoneLabel:'Hecho',
     statBudgetLabel:'Presupuesto',
+    statSavedLabel:'💚 Ahorrado',
+    proTitle:'ShopSmart Pro',proSub:'¡Todas las funciones desbloqueadas – gracias!',
+    proFeature1:'Listas y artículos ilimitados',proFeature2:'Seguimiento de presupuesto y análisis de ahorros',
+    proFeature3:'80+ supermercados internacionales',proFeature4:'Recetas sin conexión y reconocimiento de voz',
+    proUpgradeBtn:'🚀 Desbloquear Pro',
     recentLabel:'Reciente:',
     voiceStatusHint:'Toca el micrófono y habla',
     voiceNothingFound:'Nada detectado – por favor inténtalo de nuevo',
@@ -4169,11 +4277,19 @@ function renderHome(){
     const totalDone = lists.reduce((a,l)=>a+l.items.filter(i=>i.checked).length,0);
     const rate = totalItems>0?Math.round(totalDone/totalItems*100):0;
     const budget = lists.reduce((a,l)=>a+l.items.reduce((s,i)=>s+(i.price?parseFloat(i.price):0),0),0);
+    // Total savings from all offer items
+    const totalSavings = lists.reduce((a,l)=>a+l.items.reduce((s,i)=>{
+      if(!i.offerDiscount||!i.price) return s;
+      const sale=parseFloat(i.price);
+      const normal=sale/(1-i.offerDiscount/100);
+      return s+(normal-sale);
+    },0),0);
     row.innerHTML=`
       <div class="home-stat-card"><div class="home-stat-card-val">${lists.length}</div><div class="home-stat-card-lbl">${t.statListsLabel}</div></div>
       <div class="home-stat-card"><div class="home-stat-card-val">${totalItems}</div><div class="home-stat-card-lbl">${t.statItemsLabel}</div></div>
       <div class="home-stat-card"><div class="home-stat-card-val">${rate}%</div><div class="home-stat-card-lbl">${t.statDoneLabel}</div></div>
       ${budget>0?`<div class="home-stat-card"><div class="home-stat-card-val">€${budget.toFixed(0)}</div><div class="home-stat-card-lbl">${t.statBudgetLabel}</div></div>`:''}
+      ${totalSavings>0.5?`<div class="home-stat-card savings-card"><div class="home-stat-card-val savings-val">-€${totalSavings.toFixed(2)}</div><div class="home-stat-card-lbl">${t.statSavedLabel||'Gespart'}</div></div>`:''}
     `;
     row.style.display='flex';
   } else if(row){
@@ -4256,11 +4372,20 @@ function renderItems(){
   const budget=list.items.reduce((s,i)=>s+(i.price?parseFloat(i.price):0),0);
   const budgetDone=list.items.filter(i=>i.checked).reduce((s,i)=>s+(i.price?parseFloat(i.price):0),0);
   const hasPrices=list.items.some(i=>i.price);
+  // Savings from offer items (difference between normal and sale price)
+  const savings=list.items.reduce((s,i)=>{
+    if(!i.offerDiscount||!i.price) return s;
+    const sale=parseFloat(i.price);
+    const normal=sale/(1-i.offerDiscount/100);
+    return s+(normal-sale);
+  },0);
   const budgetEl=document.getElementById('budget-display');
   if(budgetEl){
     if(hasPrices){
       budgetEl.style.display='inline-flex';
-      budgetEl.innerHTML=`💰 ${budgetDone.toFixed(2)} / ${budget.toFixed(2)} €`;
+      let html=`💰 <strong>${budgetDone.toFixed(2)}</strong> / ${budget.toFixed(2)} €`;
+      if(savings>0.01) html+=` <span style="color:#16a34a;font-size:.65rem;margin-left:4px">-${savings.toFixed(2)}€ gespart</span>`;
+      budgetEl.innerHTML=html;
     } else {
       budgetEl.style.display='none';
     }
@@ -4307,12 +4432,16 @@ function renderItems(){
     html+=`<div class="category-group">
       <div class="category-label"><span>${c.icon}</span>${catName(cat)}</div>
       ${items.map(item=>`
-      <div class="item-row${item.checked?' checked':''}" onclick="toggleItem('${item.id}')">
-        <div class="item-check${item.checked?' done':''}"></div>
-        <div class="item-name">${item.name}${offerItemBadge(item.name,list.store,item.id)}${availBadge(item.name,list.store,item.id)}${offerStoreBadge(item)}</div>
-        ${(item.qty&&item.qty!=='1')||item.unit!=='Stk'?`<div class="item-qty-badge">${item.qty} ${item.unit}</div>`:''}
-        ${item.price?`<div class="item-price-badge">€ ${parseFloat(item.price).toFixed(2)}</div>`:''}
-        <button class="item-delete" onclick="event.stopPropagation();deleteItem('${item.id}')">✕</button>
+      <div class="item-row${item.checked?' checked':''}" data-id="${item.id}" ontouchstart="swipeStart(event,this)" ontouchmove="swipeMove(event,this)" ontouchend="swipeEnd(event,this)">
+        <div class="swipe-hint-right">✓ ${t.done||'Erledigt'}</div>
+        <div class="swipe-hint-left">🗑 ${t.listDeleted||'Löschen'}</div>
+        <div class="item-row-inner" onclick="toggleItem('${item.id}')">
+          <div class="item-check${item.checked?' done':''}"></div>
+          <div class="item-name">${item.name}${offerItemBadge(item.name,list.store,item.id)}${availBadge(item.name,list.store,item.id)}${offerStoreBadge(item)}</div>
+          ${(item.qty&&item.qty!=='1')||item.unit!=='Stk'?`<div class="item-qty-badge">${item.qty} ${item.unit}</div>`:''}
+          ${item.price?`<div class="item-price-badge">€ ${parseFloat(item.price).toFixed(2)}</div>`:''}
+          <button class="item-delete" onclick="event.stopPropagation();deleteItem('${item.id}')">✕</button>
+        </div>
       </div>`).join('')}
     </div>`;
   });
@@ -4333,6 +4462,43 @@ function renderItems(){
   body.innerHTML=html;
 }
 
+function openProInfo(){
+  // Show a friendly info that the app is free/donation-based
+  const msg = {
+    de:'💛 ShopSmart ist kostenlos!\n\nAlle Features sind für dich freigeschaltet.\nWenn dir die App gefällt, teile sie mit Freunden – das ist unsere beste Unterstützung! 😊',
+    en:'💛 ShopSmart is free!\n\nAll features are unlocked for you.\nIf you enjoy the app, share it with friends – that\'s the best support you can give! 😊',
+    tr:'💛 ShopSmart ücretsizdir!\n\nTüm özellikler senin için açıktır.\nUygulamayı beğendiysen arkadaşlarınla paylaş – bu bizim için en iyi destek! 😊',
+    fr:'💛 ShopSmart est gratuit !\n\nToutes les fonctions sont débloquées pour vous.\nSi vous aimez l\'app, partagez-la avec vos amis – c\'est le meilleur soutien ! 😊',
+    es:'💛 ¡ShopSmart es gratuito!\n\nTodas las funciones están desbloqueadas para ti.\n¡Si te gusta la app, compártela con amigos – eso es el mejor apoyo! 😊',
+  };
+  alert(msg[lang]||msg.de);
+}
+
+function applyProI18n(){
+  const el=id=>document.getElementById(id);
+  if(el('pro-card-title')) el('pro-card-title').textContent=t.proTitle||'ShopSmart Pro';
+  if(el('pro-card-sub'))   el('pro-card-sub').textContent=t.proSub||'Smart sortiert. Einfach einkaufen.';
+  if(el('pro-f1'))  el('pro-f1').textContent=t.proFeature1||'Unbegrenzte Listen & Artikel';
+  if(el('pro-f2'))  el('pro-f2').textContent=t.proFeature2||'Budget-Tracking & Ersparnis-Analyse';
+  if(el('pro-f3'))  el('pro-f3').textContent=t.proFeature3||'80+ internationale Supermärkte';
+  if(el('pro-f4'))  el('pro-f4').textContent=t.proFeature4||'Offline-Rezepte & Spracherkennung';
+  if(el('pro-btn')) el('pro-btn').textContent=t.proUpgradeBtn||'🚀 Pro freischalten';
+}
+
+function togglePriceField(){
+  const priceEl=document.getElementById('add-price');
+  const btn=document.getElementById('btn-price-toggle');
+  if(!priceEl) return;
+  const isVisible=priceEl.style.display!=='none';
+  priceEl.style.display=isVisible?'none':'block';
+  if(btn){
+    btn.style.background=isVisible?'var(--surface)':'var(--greenlt)';
+    btn.style.color=isVisible?'var(--text3)':'var(--green)';
+    btn.style.borderColor=isVisible?'var(--border)':'var(--green)';
+  }
+  if(!isVisible) setTimeout(()=>priceEl.focus(),50);
+}
+
 function addItem(){
   const input=document.getElementById('add-input');
   const name=input.value.trim();
@@ -4350,6 +4516,53 @@ function addItem(){
   const hel=document.getElementById('avail-hint'); if(hel) hel.style.display='none';
   hideAcDropdown();
   toast('✓ '+name);
+}
+
+// ── Touch Swipe Gestures ──────────────────────────
+let _swipeStartX=0,_swipeStartY=0,_swipeActive=false,_swipeDir=null;
+const SWIPE_THRESH=60,SWIPE_ANGLE=30;
+
+function swipeStart(e,el){
+  const t=e.changedTouches[0];
+  _swipeStartX=t.clientX; _swipeStartY=t.clientY;
+  _swipeActive=true; _swipeDir=null;
+  el.classList.remove('swiping-left','swiping-right');
+  const inner=el.querySelector('.item-row-inner');
+  if(inner) inner.style.transition='none';
+}
+function swipeMove(e,el){
+  if(!_swipeActive) return;
+  const t=e.changedTouches[0];
+  const dx=t.clientX-_swipeStartX, dy=t.clientY-_swipeStartY;
+  // Only horizontal swipe
+  if(Math.abs(dy)>Math.abs(dx)*1.5 && !_swipeDir){ _swipeActive=false; return; }
+  if(Math.abs(dx)>10){ _swipeDir=dx>0?'right':'left'; }
+  if(!_swipeDir) return;
+  e.preventDefault();
+  const inner=el.querySelector('.item-row-inner');
+  if(inner){
+    inner.style.transform=`translateX(${Math.sign(dx)*Math.min(Math.abs(dx),100)}px)`;
+  }
+  el.classList.toggle('swiping-right',dx>20);
+  el.classList.toggle('swiping-left',dx<-20);
+}
+function swipeEnd(e,el){
+  if(!_swipeActive||!_swipeDir){
+    const inner=el.querySelector('.item-row-inner');
+    if(inner){inner.style.transition='';inner.style.transform='';}
+    _swipeActive=false; return;
+  }
+  const t=e.changedTouches[0];
+  const dx=t.clientX-_swipeStartX;
+  const inner=el.querySelector('.item-row-inner');
+  if(inner){inner.style.transition='transform .2s ease';inner.style.transform='';}
+  el.classList.remove('swiping-left','swiping-right');
+  _swipeActive=false;
+  const id=el.dataset.id;
+  if(Math.abs(dx)>=SWIPE_THRESH){
+    if(dx>0){ toggleItem(id); if(navigator.vibrate)navigator.vibrate([30]); }
+    else     { deleteItem(id); if(navigator.vibrate)navigator.vibrate([20,10,20]); }
+  }
 }
 
 function toggleItem(id){
@@ -5465,6 +5678,8 @@ function applyI18n(){
   // api-status-text initial value (only if not yet checked)
   const apiStatusText = document.getElementById('api-status-text');
   if(apiStatusText) apiStatusText.textContent = t.apiNotChecked;
+  // Pro card
+  applyProI18n();
 }
 
 // ══════════════════════════════════════════════════
@@ -5863,9 +6078,9 @@ function updateClock(){
   const now = new Date();
   const hh = String(now.getHours()).padStart(2,'0');
   const mm = String(now.getMinutes()).padStart(2,'0');
-  const weekdays = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
-  const months   = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
-  const dateStr  = weekdays[now.getDay()]+', '+now.getDate()+'. '+months[now.getMonth()]+' '+now.getFullYear();
+  const localeMap = {de:'de-DE',en:'en-GB',tr:'tr-TR',fr:'fr-FR',es:'es-ES'};
+  const loc = localeMap[lang]||'de-DE';
+  const dateStr = new Intl.DateTimeFormat(loc,{weekday:'long',day:'numeric',month:'long',year:'numeric'}).format(now);
   const clockEl  = document.getElementById('home-clock');
   const dateEl   = document.getElementById('home-date-label');
   if(clockEl) clockEl.textContent = hh+':'+mm;
@@ -6719,16 +6934,17 @@ _checkPinLock();
 
 // ── Onboarding ──────────────────────────────────
 let _obSlide = 0;
+const OB_SLIDES = 4;
 function goToSlide(i){
   _obSlide = i;
   const slides = document.getElementById('onboarding-slides');
   if(slides) slides.style.transform = `translateX(-${i*100}%)`;
   document.querySelectorAll('.ob-dot').forEach((d,idx)=>d.classList.toggle('active',idx===i));
   const btn = document.getElementById('ob-btn-primary');
-  if(btn) btn.textContent = i===2 ? '🚀 Los geht\'s!' : 'Weiter →';
+  if(btn) btn.textContent = i===OB_SLIDES-1 ? '🚀 Los geht\'s!' : 'Weiter →';
 }
 function obNext(){
-  if(_obSlide < 2) goToSlide(_obSlide+1);
+  if(_obSlide < OB_SLIDES-1) goToSlide(_obSlide+1);
   else finishOnboarding();
 }
 function finishOnboarding(){
