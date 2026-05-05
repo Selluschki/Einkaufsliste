@@ -139,10 +139,149 @@ html[data-theme="orange"] body{background:#fff7ed}
 .header-btn{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);color:#fff;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:.95rem;display:flex;align-items:center;justify-content:center;transition:all .2s}
 .header-btn:hover{background:rgba(255,255,255,.24);border-color:rgba(255,255,255,.36)}
 
+/* ════ SPLASH SCREEN ════ */
+#splash{
+  position:fixed;inset:0;z-index:99999;
+  background:linear-gradient(160deg,#060d2e 0%,#0a1540 45%,#0f1f5c 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  overflow:hidden;touch-action:none;
+}
+#splash.splash-done{
+  animation:splashExit .45s cubic-bezier(.4,0,1,1) forwards;
+  pointer-events:none;
+}
+@keyframes splashExit{to{opacity:0;transform:scale(1.04)}}
+
+.splash-glow{
+  position:absolute;width:420px;height:420px;border-radius:50%;
+  background:radial-gradient(circle,rgba(245,158,11,.25) 0%,transparent 70%);
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  animation:splashGlowPulse 1.8s ease-in-out infinite;
+}
+@keyframes splashGlowPulse{
+  0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.7}
+  50%{transform:translate(-50%,-50%) scale(1.18);opacity:1}
+}
+.splash-ring{
+  position:absolute;width:260px;height:260px;border-radius:50%;
+  border:2px solid rgba(245,158,11,.15);
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  animation:splashRing 2s ease-in-out infinite;
+}
+.splash-ring2{
+  position:absolute;width:340px;height:340px;border-radius:50%;
+  border:1px solid rgba(245,158,11,.08);
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  animation:splashRing 2s ease-in-out .3s infinite;
+}
+@keyframes splashRing{
+  0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.5}
+  50%{transform:translate(-50%,-50%) scale(1.06);opacity:.15}
+}
+
+.splash-cart{
+  width:148px;height:148px;border-radius:34px;
+  box-shadow:0 24px 80px rgba(245,158,11,.5),0 0 0 2px rgba(245,158,11,.25);
+  position:relative;z-index:2;
+  animation:cartZoom 2.3s cubic-bezier(.22,.68,0,1.2) forwards;
+}
+@keyframes cartZoom{
+  0%  {transform:scale(.1) translateY(80px) rotate(-8deg);opacity:0}
+  16% {transform:scale(1.1) translateY(-8px) rotate(2deg);opacity:1}
+  26% {transform:scale(.97) translateY(0) rotate(0deg);opacity:1}
+  68% {transform:scale(1) translateY(0);opacity:1}
+  85% {transform:scale(1.02);opacity:1}
+  96% {transform:scale(18);opacity:.5}
+  100%{transform:scale(26);opacity:0}
+}
+
+.splash-brand{
+  color:#fde68a;font-size:2.1rem;font-weight:900;letter-spacing:-.04em;
+  margin-top:20px;position:relative;z-index:2;
+  animation:splashFade 2.3s ease forwards;
+  text-shadow:0 2px 24px rgba(245,158,11,.45);
+}
+.splash-tagline{
+  color:rgba(255,255,255,.55);font-size:.75rem;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;margin-top:5px;
+  position:relative;z-index:2;
+  animation:splashFade 2.3s ease .08s forwards;
+}
+@keyframes splashFade{
+  0%{opacity:0;transform:translateY(14px)}
+  20%{opacity:1;transform:translateY(0)}
+  72%{opacity:1}
+  90%{opacity:0}
+  100%{opacity:0}
+}
+
+/* Flying product emojis */
+.splash-emoji{position:absolute;z-index:3;opacity:0;
+  filter:drop-shadow(0 4px 10px rgba(0,0,0,.5));}
+.sp-e1{top:16%;left:7%; font-size:2.2rem;animation:fly1 1.5s .38s ease-in-out forwards}
+.sp-e2{top:10%;right:9%; font-size:2rem;  animation:fly2 1.4s .50s ease-in-out forwards}
+.sp-e3{top:38%;left:3%; font-size:2.4rem;animation:fly3 1.6s .43s ease-in-out forwards}
+.sp-e4{bottom:26%;right:5%;font-size:2rem; animation:fly4 1.5s .56s ease-in-out forwards}
+.sp-e5{bottom:16%;left:10%;font-size:2.2rem;animation:fly5 1.4s .40s ease-in-out forwards}
+.sp-e6{top:55%;right:9%;font-size:2.1rem;animation:fly6 1.5s .48s ease-in-out forwards}
+.sp-e7{top:20%;left:26%;font-size:1.7rem;animation:fly7 1.4s .60s ease-in-out forwards}
+.sp-e8{bottom:36%;right:20%;font-size:1.8rem;animation:fly8 1.4s .52s ease-in-out forwards}
+.sp-e9{bottom:12%;left:38%;font-size:1.6rem;animation:fly1 1.5s .45s ease-in-out forwards}
+.sp-e10{top:7%;left:48%;font-size:1.8rem; animation:fly2 1.6s .42s ease-in-out forwards}
+
+@keyframes fly1{
+  0%  {opacity:0;transform:translate(-90px,-60px) scale(.3) rotate(-20deg)}
+  30% {opacity:1}
+  72% {opacity:.95;transform:translate(35px,25px) scale(1.25) rotate(10deg)}
+  100%{opacity:0;transform:translate(70px,55px) scale(.4) rotate(25deg)}
+}
+@keyframes fly2{
+  0%  {opacity:0;transform:translate(90px,-60px) scale(.3) rotate(20deg)}
+  30% {opacity:1}
+  72% {opacity:.95;transform:translate(-35px,25px) scale(1.25) rotate(-10deg)}
+  100%{opacity:0;transform:translate(-70px,55px) scale(.4) rotate(-25deg)}
+}
+@keyframes fly3{
+  0%  {opacity:0;transform:translate(-100px,0) scale(.3) rotate(-12deg)}
+  30% {opacity:1}
+  72% {opacity:.95;transform:translate(52px,18px) scale(1.15) rotate(6deg)}
+  100%{opacity:0;transform:translate(110px,36px) scale(.4)}
+}
+@keyframes fly4{
+  0%  {opacity:0;transform:translate(100px,50px) scale(.3) rotate(12deg)}
+  30% {opacity:1}
+  72% {opacity:.95;transform:translate(-52px,-22px) scale(1.15) rotate(-6deg)}
+  100%{opacity:0;transform:translate(-110px,-44px) scale(.4)}
+}
+@keyframes fly5{
+  0%  {opacity:0;transform:translate(-80px,70px) scale(.3) rotate(-22deg)}
+  30% {opacity:1}
+  72% {opacity:.95;transform:translate(42px,-42px) scale(1.2) rotate(12deg)}
+  100%{opacity:0;transform:translate(84px,-84px) scale(.4)}
+}
+@keyframes fly6{
+  0%  {opacity:0;transform:translate(80px,60px) scale(.3) rotate(22deg)}
+  30% {opacity:1}
+  72% {opacity:.95;transform:translate(-42px,-38px) scale(1.15) rotate(-12deg)}
+  100%{opacity:0;transform:translate(-84px,-76px) scale(.4)}
+}
+@keyframes fly7{
+  0%  {opacity:0;transform:translate(0,-100px) scale(.3)}
+  30% {opacity:1}
+  72% {opacity:.95;transform:translate(12px,58px) scale(1.2)}
+  100%{opacity:0;transform:translate(24px,110px) scale(.4)}
+}
+@keyframes fly8{
+  0%  {opacity:0;transform:translate(0,100px) scale(.3)}
+  30% {opacity:1}
+  72% {opacity:.95;transform:translate(-12px,-58px) scale(1.15)}
+  100%{opacity:0;transform:translate(-24px,-110px) scale(.4)}
+}
+
 /* ════ HOME VIEW ════ */
 .home-hero{
   background:linear-gradient(160deg,#0a1540 0%,#0f1f5c 45%,#1a3a8f 100%);
-  padding:28px 110px 36px 20px;position:relative;overflow:hidden;color:#fff;
+  padding:20px 110px 24px 20px;position:relative;overflow:hidden;color:#fff;
 }
 .home-hero::before{
   content:'';position:absolute;top:-60px;right:-60px;
@@ -174,9 +313,9 @@ html[data-theme="orange"] body{background:#fff7ed}
   color:#fbbf24;letter-spacing:.01em;line-height:1.4;max-width:100%;
 }
 .home-slogan span{color:rgba(255,255,255,.9)}
-.home-stats{display:flex;gap:7px;margin-top:18px;flex-wrap:wrap}
+.home-stats{display:flex;gap:7px;margin-top:12px;flex-wrap:wrap}
 .stat-pill{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);border-radius:50px;padding:6px 14px;font-size:.74rem;font-weight:600;color:#fff;display:flex;align-items:center;gap:5px;backdrop-filter:blur(8px)}
-.home-search-wrap{margin-top:16px;position:relative}
+.home-search-wrap{margin-top:10px;position:relative}
 .home-search{
   width:100%;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.22);
   color:#fff;border-radius:50px;padding:12px 16px 12px 42px;font-size:.9rem;
@@ -198,7 +337,7 @@ html[data-theme="dark"] .app-share-sheet{background:#1a2332}
 .app-share-sheet-title{font-weight:800;font-size:1rem;color:var(--text)}
 .app-share-sheet-sub{font-size:.8rem;color:var(--text2);margin-top:3px}
 .app-share-sheet-btns{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:14px 18px}
-.home-body{flex:1;padding:20px 16px;margin-top:-22px;background:#f0f4ff;border-radius:24px 24px 0 0;min-height:200px}
+.home-body{flex:1;padding:16px 16px 20px;margin-top:-26px;background:#f0f4ff;border-radius:26px 26px 0 0;min-height:200px}
 html[data-theme="dark"] .home-body{background:#060d2e}
 .section-title{font-size:.72rem;font-weight:800;color:var(--text3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px;padding-left:2px}
 
@@ -1286,6 +1425,29 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
 </style>
 </head>
 <body>
+
+<!-- ══ SPLASH SCREEN ══ -->
+<div id="splash" aria-hidden="true">
+  <div class="splash-glow"></div>
+  <div class="splash-ring"></div>
+  <div class="splash-ring2"></div>
+  <!-- Flying product emojis -->
+  <div class="splash-emoji sp-e1">🍎</div>
+  <div class="splash-emoji sp-e2">🥛</div>
+  <div class="splash-emoji sp-e3">🥕</div>
+  <div class="splash-emoji sp-e4">🍞</div>
+  <div class="splash-emoji sp-e5">🧀</div>
+  <div class="splash-emoji sp-e6">🍌</div>
+  <div class="splash-emoji sp-e7">🥩</div>
+  <div class="splash-emoji sp-e8">🍫</div>
+  <div class="splash-emoji sp-e9">🥑</div>
+  <div class="splash-emoji sp-e10">🍊</div>
+  <!-- Cart icon zooms toward viewer -->
+  <img src="icon-512.png" class="splash-cart" alt="ShopSmart" loading="eager"/>
+  <div class="splash-brand">ShopSmart</div>
+  <div class="splash-tagline">Smart Shopping List</div>
+</div>
+
 
 <!-- PIN Lock Screen -->
 <div id="pin-lock-screen" style="display:none;position:fixed;inset:0;z-index:10000;background:linear-gradient(135deg,#0f1f5c,#1a3a8f);flex-direction:column;align-items:center;justify-content:center;color:#fff">
@@ -7279,6 +7441,17 @@ window.addEventListener('appinstalled', ()=>{
   hideInstallCard();
   toast('🎉 '+t.appInstalledFun);
 });
+
+// ── Splash Screen ─────────────────────────────────
+(function(){
+  const splash = document.getElementById('splash');
+  if(!splash) return;
+  // Remove after animation completes
+  setTimeout(()=>{
+    splash.classList.add('splash-done');
+    setTimeout(()=>{ if(splash.parentNode) splash.remove(); }, 480);
+  }, 2300);
+})();
 
 // ── Boot ──────────────────────────────────────────
 applyTheme(CFG.theme);
