@@ -1004,23 +1004,23 @@ html[data-theme="dark"] .nav-item.active{color:#fbbf24!important}
 
 /* ── Store Logo Marquee ── */
 @keyframes logoScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-.store-logo-strip{padding:18px 0 6px;position:relative;z-index:1;overflow:hidden}
+.store-logo-strip{padding:18px 0 10px;position:relative;z-index:1;overflow:hidden}
 .store-logo-strip::before,.store-logo-strip::after{content:'';position:absolute;top:0;bottom:0;width:40px;z-index:2;pointer-events:none}
 .store-logo-strip::before{left:0;background:linear-gradient(to right,rgba(17,34,85,.7),transparent)}
 .store-logo-strip::after{right:0;background:linear-gradient(to left,rgba(17,34,85,.7),transparent)}
 .logos-marquee{overflow:hidden;width:100%}
-.logos-track{display:flex;gap:12px;width:max-content;animation:logoScroll 70s linear infinite;align-items:flex-start;padding:2px 0 8px}
+.logos-track{display:flex;gap:16px;width:max-content;animation:logoScroll 70s linear infinite;align-items:flex-start;padding:4px 0 10px}
 .logos-track:hover{animation-play-state:paused}
 .logos-divider{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 4px;flex-shrink:0;opacity:.45}
 .logos-divider-flag{font-size:.9rem;line-height:1}
-.store-logo-item{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;flex-shrink:0;transition:transform .18s cubic-bezier(.34,1.56,.64,1)}
+.store-logo-item{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;flex-shrink:0;transition:transform .18s cubic-bezier(.34,1.56,.64,1)}
 .store-logo-item:hover{transform:scale(1.12);animation-play-state:paused}
 .store-logo-item:active{transform:scale(.92)}
-.store-logo-wrap{width:48px;height:48px;border-radius:13px;overflow:hidden;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(0,0,0,.2),0 1px 3px rgba(0,0,0,.12);border:2px solid rgba(255,255,255,.2);transition:all .2s}
+.store-logo-wrap{width:62px;height:62px;border-radius:16px;overflow:hidden;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(0,0,0,.2),0 1px 3px rgba(0,0,0,.12);border:2px solid rgba(255,255,255,.2);transition:all .2s}
 .store-logo-item.selected .store-logo-wrap{border-color:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.45),0 4px 16px rgba(0,0,0,.2)}
-.store-logo-img{width:34px;height:34px;object-fit:contain;display:block}
-.store-logo-fallback{width:48px;height:48px;border-radius:13px;display:none;align-items:center;justify-content:center;font-size:.65rem;font-weight:800;color:#fff;letter-spacing:.01em;text-align:center;line-height:1.2;padding:3px}
-.store-logo-name{font-size:.54rem;font-weight:600;color:rgba(255,255,255,.68);text-align:center;max-width:52px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.store-logo-img{width:44px;height:44px;object-fit:contain;display:block}
+.store-logo-fallback{width:62px;height:62px;border-radius:16px;display:none;align-items:center;justify-content:center;font-size:.72rem;font-weight:800;color:#fff;letter-spacing:.01em;text-align:center;line-height:1.2;padding:3px}
+.store-logo-name{font-size:.62rem;font-weight:600;color:rgba(255,255,255,.68);text-align:center;max-width:64px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .store-logo-item.selected .store-logo-name{color:#fff;font-weight:800}
 .store-active-bar{display:flex;align-items:center;gap:8px;padding:0 16px 8px}
 .store-active-chip{font-size:.72rem;color:#fff;font-weight:700;background:rgba(255,255,255,.2);padding:4px 12px;border-radius:50px;display:flex;align-items:center;gap:6px;backdrop-filter:blur(4px)}
@@ -1593,7 +1593,14 @@ html[data-theme="dark"] .rate-sheet{background:#1a2332}
   </div>
 
   <div class="home-body">
-    <div id="home-lists"></div>
+    <div id="home-lists">
+      <!-- Sofort-Inhalt: wird von renderHome() überschrieben -->
+      <div class="empty-state anim-fade" id="home-lists-placeholder">
+        <div class="empty-state-icon">📝</div>
+        <div class="empty-state-title">Noch keine Listen</div>
+        <div class="empty-state-desc">Tippe auf + um deine erste Liste zu erstellen</div>
+      </div>
+    </div>
   </div>
 </div>
 
