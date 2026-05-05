@@ -7580,39 +7580,81 @@ function dismissUpdateBanner(){
 }
 
 function applyUpdate(){
-  if(!_updateWaiting || !_swReg || !_swReg.waiting){
-    // Fallback: Seite neu laden
-    window.location.reload();
+  // Wenn SW wartet → SKIP_WAITING senden
+  if(_swReg && _swReg.waiting){
+    _swReg.waiting.postMessage('SKIP_WAITING');
     return;
   }
-  // SW anweisen, sofort zu aktivieren
-  _swReg.waiting.postMessage('SKIP_WAITING');
+  // Fallback: Hard-Reload (umgeht alle Caches)
+  forceReload();
+}
+
+async function forceReload(){
+  // 1. SW-Cache leeren
+  try{
+    if(_swReg && _swReg.active){
+      _swReg.active.postMessage('CLEAR_CACHE');
+    }
+    // Alle Caches direkt leeren
+    const keys = await caches.keys();
+    await Promise.all(keys.map(k => caches.delete(k)));
+  } catch(e){ /* ignore */ }
+  // 2. Hard-Reload (kein Cache)
+  window.location.reload(true);
 }
 
 async function checkForUpdate(){
   const btn = document.getElementById('update-check-btn');
   const now = new Date().toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
-  if(btn){ btn.disabled = true; btn.textContent = t.updateCheckingBtn; }
+  if(btn){ btn.disabled = true; btn.textContent = t.updateCheckingBtn||'…'; }
   _setUpdateDot('checking');
   _setUpdateStatusText(t.updateStatusSearching, t.updateStatusWaiting);
-  try{
-    if(!_swReg){ throw new Error('SW nicht registriert'); }
-    await _swReg.update();
-    if(_updateWaiting){
-      // Schon bekannt
-    } else if(_swReg.waiting){
-      _showUpdateAvailable();
-    } else {
-      _setUpdateDot('up-to-date');
-      _setUpdateStatusText(t.updateStatusUpToDate, t.updateStatusCheckedAt + now + ' Uhr');
-      toast(t.updateStatusOk, 3000);
-    }
-  } catch(e){
-    _setUpdateDot('up-to-date');
-    _setUpdateStatusText(t.updateStatusFailed, t.updateStatusFailedSub);
-    toast(t.updateStatusFailedToast, 3000);
+
+  let found = false;
+
+  // Methode 1: SW.update() aufrufen (bevorzugt)
+  if(_swReg){
+    try{
+      await _swReg.update();
+      if(_swReg.waiting){ _showUpdateAvailable(); found = true; }
+      else if(_updateWaiting){ found = true; }
+    } catch(e){ /* Methode 2 versuchen */ }
   }
-  if(btn){ btn.disabled = false; btn.textContent = t.updateCheckBtn; }
+
+  // Methode 2: sw.js direkt abrufen und CACHE-Version vergleichen
+  if(!found){
+    try{
+      const swPath = location.pathname.replace(/einkaufsliste\.html$/, '') + 'sw.js';
+      const resp = await fetch(swPath + '?_=' + Date.now(), {cache:'no-store'});
+      if(resp.ok){
+        const text = await resp.text();
+        // Extrahiere Cache-Name aus sw.js
+        const match = text.match(/const CACHE\s*=\s*['"]([^'"]+)['"]/);
+        if(match){
+          const remoteCacheName = match[1];
+          // Prüfe ob remote-Version neuer ist als lokale Caches
+          const localKeys = await caches.keys();
+          if(!localKeys.includes(remoteCacheName)){
+            // Neue Version verfügbar!
+            _showUpdateAvailable();
+            found = true;
+          }
+        }
+      }
+      if(!found){
+        _setUpdateDot('up-to-date');
+        _setUpdateStatusText(t.updateStatusUpToDate, (t.updateStatusCheckedAt||'Geprüft: ') + now + ' Uhr');
+        toast(t.updateStatusOk||'✅ App ist aktuell', 3000);
+      }
+    } catch(e){
+      // Offline oder anderer Fehler → Neu-Laden anbieten
+      _setUpdateDot('up-to-date');
+      _setUpdateStatusText('📴 Offline', t.updateStatusFailedSub||'Bitte Verbindung prüfen');
+      toast('📴 Offline – kein Update-Check möglich', 3000);
+    }
+  }
+
+  if(btn){ btn.disabled = false; btn.textContent = t.updateCheckBtn||'🔍 Prüfen'; }
 }
 
 // Service Worker – Pfad automatisch ermitteln (lokal + GitHub Pages)
