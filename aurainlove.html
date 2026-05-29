@@ -354,7 +354,7 @@ body{display:flex;justify-content:center;align-items:center;}
 /* CARD CONTENT */
 .card-content{
   position:absolute;bottom:0;left:0;right:0;
-  padding:20px;
+  padding:16px 20px 20px;
   z-index:2;
 }
 .card-top-row{
@@ -1144,6 +1144,107 @@ body{display:flex;justify-content:center;align-items:center;}
   pointer-events:none;
 }
 
+/* ─── LIFESTYLE FILTER ───────────────────────────────────── */
+.filter-row{
+  display:flex;align-items:center;justify-content:space-between;
+  width:100%;padding:0 4px 8px;flex-shrink:0;
+}
+.filter-btn{
+  display:flex;align-items:center;gap:6px;
+  padding:7px 14px;border-radius:50px;
+  background:var(--glass);border:1.5px solid var(--glassbr);
+  color:var(--text2);font-size:13px;font-weight:600;cursor:pointer;
+  transition:all .2s;flex-shrink:0;
+}
+.filter-btn.has-filters{
+  background:rgba(124,58,237,.18);border-color:rgba(124,58,237,.5);color:var(--purple);
+}
+.filter-btn svg{stroke:currentColor;}
+.active-filters-bar{
+  display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;
+  flex:1;padding:0 8px 0 0;
+}
+.active-filters-bar::-webkit-scrollbar{display:none;}
+.active-filter-chip{
+  display:flex;align-items:center;gap:4px;flex-shrink:0;
+  padding:5px 10px;border-radius:50px;
+  background:rgba(124,58,237,.2);border:1px solid rgba(124,58,237,.4);
+  color:var(--text);font-size:12px;cursor:pointer;
+}
+.active-filter-chip span{color:var(--text3);font-size:11px;margin-left:2px;}
+
+/* Filter Panel (bottom sheet) */
+#filter-panel{
+  position:absolute;bottom:0;left:0;right:0;
+  background:var(--bg2,#0d0d24);border-top:1px solid var(--glassbr);
+  border-radius:20px 20px 0 0;z-index:500;
+  transform:translateY(100%);transition:transform .35s cubic-bezier(.32,1,.32,1);
+  max-height:80%;overflow-y:auto;scrollbar-width:none;
+}
+#filter-panel.open{transform:translateY(0);}
+#filter-panel::-webkit-scrollbar{display:none;}
+.filter-panel-handle{
+  width:36px;height:4px;border-radius:2px;
+  background:var(--glassbr);margin:12px auto 0;
+}
+.filter-panel-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 20px 12px;
+}
+.filter-panel-header h3{font-size:17px;font-weight:800;color:var(--text);}
+.filter-clear-btn{
+  font-size:13px;color:var(--purple);background:none;border:none;cursor:pointer;font-weight:600;
+}
+.filter-category{padding:0 20px 18px;}
+.filter-category-label{
+  font-size:12px;font-weight:700;color:var(--text3);
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;
+}
+.filter-chips{display:flex;gap:8px;flex-wrap:wrap;}
+.lifestyle-chip{
+  padding:7px 13px;border-radius:50px;
+  background:var(--glass);border:1.5px solid var(--glassbr);
+  color:var(--text2);font-size:13px;cursor:pointer;
+  transition:all .18s;user-select:none;
+}
+.lifestyle-chip:active{transform:scale(.94);}
+.lifestyle-chip.selected{
+  background:rgba(124,58,237,.22);border-color:var(--purple);
+  color:var(--text);font-weight:600;
+}
+.filter-apply-btn{
+  margin:4px 20px 24px;width:calc(100% - 40px);
+  padding:15px;border-radius:14px;border:none;
+  background:var(--grad);color:#fff;font-size:16px;font-weight:700;
+  cursor:pointer;box-shadow:0 6px 24px rgba(124,58,237,.4);
+}
+.filter-overlay{
+  position:absolute;inset:0;background:rgba(0,0,0,.5);z-index:499;
+  opacity:0;pointer-events:none;transition:opacity .3s;
+}
+.filter-overlay.open{opacity:1;pointer-events:all;}
+
+/* Match Badge auf Karte */
+.card-match-badge{
+  display:flex;align-items:center;gap:6px;
+  padding:6px 10px;border-radius:50px;
+  background:rgba(0,0,0,.55);backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.12);
+  font-size:11px;color:#fff;font-weight:600;
+  flex-wrap:wrap;max-width:90%;
+}
+.card-match-badge .match-item{
+  display:flex;align-items:center;gap:3px;
+}
+.match-count-badge{
+  position:absolute;top:12px;right:12px;
+  background:var(--grad);border-radius:50px;
+  padding:4px 9px;font-size:11px;font-weight:700;color:#fff;
+  display:flex;align-items:center;gap:4px;z-index:5;
+  box-shadow:0 4px 12px rgba(124,58,237,.5);
+  animation:match-pop .4s cubic-bezier(.34,1.56,.64,1) both;
+}
+
 /* ─── AURA RINGS ─────────────────────────────────────────── */
 @keyframes aura-romantic{
   0%,100%{box-shadow:var(--shadow),0 0 0 2px rgba(236,72,153,.7),0 0 35px rgba(236,72,153,.35);}
@@ -1381,6 +1482,13 @@ svg{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-lin
         <div class="vibe-btn" onclick="setVibe(this,'🏔️ Abenteuer')">🏔️ Abenteuer</div>
         <div class="vibe-btn" onclick="setVibe(this,'🌹 Romantisch')">🌹 Romantisch</div>
         <div class="vibe-btn" onclick="setVibe(this,'💬 Deep Talk')">💬 Deep Talk</div>
+      </div>
+      <div class="filter-row">
+        <div class="active-filters-bar" id="active-filters-bar"></div>
+        <button class="filter-btn" id="filter-btn" onclick="openFilterPanel()">
+          <svg width="14" height="14" viewBox="0 0 24 24"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
+          Filter
+        </button>
       </div>
       <div class="card-stack" id="card-stack"></div>
       <div class="undo-wrap">
@@ -1680,6 +1788,20 @@ svg{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-lin
   </div>
 </div>
 
+<!-- FILTER OVERLAY -->
+<div class="filter-overlay" id="filter-overlay" onclick="closeFilterPanel()"></div>
+
+<!-- FILTER PANEL -->
+<div id="filter-panel">
+  <div class="filter-panel-handle"></div>
+  <div class="filter-panel-header">
+    <h3>🎯 Nach Vorlieben filtern</h3>
+    <button class="filter-clear-btn" onclick="clearAllFilters()">Alles zurücksetzen</button>
+  </div>
+  <div id="filter-categories"><!-- filled by JS --></div>
+  <button class="filter-apply-btn" onclick="applyFilters()">Matches anzeigen</button>
+</div>
+
 <!-- TOAST -->
 <div id="toast"></div>
 </div><!-- /app-shell -->
@@ -1689,8 +1811,24 @@ svg{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-lin
 //  AURA — App State & Data
 // ════════════════════════════════════════════════
 
+// ════════════════════════════════════════════════
+//  LIFESTYLE KATEGORIEN
+// ════════════════════════════════════════════════
+const LIFESTYLE = {
+  pet:     { icon:'🐾', label:'Haustier',   options:['🐱 Katze','🐕 Hund','🐾 Kein Tier','🦜 Exotisch'] },
+  music:   { icon:'🎵', label:'Musik',      options:['🎸 Rock','🎵 Pop','🎤 Hip-Hop','🎶 Electronic','🎻 Klassik','🤘 Metal'] },
+  food:    { icon:'🍽️', label:'Ernährung',  options:['🥩 Allesser','🥗 Vegetarisch','🌱 Vegan','☪️ Halal'] },
+  travel:  { icon:'✈️', label:'Reisen',     options:['🏖️ Strand','🏔️ Berge','🏙️ Städtetrip','🎒 Backpacking'] },
+  sport:   { icon:'🏃', label:'Sport',      options:['🏋️ Gym','🧘 Yoga','🚴 Outdoor','⚽ Teamsport','🙅 Kein Sport'] },
+  sleep:   { icon:'🌙', label:'Schlaftyp',  options:['☀️ Frühaufsteher','🌙 Nachtmensch'] },
+  smoking: { icon:'🚬', label:'Rauchen',    options:['🚭 Nichtraucher','🚬 Raucher','💨 Gelegentlich'] },
+};
+
 const state = {
-  currentUser: { name:'Max', age:28, photo:'https://randomuser.me/api/portraits/men/32.jpg' },
+  currentUser: {
+    name:'Max', age:28, photo:'https://randomuser.me/api/portraits/men/32.jpg',
+    lifestyle:{ pet:'🐕 Hund', music:'🎸 Rock', food:'🥩 Allesser', travel:'🏙️ Städtetrip', sport:'🏋️ Gym', sleep:'☀️ Frühaufsteher', smoking:'🚭 Nichtraucher' }
+  },
   profileIdx: 0,
   matches: [],
   stats: { likes:0, matches:0, sparks:0 },
@@ -1699,6 +1837,7 @@ const state = {
   vmProfile: null,
   isVerified: false,
   vibe: 'Spontan',
+  filters: {},        // aktive Filter: { pet:'🐱 Katze', music:'🎸 Rock', ... }
 };
 let lastSwiped = null; // { profile, dir, wasMatched, matchEntry }
 
@@ -1709,6 +1848,7 @@ const profiles = [
     photos:['https://randomuser.me/api/portraits/women/21.jpg','https://randomuser.me/api/portraits/women/22.jpg','https://randomuser.me/api/portraits/women/23.jpg'],
     bio:'Fotografin & Träumerin 📸 | Suche jemanden, der echte Gespräche liebt und nicht nur Swiper ist. Yoga am Morgen, Rotwein am Abend.',
     interests:['Fotografie','Yoga','Reisen','Kochen','Kunst'],
+    lifestyle:{ pet:'🐱 Katze', music:'🎵 Pop', food:'🥗 Vegetarisch', travel:'🏙️ Städtetrip', sport:'🧘 Yoga', sleep:'🌙 Nachtmensch', smoking:'🚭 Nichtraucher' },
     blurLevel:4, connectionLevel:1, vouches:3, verified:true, online:true,
     mood:'🌹 Romantisch', intent:'Feste Beziehung',
     voicemailText:'Hey, ich hab dein Profil gesehen und irgendetwas hat mich direkt angesprochen...',
@@ -1721,6 +1861,7 @@ const profiles = [
     photos:['https://randomuser.me/api/portraits/women/44.jpg','https://randomuser.me/api/portraits/women/45.jpg','https://randomuser.me/api/portraits/women/46.jpg'],
     bio:'Ärztin in Ausbildung 🩺 | Klettere in meiner Freizeit. Lieblingsfilm: Alles, was Christopher Nolan anfasst.',
     interests:['Klettern','Filme','Medizin','Kochen','Lesen'],
+    lifestyle:{ pet:'🐕 Hund', music:'🎸 Rock', food:'🥩 Allesser', travel:'🏔️ Berge', sport:'🚴 Outdoor', sleep:'☀️ Frühaufsteher', smoking:'🚭 Nichtraucher' },
     blurLevel:5, connectionLevel:0, vouches:1, verified:true, online:false,
     mood:'💬 Deep Talk', intent:'Mal sehen',
     hasVoicemail:false, vmDuration:'',
@@ -1732,6 +1873,7 @@ const profiles = [
     photos:['https://randomuser.me/api/portraits/women/63.jpg','https://randomuser.me/api/portraits/women/64.jpg','https://randomuser.me/api/portraits/women/65.jpg'],
     bio:'UX Designerin bei einem Startup 🎨 | Gute Laune kommt von guten Menschen. Frag mich nach meinem Lieblingscafé.',
     interests:['Design','Kaffee','Fahrradfahren','Musik','Street Art'],
+    lifestyle:{ pet:'🐱 Katze', music:'🎶 Electronic', food:'🌱 Vegan', travel:'🏙️ Städtetrip', sport:'🚴 Outdoor', sleep:'🌙 Nachtmensch', smoking:'🚭 Nichtraucher' },
     blurLevel:3, connectionLevel:2, vouches:4, verified:true, online:true,
     mood:'⚡ Spontan', intent:'Casual Dating',
     hasVoicemail:true, vmDuration:'0:19',
@@ -1744,6 +1886,7 @@ const profiles = [
     photos:['https://randomuser.me/api/portraits/women/33.jpg','https://randomuser.me/api/portraits/women/34.jpg','https://randomuser.me/api/portraits/women/35.jpg'],
     bio:'Musiklehrerin 🎹 | Jeden Sonntag Flohmarkt. Glaubt fest daran, dass jeder Mensch eine gute Geschichte hat.',
     interests:['Musik','Flohmarkt','Backen','Konzerte','Lesen'],
+    lifestyle:{ pet:'🐱 Katze', music:'🎸 Rock', food:'🥗 Vegetarisch', travel:'🏙️ Städtetrip', sport:'🙅 Kein Sport', sleep:'☀️ Frühaufsteher', smoking:'🚭 Nichtraucher' },
     blurLevel:5, connectionLevel:0, vouches:2, verified:false, online:true,
     mood:'🛋️ Chill', intent:'Feste Beziehung',
     hasVoicemail:false, vmDuration:'',
@@ -1755,6 +1898,7 @@ const profiles = [
     photos:['https://randomuser.me/api/portraits/women/52.jpg','https://randomuser.me/api/portraits/women/53.jpg','https://randomuser.me/api/portraits/women/54.jpg'],
     bio:'Architektin 🏛️ | Laufe Halbmarathon, wenn ich nicht gerade Gebäude entwerfe. Morgenmenschen bevorzugt.',
     interests:['Architektur','Laufen','Reisen','Wein','Podcasts'],
+    lifestyle:{ pet:'🐕 Hund', music:'🎸 Rock', food:'🥩 Allesser', travel:'🏙️ Städtetrip', sport:'🏋️ Gym', sleep:'☀️ Frühaufsteher', smoking:'🚭 Nichtraucher' },
     blurLevel:4, connectionLevel:1, vouches:5, verified:true, online:false,
     mood:'🏔️ Abenteuer', intent:'Feste Beziehung',
     hasVoicemail:true, vmDuration:'0:34',
@@ -1767,6 +1911,7 @@ const profiles = [
     photos:['https://randomuser.me/api/portraits/women/17.jpg','https://randomuser.me/api/portraits/women/18.jpg','https://randomuser.me/api/portraits/women/19.jpg'],
     bio:'Studentin Psychologie 🧠 | Bin überzeugt, dass wir alle etwas voneinander lernen können. Liebe ehrliche Unterhaltungen.',
     interests:['Psychologie','Yoga','Schreiben','Natur','Tee'],
+    lifestyle:{ pet:'🐾 Kein Tier', music:'🎻 Klassik', food:'🌱 Vegan', travel:'🏔️ Berge', sport:'🧘 Yoga', sleep:'☀️ Frühaufsteher', smoking:'🚭 Nichtraucher' },
     blurLevel:5, connectionLevel:0, vouches:0, verified:false, online:true,
     mood:'💬 Deep Talk', intent:'Neue Freundschaft',
     hasVoicemail:false, vmDuration:'',
@@ -1945,6 +2090,87 @@ function setVibe(el, vibe) {
 // ════════════════════════════════════════════════
 //  CARD STACK
 // ════════════════════════════════════════════════
+// ════════════════════════════════════════════════
+//  LIFESTYLE FILTER SYSTEM
+// ════════════════════════════════════════════════
+function getCommonLifestyle(profile) {
+  const me = state.currentUser.lifestyle || {};
+  const them = profile.lifestyle || {};
+  return Object.keys(LIFESTYLE).filter(k => me[k] && them[k] && me[k] === them[k]).map(k => me[k]);
+}
+
+function openFilterPanel() {
+  // Panel mit Kategorien befüllen
+  const container = document.getElementById('filter-categories');
+  container.innerHTML = '';
+  Object.entries(LIFESTYLE).forEach(([key, cat]) => {
+    const div = document.createElement('div');
+    div.className = 'filter-category';
+    div.innerHTML = `<div class="filter-category-label">${cat.icon} ${cat.label}</div>
+      <div class="filter-chips">${cat.options.map(opt =>
+        `<div class="lifestyle-chip${state.filters[key]===opt?' selected':''}"
+          onclick="toggleFilter('${key}','${opt}',this)">${opt}</div>`
+      ).join('')}</div>`;
+    container.appendChild(div);
+  });
+  document.getElementById('filter-panel').classList.add('open');
+  document.getElementById('filter-overlay').classList.add('open');
+}
+
+function closeFilterPanel() {
+  document.getElementById('filter-panel').classList.remove('open');
+  document.getElementById('filter-overlay').classList.remove('open');
+}
+
+function toggleFilter(key, value, el) {
+  if(state.filters[key] === value) {
+    delete state.filters[key];
+    el.classList.remove('selected');
+  } else {
+    // Anderen Chip in dieser Kategorie deselektieren
+    el.parentElement.querySelectorAll('.lifestyle-chip').forEach(c => c.classList.remove('selected'));
+    state.filters[key] = value;
+    el.classList.add('selected');
+  }
+}
+
+function clearAllFilters() {
+  state.filters = {};
+  document.querySelectorAll('.lifestyle-chip').forEach(c => c.classList.remove('selected'));
+  updateFilterBar();
+  renderCardStack();
+  closeFilterPanel();
+  showToast('🔄 Alle Filter zurückgesetzt');
+}
+
+function applyFilters() {
+  closeFilterPanel();
+  updateFilterBar();
+  renderCardStack();
+  const count = Object.keys(state.filters).length;
+  showToast(count > 0 ? `🎯 ${count} Filter aktiv` : '✅ Alle Profile angezeigt');
+}
+
+function updateFilterBar() {
+  const bar = document.getElementById('active-filters-bar');
+  const btn = document.getElementById('filter-btn');
+  bar.innerHTML = '';
+  const active = Object.entries(state.filters);
+  active.forEach(([key, val]) => {
+    const chip = document.createElement('div');
+    chip.className = 'active-filter-chip';
+    chip.innerHTML = `${val} <span onclick="removeFilter('${key}')">✕</span>`;
+    bar.appendChild(chip);
+  });
+  btn.classList.toggle('has-filters', active.length > 0);
+}
+
+function removeFilter(key) {
+  delete state.filters[key];
+  updateFilterBar();
+  renderCardStack();
+}
+
 function getAuraType(p) {
   const i = p.interests || [];
   const intent = p.intent || '';
@@ -1958,13 +2184,23 @@ function getAuraType(p) {
 function renderCardStack() {
   const stack = document.getElementById('card-stack');
   stack.innerHTML = '';
-  const remaining = profiles.filter(p => !p.liked && state.profileIdx <= profiles.indexOf(p));
+  // Filter anwenden
+  const activeFilters = Object.entries(state.filters);
+  let remaining = profiles.filter(p => !p.liked && state.profileIdx <= profiles.indexOf(p));
+  if(activeFilters.length > 0) {
+    remaining = remaining.filter(p =>
+      activeFilters.every(([key, val]) => p.lifestyle && p.lifestyle[key] === val)
+    );
+  }
   const slice = remaining.slice(0, 3);
   if(slice.length === 0) {
+    const filterHint = activeFilters.length > 0
+      ? '<br><br><button onclick="clearAllFilters()" style="background:var(--grad);border:none;color:#fff;padding:10px 20px;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;">Filter zurücksetzen</button>'
+      : '<br><br>Oder: Passe deinen Vibe an!';
     stack.innerHTML = `<div class="empty-deck">
       <svg width="60" height="60" viewBox="0 0 24 24" stroke="var(--text3)" style="opacity:.4"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-      <h3>Keine Profile mehr</h3>
-      <p>Komm morgen wieder — neue Leute warten auf dich. ☀️<br><br>Oder: Passe deinen Vibe an!</p>
+      <h3>${activeFilters.length > 0 ? 'Keine Treffer' : 'Keine Profile mehr'}</h3>
+      <p>${activeFilters.length > 0 ? 'Niemand passt zu diesem Filter.' : 'Komm morgen wieder ☀️'}${filterHint}</p>
     </div>`;
     return;
   }
@@ -2011,6 +2247,12 @@ function buildCard(p, isTop) {
       </div>
       <div class="card-bio">${p.bio}</div>
       <div class="card-tags">${p.interests.slice(0,4).map(t=>`<span class="card-tag">${t}</span>`).join('')}</div>
+      ${(() => {
+        const common = getCommonLifestyle(p);
+        if(common.length === 0) return '';
+        if(common.length >= 3) return `<div class="match-count-badge">♥ ${common.length} Gemeinsamkeiten</div>`;
+        return `<div class="card-match-badge">${common.slice(0,2).map(v=>`<span class="match-item">${v}</span>`).join('<span style="opacity:.4">·</span>')}</div>`;
+      })()}
       ${p.hasVoicemail ? `
         <div class="voice-intro-btn" onclick="playVoiceIntro(event,${p.id})">
           <div class="voice-wave">
